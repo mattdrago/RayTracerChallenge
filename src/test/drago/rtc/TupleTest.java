@@ -149,6 +149,88 @@ class TupleTest {
         Tuple actual = a.divide(2);
 
         assertEquals(expected, actual);
-
     }
+
+    @Test
+    void computeMagnitudeofVector100() {
+        Tuple v = Tuple.vector(1, 0, 0);
+
+        assertEquals(1, v.magnitude());
+    }
+
+    @Test
+    void computeMagnitudeofVector010() {
+        Tuple v = Tuple.vector(0, 1, 0);
+
+        assertEquals(1, v.magnitude());
+    }
+
+    @Test
+    void computeMagnitudeofVector001() {
+        Tuple v = Tuple.vector(0, 0, 1);
+
+        assertEquals(1, v.magnitude());
+    }
+
+
+    @Test
+    void computeMagnitudeofVector123() {
+        Tuple v = Tuple.vector(1, 2, 3);
+
+        assertEquals(Math.sqrt(14), v.magnitude());
+    }
+
+    @Test
+    void computeMagnitudeofVectorNeg123() {
+        Tuple v = Tuple.vector(-1, -2, -3);
+
+        assertEquals(Math.sqrt(14), v.magnitude());
+    }
+
+    @Test
+    void normaliseVector400() {
+        Tuple v = Tuple.vector(4, 0, 0);
+
+        Tuple expected = Tuple.vector(1, 0, 0);
+        Tuple actual = v.normalise();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void normaliseVector123() {
+        Tuple v = Tuple.vector(1, 2,3 );
+
+        Tuple expected = Tuple.vector(1/Math.sqrt(14), 2/Math.sqrt(14), 3/Math.sqrt(14));
+        Tuple actual = v.normalise();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void magnitudeOfNormalisedVecotrIs1() {
+        Tuple v = Tuple.vector(1, 2,3 );
+
+        Tuple vNorm = v.normalise();
+
+        assertEquals(1, vNorm.magnitude());
+    }
+
+    @Test
+    void dotProductOfTwoTuples() {
+        Tuple v1 = Tuple.vector(1, 2, 3);
+        Tuple v2 = Tuple.vector(2, 3, 4);
+
+        assertEquals(20, v1.dot(v2));
+    }
+
+    @Test
+    void crossProductOfTwoVectors() {
+        Tuple v1 = Tuple.vector(1, 2, 3);
+        Tuple v2 = Tuple.vector(2, 3, 4);
+
+        assertEquals(Tuple.vector(-1, 2, -1), v1.cross(v2));
+        assertEquals(Tuple.vector(1, -2, 1), v2.cross(v1));
+    }
+
 }

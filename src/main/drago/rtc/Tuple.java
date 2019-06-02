@@ -86,4 +86,22 @@ public class Tuple {
     public Tuple divide(double operand) {
         return new Tuple(this.x / operand, this.y /operand, this.z / operand, this.w / operand );
     }
+
+    public double magnitude() {
+        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    }
+
+    public Tuple normalise() {
+        return this.divide(this.magnitude());
+    }
+
+    public double dot(Tuple operand) {
+        return this.x * operand.x + this.y * operand.y + this.z * operand.z + this.w * operand.w;
+    }
+
+    public Tuple cross(Tuple operand) {
+        return vector(this.y * operand.z - this.z * operand.y,
+                this.z * operand.x - this.x * operand.z,
+                this.x * operand.y - this.y * operand.x);
+    }
 }
