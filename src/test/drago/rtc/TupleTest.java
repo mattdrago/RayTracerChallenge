@@ -99,4 +99,56 @@ class TupleTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    void subtractingAVectorFromTheZeroVector() {
+        Tuple zero = Tuple.vector(0, 0, 0);
+        Tuple v = Tuple.vector(1, -2, 3);
+
+        Tuple expected = Tuple.vector(-1, 2, -3);
+        Tuple actual = zero.subtract(v);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void negatingATuple() {
+        Tuple a = new Tuple(1, -2, 3, -4);
+
+        Tuple expected = new Tuple(-1, 2, -3, 4);
+        Tuple actual = a.negate();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void multiplyingTupleByAScalar() {
+        Tuple a = new Tuple(1, -2, 3, -4);
+
+        Tuple expected = new Tuple(3.5, -7, 10.5, -14);
+        Tuple actual = a.scale(3.5);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void multiplyingTupleByAFraction() {
+        Tuple a = new Tuple(1, -2, 3, -4);
+
+        Tuple expected = new Tuple(0.5, -1, 1.5, -2);
+        Tuple actual = a.scale(0.5);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void dividingTupleByAScalar() {
+        Tuple a = new Tuple(1, -2, 3, -4);
+
+        Tuple expected = new Tuple(0.5, -1, 1.5, -2);
+        Tuple actual = a.divide(2);
+
+        assertEquals(expected, actual);
+
+    }
 }

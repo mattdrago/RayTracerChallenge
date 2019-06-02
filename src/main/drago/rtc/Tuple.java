@@ -74,4 +74,16 @@ public class Tuple {
     public Tuple subtract(Tuple operand) {
         return new Tuple(this.x - operand.x, this.y - operand.y, this.z - operand.z, this.w - operand.w);
     }
+
+    public Tuple negate() {
+        return new Tuple(-this.x, -this.y, -this.z, -this.w);
+    }
+
+    public Tuple scale(double operand) {
+        return new Tuple(this.x * operand, this.y * operand, this.z * operand, this.w * operand );
+    }
+
+    public Tuple divide(double operand) {
+        return new Tuple(this.x / operand, this.y /operand, this.z / operand, this.w / operand );
+    }
 }
