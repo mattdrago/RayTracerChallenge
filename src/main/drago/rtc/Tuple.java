@@ -11,6 +11,8 @@ public class Tuple {
     private static final double POINT = 1.0;
     private static final double VECTOR = 0.0;
 
+    private static final double EPSILON= 0.00001;
+
     public Tuple(double x, double y, double z, double w) {
         this.x = x;
         this.y = y;
@@ -56,15 +58,29 @@ public class Tuple {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tuple tuple = (Tuple) o;
-        return Double.compare(tuple.x, x) == 0 &&
-                Double.compare(tuple.y, y) == 0 &&
-                Double.compare(tuple.z, z) == 0 &&
-                Double.compare(tuple.w, w) == 0;
+        return equalDoubles(tuple.x, x) &&
+                equalDoubles(tuple.y, y) &&
+                equalDoubles(tuple.z, z) &&
+                equalDoubles(tuple.w, w);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(x, y, z, w);
+    }
+
+    @Override
+    public String toString() {
+        return "Tuple{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                ", w=" + w +
+                '}';
+    }
+
+    private boolean equalDoubles(double d1, double d2) {
+        return Math.abs(d1 - d2) < EPSILON;
     }
 
     public Tuple add(Tuple operand) {
