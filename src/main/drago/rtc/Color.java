@@ -1,8 +1,8 @@
 package drago.rtc;
 
-class Color extends Tuple {
+public class Color extends Tuple {
 
-    Color(double red, double green, double blue) {
+    public Color(double red, double green, double blue) {
         super(red, green, blue, 0.0);
     }
 

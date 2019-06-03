@@ -2,7 +2,7 @@ package drago.rtc;
 
 import java.util.HashMap;
 
-class Canvas {
+public class Canvas {
 
     private final int width;
     private final int height;
@@ -11,7 +11,7 @@ class Canvas {
 
     private static final Color DEFAULT_PIXEL = new Color(0, 0, 0);
 
-    Canvas(int width, int height) {
+    public Canvas(int width, int height) {
         this.width = width;
         this.height = height;
     }
@@ -20,7 +20,7 @@ class Canvas {
         return width;
     }
 
-    int getHeight() {
+    public int getHeight() {
         return height;
     }
 
@@ -38,7 +38,16 @@ class Canvas {
         return x + "_" + y;
     }
 
-    void writePixel(int x, int y, Color color) {
-        pixels.put(pixelKey(x, y), color);
+    public void writePixel(int x, int y, Color color) {
+        if(withinCanvasBounds(x, y)) {
+            pixels.put(pixelKey(x, y), color);
+        }
+    }
+
+    private boolean withinCanvasBounds(int x, int y) {
+        return x >= 0
+            && x < width
+            && y >=0
+            && y < height;
     }
 }

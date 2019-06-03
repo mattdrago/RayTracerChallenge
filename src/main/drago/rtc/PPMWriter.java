@@ -1,10 +1,10 @@
 package drago.rtc;
 
-class PPMWriter {
+public class PPMWriter {
 
     private static final int MAX_COLOR = 255;
 
-    String write(Canvas canvas) {
+    public String write(Canvas canvas) {
         StringBuilder ppmStringBuilder = new StringBuilder("P3\n");
         ppmStringBuilder.append(canvas.getWidth()).append(" ").append(canvas.getHeight()).append("\n");
         ppmStringBuilder.append(MAX_COLOR).append("\n");
