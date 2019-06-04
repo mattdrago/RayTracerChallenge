@@ -6,6 +6,8 @@ class Matrix {
 
     private final double[][] values;
 
+    private static final double EPSILON= 0.00001;
+
     Matrix(double[][] values) {
 
         this.values = new double[values.length][];
@@ -25,7 +27,28 @@ class Matrix {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Matrix matrix = (Matrix) o;
-        return Arrays.deepEquals(values, matrix.values);
+
+        if (values.length != matrix.values.length) {
+            return false;
+        } else {
+            for (int rowI = 0; rowI < values.length; rowI++) {
+                if (values[rowI].length != matrix.values[rowI].length) {
+                    return false;
+                } else {
+                    for (int colI = 0; colI < values[rowI].length; colI++) {
+                        if (!equalDoubles(values[rowI][colI], matrix.values[rowI][colI])) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean equalDoubles(double d1, double d2) {
+        return Math.abs(d1 - d2) < EPSILON;
     }
 
     @Override
@@ -40,10 +63,10 @@ class Matrix {
 
         double[][] newValues = new double[rowCount][colCount];
 
-        for (int rowi = 0; rowi < rowCount; rowi++) {
-            for (int coli = 0; coli < colCount; coli++) {
-                for (int itemi = 0; itemi < itemCount; itemi++) {
-                    newValues[rowi][coli] += values[rowi][itemi] * operand.values[itemi][coli];
+        for (int rowI = 0; rowI < rowCount; rowI++) {
+            for (int colI = 0; colI < colCount; colI++) {
+                for (int itemI = 0; itemI < itemCount; itemI++) {
+                    newValues[rowI][colI] += values[rowI][itemI] * operand.values[itemI][colI];
                 }
             }
         }
@@ -91,12 +114,81 @@ class Matrix {
 
         double[][] transposeValues = new double[cols][rows];
 
-        for (int rowi = 0; rowi < rows; rowi++) {
-            for (int coli = 0; coli < cols; coli++) {
-                transposeValues[coli][rowi] = values[rowi][coli];
+        for (int rowI = 0; rowI < rows; rowI++) {
+            for (int colI = 0; colI < cols; colI++) {
+                transposeValues[colI][rowI] = values[rowI][colI];
             }
         }
 
         return new Matrix(transposeValues);
+    }
+
+    double determinant() {
+        double determinant = 0;
+        int matrixSize = values.length;
+
+        if(matrixSize == 2) {
+            determinant = values[0][0] * values[1][1] - values[0][1] * values [1][0];
+        } else {
+            for (int colI = 0; colI < matrixSize; colI++) {
+                determinant += values[0][colI] * cofactor(0, colI);
+            }
+        }
+
+        return determinant;
+    }
+
+    public Matrix submatrix(int rowToRemove, int columnToRemove) {
+        int oldRows = values.length;
+        int oldCols = values[0].length;
+
+        double[][] newValues = new double[oldRows - 1][oldCols - 1];
+
+        for (int oldrowI = 0, newrowI = 0; oldrowI < oldRows; oldrowI++, newrowI++) {
+            if(oldrowI == rowToRemove) {
+                newrowI--;
+                continue;
+            }
+
+            for (int oldcolI = 0, newcolI = 0; oldcolI < oldCols; oldcolI++, newcolI++) {
+                if(oldcolI == columnToRemove) {
+                    newcolI--;
+                    continue;
+                }
+
+                newValues[newrowI][newcolI] = values[oldrowI][oldcolI];
+            }
+        }
+
+        return new Matrix(newValues);
+    }
+
+    double minor(int row, int col) {
+        return submatrix(row, col).determinant();
+    }
+
+    double cofactor(int row, int col) {
+        return minor(row, col) * ((row + col) % 2 == 0 ? 1 : -1);
+    }
+
+    boolean isInvertible() {
+        return determinant() != 0;
+    }
+
+    Matrix inverse() {
+        if(!isInvertible()) {
+            return null;
+        }
+
+        double determinant = determinant();
+        double[][] newValues = new double[values.length][values[0].length];
+
+        for (int rowI = 0; rowI < values.length; rowI++) {
+            for (int colI = 0; colI < values[0].length; colI++) {
+                newValues[colI][rowI] = cofactor(rowI, colI) / determinant;
+            }
+        }
+
+        return new Matrix(newValues);
     }
 }
