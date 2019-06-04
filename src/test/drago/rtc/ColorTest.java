@@ -38,7 +38,7 @@ class ColorTest {
     }
 
     @Test
-    void mulitplyingColorByAScalar() {
+    void multiplyingColorByAScalar() {
         Color c = new Color(0.2, 0.3, 0.4);
 
         Color expected = new Color(0.4, 0.6, 0.8);

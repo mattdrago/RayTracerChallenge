@@ -6,16 +6,15 @@ import drago.rtc.PPMWriter;
 import drago.rtc.Tuple;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class CannonSim {
+class CannonSim {
     private Projectile projectile;
-    private Environment environment;
-    private Canvas canvas;
+    private final Environment environment;
+    private final Canvas canvas;
 
     private static final Color PLOT_COLOR = new Color(0.9, 0.2, 0.1);
 

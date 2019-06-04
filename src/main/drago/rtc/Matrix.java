@@ -1,13 +1,12 @@
 package drago.rtc;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class Matrix {
+class Matrix {
 
-    private double[][] values;
+    private final double[][] values;
 
-    public Matrix(double[][] values) {
+    Matrix(double[][] values) {
 
         this.values = new double[values.length][];
 
@@ -17,7 +16,7 @@ public class Matrix {
 
     }
 
-    public double get(int row, int column) {
+    double get(int row, int column) {
         return values[row][column];
     }
 

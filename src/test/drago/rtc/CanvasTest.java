@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CanvasTest {
 
-    public static final Color BLACK = new Color(0, 0, 0);
-    public static final Color RED = new Color(1, 0, 0);
+    private static final Color BLACK = new Color(0, 0, 0);
+    private static final Color RED = new Color(1, 0, 0);
 
     @Test
     void createACanvas() {

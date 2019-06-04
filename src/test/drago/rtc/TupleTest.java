@@ -49,7 +49,7 @@ class TupleTest {
     }
 
     @Test
-    void vectorCreatesTuplewithWEqual0() {
+    void vectorCreatesTupleWithWEqual0() {
         Tuple expected = new Tuple(X, Y, Z, 0.0);
         Tuple actual = Tuple.vector(X, Y, Z);
 
@@ -152,21 +152,21 @@ class TupleTest {
     }
 
     @Test
-    void computeMagnitudeofVector100() {
+    void computeMagnitudeOfVector100() {
         Tuple v = Tuple.vector(1, 0, 0);
 
         assertEquals(1, v.magnitude());
     }
 
     @Test
-    void computeMagnitudeofVector010() {
+    void computeMagnitudeOfVector010() {
         Tuple v = Tuple.vector(0, 1, 0);
 
         assertEquals(1, v.magnitude());
     }
 
     @Test
-    void computeMagnitudeofVector001() {
+    void computeMagnitudeOfVector001() {
         Tuple v = Tuple.vector(0, 0, 1);
 
         assertEquals(1, v.magnitude());
@@ -174,14 +174,14 @@ class TupleTest {
 
 
     @Test
-    void computeMagnitudeofVector123() {
+    void computeMagnitudeOfVector123() {
         Tuple v = Tuple.vector(1, 2, 3);
 
         assertEquals(Math.sqrt(14), v.magnitude());
     }
 
     @Test
-    void computeMagnitudeofVectorNeg123() {
+    void computeMagnitudeOfVectorNeg123() {
         Tuple v = Tuple.vector(-1, -2, -3);
 
         assertEquals(Math.sqrt(14), v.magnitude());
@@ -208,7 +208,7 @@ class TupleTest {
     }
 
     @Test
-    void magnitudeOfNormalisedVecotrIs1() {
+    void magnitudeOfNormalisedVectorIs1() {
         Tuple v = Tuple.vector(1, 2,3 );
 
         Tuple vNorm = v.normalise();

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MatrixTest {
 
     @Test
-    void construcingAndInspectingA4x4Matrix() {
+    void constructingAndInspectingA4x4Matrix() {
         Matrix m = new Matrix(new double[][]{
                 {1, 2, 3, 4},
                 {5.5, 6.5, 7.5, 8.5},
@@ -26,7 +26,7 @@ class MatrixTest {
 
     @Test
     void constructedMatrixCannotBeManipulated() {
-        double values[][] = {
+        double[][] values = {
                 {1, 2, 3, 4},
                 {5, 6, 7, 8}
         };
