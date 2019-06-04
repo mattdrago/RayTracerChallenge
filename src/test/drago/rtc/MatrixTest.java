@@ -179,4 +179,50 @@ class MatrixTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    void multiplyingAMatrixByTheIdentityMatrix() {
+        Matrix m = new Matrix(new double[][] {
+                {0, 1, 2, 4},
+                {1, 2, 4, 8},
+                {2, 4, 8, 16},
+                {4, 8, 16, 32}
+        });
+
+        Matrix identity = Matrix.identity(4);
+
+        Matrix result = m.multiplyBy(identity);
+
+        assertEquals(m, result);
+    }
+
+    @Test
+    void transposeAMatrix() {
+        Matrix m = new Matrix(new double[][] {
+                {0, 9, 3, 0},
+                {9, 8, 0, 8},
+                {1, 8, 5, 3},
+                {0, 0, 5, 8}
+        });
+
+        Matrix expected = new Matrix(new double[][] {
+                {0, 9, 1, 0},
+                {9, 8, 8, 0},
+                {3, 0, 5, 5},
+                {0, 8, 3, 8}
+        });
+
+        Matrix actual = m.transpose();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void transposingTheIdentityMatrix() {
+        Matrix identity = Matrix.identity(4);
+
+        Matrix result = identity.transpose();
+
+        assertEquals(identity, result);
+    }
 }

@@ -38,11 +38,9 @@ class Matrix {
         int rowCount = values.length;
         int colCount = operand.values[0].length;
 
-        double[][] newValues = new double[rowCount][];
+        double[][] newValues = new double[rowCount][colCount];
 
         for (int rowi = 0; rowi < rowCount; rowi++) {
-            newValues[rowi] = new double[colCount];
-
             for (int coli = 0; coli < colCount; coli++) {
                 for (int itemi = 0; itemi < itemCount; itemi++) {
                     newValues[rowi][coli] += values[rowi][itemi] * operand.values[itemi][coli];
@@ -59,6 +57,11 @@ class Matrix {
         return fromMatrix(result);
     }
 
+    @Override
+    public String toString() {
+        return Arrays.deepToString(values);
+    }
+
     static Matrix toMatrix(Tuple t) {
         return new Matrix(new double[][] {
                 {t.getX()},
@@ -70,5 +73,30 @@ class Matrix {
 
     static Tuple fromMatrix(Matrix m) {
         return new Tuple(m.values[0][0], m.values[1][0], m.values[2][0], m.values[3][0]);
+    }
+
+    static Matrix identity(int size) {
+        double[][] values = new double[size][size];
+
+        for (int i = 0; i < size; i++) {
+            values[i][i] = 1;
+        }
+
+        return new Matrix(values);
+    }
+
+    Matrix transpose() {
+        int rows = values.length;
+        int cols = values[0].length;
+
+        double[][] transposeValues = new double[cols][rows];
+
+        for (int rowi = 0; rowi < rows; rowi++) {
+            for (int coli = 0; coli < cols; coli++) {
+                transposeValues[coli][rowi] = values[rowi][coli];
+            }
+        }
+
+        return new Matrix(transposeValues);
     }
 }
