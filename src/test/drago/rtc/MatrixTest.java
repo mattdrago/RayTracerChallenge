@@ -104,4 +104,79 @@ class MatrixTest {
         assertFalse(m1.equals(m2));
     }
 
+    @Test
+    void multiplyingTwoMatrices() {
+        Matrix m1 = new Matrix(new double[][] {
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 8, 7, 6},
+                {5, 4, 3, 2}
+        });
+
+        Matrix m2 = new Matrix(new double[][] {
+            {-2, 1, 2, 3},
+            {3, 2, 1, -1},
+            {4, 3, 6, 5},
+            {1, 2, 7, 8}
+        });
+
+        Matrix expected = new Matrix(new double[][] {
+                {20, 22, 50, 48},
+                {44, 54, 114, 108},
+                {40, 58, 110, 102},
+                {16, 26, 46, 42}
+        });
+
+        Matrix actual = m1.multiplyBy(m2);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void matrixMultipliedByATuple() {
+        Matrix m = new Matrix(new double[][] {
+                {1, 2, 3, 4},
+                {2, 4, 4, 2},
+                {8, 6, 4, 1},
+                {0, 0, 0, 1}
+        });
+
+        Tuple t = new Tuple(1, 2, 3, 1);
+
+        Tuple expected = new Tuple(18, 24, 33, 1);
+        Tuple actual = m.multiplyBy(t);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void convertTupleToMatrix() {
+        Tuple t = new Tuple(1, 2, 3, 4);
+
+        Matrix expected = new Matrix(new double[][] {
+                {1},
+                {2},
+                {3},
+                {4}
+        });
+
+        Matrix actual = Matrix.toMatrix(t);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void convertMatrixToTuple() {
+        Matrix m = new Matrix(new double[][] {
+                {1},
+                {2},
+                {3},
+                {4}
+        });
+
+        Tuple expected = new Tuple(1, 2, 3, 4);
+        Tuple actual = Matrix.fromMatrix(m);
+
+        assertEquals(expected, actual);
+    }
 }
