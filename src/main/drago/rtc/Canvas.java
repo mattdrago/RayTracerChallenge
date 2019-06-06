@@ -16,7 +16,7 @@ public class Canvas {
         this.height = height;
     }
 
-    int getWidth() {
+    public int getWidth() {
         return width;
     }
 

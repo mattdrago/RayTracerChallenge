@@ -2,7 +2,7 @@ package drago.rtc;
 
 import java.util.Arrays;
 
-class Matrix {
+public class Matrix {
 
     private final double[][] values;
 
@@ -147,7 +147,7 @@ class Matrix {
         return new Matrix(newValues);
     }
 
-    Tuple multiplyBy(Tuple operand) {
+    public Tuple multiplyBy(Tuple operand) {
         Matrix result = this.multiplyBy(toMatrix(operand));
 
         return fromMatrix(result);
