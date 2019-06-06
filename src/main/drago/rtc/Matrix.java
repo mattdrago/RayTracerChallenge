@@ -18,6 +18,79 @@ class Matrix {
 
     }
 
+    public static Matrix translation(double x, double y, double z) {
+        Matrix translation = Matrix.identity(4);
+        translation.values[0][3] = x;
+        translation.values[1][3] = y;
+        translation.values[2][3] = z;
+
+        return translation;
+    }
+
+    public static Matrix scaling(double x, double y, double z) {
+        Matrix scaling = Matrix.identity(4);
+        scaling.values[0][0] = x;
+        scaling.values[1][1] = y;
+        scaling.values[2][2] = z;
+
+        return scaling;
+    }
+
+    public static Matrix rotationX(double radians) {
+        Matrix rotationX = identity(4);
+
+        double cosR = Math.cos(radians);
+        double sinR = Math.sin(radians);
+
+        rotationX.values[1][1] = cosR;
+        rotationX.values[2][2] = cosR;
+        rotationX.values[2][1] = sinR;
+        rotationX.values[1][2] = -sinR;
+
+        return rotationX;
+    }
+
+    public static Matrix rotationY(double radians) {
+        Matrix rotationY = identity(4);
+
+        double cosR = Math.cos(radians);
+        double sinR = Math.sin(radians);
+
+        rotationY.values[0][0] = cosR;
+        rotationY.values[2][2] = cosR;
+        rotationY.values[2][0] = -sinR;
+        rotationY.values[0][2] = sinR;
+
+        return rotationY;
+    }
+
+    public static Matrix rotationZ(double radians) {
+        Matrix rotationZ = identity(4);
+
+        double cosR = Math.cos(radians);
+        double sinR = Math.sin(radians);
+
+        rotationZ.values[0][0] = cosR;
+        rotationZ.values[1][1] = cosR;
+        rotationZ.values[1][0] = sinR;
+        rotationZ.values[0][1] = -sinR;
+
+        return rotationZ;
+    }
+
+    public static Matrix shearing(double xy, double xz, double yx, double yz, double zx, double zy) {
+        Matrix shearing = Matrix.identity(4);
+
+        shearing.values[0][1] = xy;
+        shearing.values[0][2] = xz;
+        shearing.values[1][0] = yx;
+        shearing.values[1][2] = yz;
+        shearing.values[2][0] = zx;
+        shearing.values[2][1] = zy;
+
+        return shearing;
+    }
+
     double get(int row, int column) {
         return values[row][column];
     }
@@ -144,19 +217,19 @@ class Matrix {
 
         double[][] newValues = new double[oldRows - 1][oldCols - 1];
 
-        for (int oldrowI = 0, newrowI = 0; oldrowI < oldRows; oldrowI++, newrowI++) {
-            if(oldrowI == rowToRemove) {
-                newrowI--;
+        for (int oldRowI = 0, newRowI = 0; oldRowI < oldRows; oldRowI++, newRowI++) {
+            if(oldRowI == rowToRemove) {
+                newRowI--;
                 continue;
             }
 
-            for (int oldcolI = 0, newcolI = 0; oldcolI < oldCols; oldcolI++, newcolI++) {
-                if(oldcolI == columnToRemove) {
-                    newcolI--;
+            for (int oldColI = 0, newColI = 0; oldColI < oldCols; oldColI++, newColI++) {
+                if(oldColI == columnToRemove) {
+                    newColI--;
                     continue;
                 }
 
-                newValues[newrowI][newcolI] = values[oldrowI][oldcolI];
+                newValues[newRowI][newColI] = values[oldRowI][oldColI];
             }
         }
 
