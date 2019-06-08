@@ -35,4 +35,16 @@ public class Sphere {
     public void setTransform(Matrix transform) {
         this.transform = transform;
     }
+
+    Tuple normalAt(Tuple point) {
+        Matrix transformInverse = transform.inverse();
+
+        Tuple objectPoint = transformInverse.multiplyBy(point);
+        Tuple objectNormal = objectPoint.subtract(Tuple.point(0, 0, 0));
+
+        Tuple worldNormal = transformInverse.transpose().multiplyBy(objectNormal);
+        worldNormal = Tuple.vector(worldNormal.getX(), worldNormal.getY(), worldNormal.getZ());
+
+        return worldNormal.normalise();
+    }
 }

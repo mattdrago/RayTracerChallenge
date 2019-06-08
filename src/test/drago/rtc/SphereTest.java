@@ -114,4 +114,73 @@ class SphereTest {
         assertEquals(0, xs.length);
     }
 
+    @Test
+    void theNormalOnASphereAtAPointOnTheXAxis() {
+        Sphere s = new Sphere();
+
+        Tuple expectedNormal = Tuple.vector(1, 0, 0);
+        Tuple actualNormal = s.normalAt(Tuple.point(1, 0, 0));
+
+        assertEquals(expectedNormal, actualNormal);
+    }
+
+    @Test
+    void theNormalOnASphereAtAPointOnTheYAxis() {
+        Sphere s = new Sphere();
+
+        Tuple expectedNormal = Tuple.vector(0, 1, 0);
+        Tuple actualNormal = s.normalAt(Tuple.point(0, 1, 0));
+
+        assertEquals(expectedNormal, actualNormal);
+    }
+
+    @Test
+    void theNormalOnASphereAtAPointOnTheZAxis() {
+        Sphere s = new Sphere();
+
+        Tuple expectedNormal = Tuple.vector(0, 0, 1);
+        Tuple actualNormal = s.normalAt(Tuple.point(0, 0, 1));
+
+        assertEquals(expectedNormal, actualNormal);
+    }
+
+    @Test
+    void theNormalOnASphereAtANonAxialPoint() {
+        Sphere s = new Sphere();
+
+        Tuple expectedNormal = Tuple.vector(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3);
+        Tuple actualNormal = s.normalAt(Tuple.point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3));
+
+        assertEquals(expectedNormal, actualNormal);
+    }
+
+    @Test
+    void theNormalIsANormalisedVector() {
+        Sphere s = new Sphere();
+        Tuple normal = s.normalAt(Tuple.point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3));
+
+        assertEquals(normal, normal.normalise());
+    }
+
+    @Test
+    void computingTheNormalOnATranslatedSphere() {
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(0, 1, 0));
+
+        Tuple expectedNormal = Tuple.vector(0, 0.70711, -0.70711);
+        Tuple actualNormal = s.normalAt(Tuple.point(0,1.70711, -0.70711));
+
+        assertEquals(expectedNormal, actualNormal);
+    }
+
+    @Test
+    void computingTheNormailOnATransformedSphere() {
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.scaling(1, 0.5, 1).multiplyBy(Matrix.rotationZ(Math.PI / 5)));
+
+        Tuple expectedNormal = Tuple.vector(0, 0.97014, -0.24254);
+        Tuple actualNormal =  s.normalAt(Tuple.point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2));
+
+        assertEquals(expectedNormal, actualNormal);
+    }
 }
