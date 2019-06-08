@@ -11,11 +11,11 @@ class SphereTest {
         Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
         Sphere s = new Sphere();
 
-        double[] ts = s.intersects(r);
+        Intersection[] ts = s.intersects(r);
 
         assertEquals(2, ts.length);
-        assertEquals(4.0, ts[0]);
-        assertEquals(6.0, ts[1]);
+        assertEquals(4.0, ts[0].getT());
+        assertEquals(6.0, ts[1].getT());
     }
 
     @Test
@@ -23,11 +23,11 @@ class SphereTest {
         Ray r = new Ray(Tuple.point(0, 1, -5), Tuple.vector(0, 0, 1));
         Sphere s = new Sphere();
 
-        double[] ts = s.intersects(r);
+        Intersection[] ts = s.intersects(r);
 
         assertEquals(2, ts.length);
-        assertEquals(5.0, ts[0]);
-        assertEquals(5.0, ts[1]);
+        assertEquals(5.0, ts[0].getT());
+        assertEquals(5.0, ts[1].getT());
     }
 
     @Test
@@ -43,11 +43,11 @@ class SphereTest {
         Ray r = new Ray(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
         Sphere s = new Sphere();
 
-        double [] ts = s.intersects(r);
+        Intersection [] ts = s.intersects(r);
 
         assertEquals(2, ts.length);
-        assertEquals(-1.0, ts[0]);
-        assertEquals(1.0, ts[1]);
+        assertEquals(-1.0, ts[0].getT());
+        assertEquals(1.0, ts[1].getT());
     }
 
     @Test
@@ -55,12 +55,22 @@ class SphereTest {
         Ray r = new Ray(Tuple.point(0, 0, 5), Tuple.vector(0, 0, 1));
         Sphere s = new Sphere();
 
-        double[] ts = s.intersects(r);
+        Intersection[] ts = s.intersects(r);
 
         assertEquals(2, ts.length);
-        assertEquals(-6.0, ts[0]);
-        assertEquals(-4.0, ts[1]);
+        assertEquals(-6.0, ts[0].getT());
+        assertEquals(-4.0, ts[1].getT());
     }
 
+    @Test
+    void intersectSetsTheObjectOnTheIntersection() {
+        Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
+        Sphere s = new Sphere();
+
+        Intersection[] xs = s.intersects(r);
+
+        assertEquals(s, xs[0].getObject());
+        assertEquals(s, xs[1].getObject());
+    }
 
 }
