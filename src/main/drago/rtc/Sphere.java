@@ -1,9 +1,9 @@
 package drago.rtc;
 
-class Sphere {
+public class Sphere {
     private Matrix transform = Matrix.identity(4);
 
-    Intersection[] intersects(Ray ray) {
+    public Intersection[] intersects(Ray ray) {
         Ray transformedRay = ray.transform(transform.inverse());
         // Calculate the Discriminant
         Tuple sphereToRay = transformedRay.getOrigin().subtract(Tuple.point(0, 0, 0));
@@ -32,7 +32,7 @@ class Sphere {
         return transform;
     }
 
-    void setTransform(Matrix transform) {
+    public void setTransform(Matrix transform) {
         this.transform = transform;
     }
 }

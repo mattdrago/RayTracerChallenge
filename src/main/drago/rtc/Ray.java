@@ -2,11 +2,11 @@ package drago.rtc;
 
 import java.util.Objects;
 
-class Ray {
+public class Ray {
     private final Tuple origin;
     private final Tuple direction;
 
-    Ray(Tuple origin, Tuple direction) {
+    public Ray(Tuple origin, Tuple direction) {
         this.origin = origin;
         this.direction = direction;
     }

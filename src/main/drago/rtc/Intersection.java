@@ -2,7 +2,7 @@ package drago.rtc;
 
 import java.util.Arrays;
 
-class Intersection implements Comparable<Intersection> {
+public class Intersection implements Comparable<Intersection> {
     private final double t;
     private final Object object;
 
@@ -15,7 +15,7 @@ class Intersection implements Comparable<Intersection> {
         return is;
     }
 
-    static Intersection hit(Intersection[] xs) {
+    public static Intersection hit(Intersection[] xs) {
         Arrays.sort(xs);
 
         Intersection hit = null;
@@ -40,7 +40,6 @@ class Intersection implements Comparable<Intersection> {
 
     @Override
     public int compareTo(Intersection o) {
-        int compare = Double.compare(this.t, o.t);
-        return compare;
+        return Double.compare(this.t, o.t);
     }
 }
