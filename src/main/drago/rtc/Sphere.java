@@ -1,12 +1,15 @@
 package drago.rtc;
 
 class Sphere {
-    Intersection[] intersects(Ray r) {
-        // Calculate the Discriminant
-        Tuple sphereToRay = r.getOrigin().subtract(Tuple.point(0, 0, 0));
+    private Matrix transform = Matrix.identity(4);
 
-        double a = r.getDirection().dot(r.getDirection());
-        double b = 2.0 * r.getDirection().dot(sphereToRay);
+    Intersection[] intersects(Ray ray) {
+        Ray transformedRay = ray.transform(transform.inverse());
+        // Calculate the Discriminant
+        Tuple sphereToRay = transformedRay.getOrigin().subtract(Tuple.point(0, 0, 0));
+
+        double a = transformedRay.getDirection().dot(transformedRay.getDirection());
+        double b = 2.0 * transformedRay.getDirection().dot(sphereToRay);
         double c = sphereToRay.dot(sphereToRay) - 1.0;
 
         double discriminant = b * b - 4 * a * c;
@@ -25,4 +28,11 @@ class Sphere {
         return ts;
     }
 
+    Matrix getTransform() {
+        return transform;
+    }
+
+    void setTransform(Matrix transform) {
+        this.transform = transform;
+    }
 }

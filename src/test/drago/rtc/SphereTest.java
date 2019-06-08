@@ -73,4 +73,45 @@ class SphereTest {
         assertEquals(s, xs[1].getObject());
     }
 
+    @Test
+    void aSpheresDefaultTransformation() {
+        Sphere s = new Sphere();
+
+        assertEquals(Matrix.identity(4), s.getTransform());
+    }
+
+    @Test
+    void changingASpheresTransformation() {
+        Sphere s = new Sphere();
+        Matrix t = Matrix.translation(2, 3, 4);
+
+        s.setTransform(t);
+
+        assertEquals(t, s.getTransform());
+    }
+
+    @Test
+    void intersectingAScaledSphereWithARay() {
+        Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.scaling(2, 2, 2));
+
+        Intersection[] xs = s.intersects(r);
+
+        assertEquals(2, xs.length);
+        assertEquals(3.0, xs[0].getT());
+        assertEquals(7.0, xs[1].getT());
+    }
+
+    @Test
+    void intersectingATranslatedSPhereWithARay() {
+        Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(5, 0, 0));
+
+        Intersection[] xs = s.intersects(r);
+
+        assertEquals(0, xs.length);
+    }
+
 }

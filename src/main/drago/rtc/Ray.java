@@ -1,5 +1,7 @@
 package drago.rtc;
 
+import java.util.Objects;
+
 class Ray {
     private final Tuple origin;
     private final Tuple direction;
@@ -9,15 +11,42 @@ class Ray {
         this.direction = direction;
     }
 
-    public Tuple getOrigin() {
+    Tuple getOrigin() {
         return origin;
     }
 
-    public Tuple getDirection() {
+    Tuple getDirection() {
         return direction;
     }
 
-    public Tuple position(double t) {
+    Tuple position(double t) {
         return origin.add(direction.scale(t));
+    }
+
+    Ray transform(Matrix transform) {
+
+        return new Ray(transform.multiplyBy(origin), transform.multiplyBy(direction));
+    }
+
+    @Override
+    public String toString() {
+        return "Ray{" +
+                "origin=" + origin +
+                ", direction=" + direction +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ray ray = (Ray) o;
+        return Objects.equals(origin, ray.origin) &&
+                Objects.equals(direction, ray.direction);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(origin, direction);
     }
 }
