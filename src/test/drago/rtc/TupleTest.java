@@ -233,4 +233,26 @@ class TupleTest {
         assertEquals(Tuple.vector(1, -2, 1), v2.cross(v1));
     }
 
+    @Test
+    void reflectingAVectorApproachingAt45Degrees() {
+        Tuple v = Tuple.vector(1, -1, 0);
+        Tuple normal = Tuple.vector(0, 1, 0);
+
+        Tuple expectedReflection = Tuple.vector(1, 1, 0);
+        Tuple actualReflection = v.reflect(normal);
+
+        assertEquals(expectedReflection, actualReflection);
+    }
+
+    @Test
+    void reflectingAVectorOffASlantedSurface() {
+        Tuple v = Tuple.vector(0, -1, 0);
+        Tuple normal = Tuple.vector(Math.sqrt(2) / 2, Math.sqrt(2) / 2, 0);
+
+        Tuple expectedReflection = Tuple.vector(1, 0, 0);
+        Tuple actualReflection = v.reflect(normal);
+
+        assertEquals(expectedReflection, actualReflection);
+    }
+
 }

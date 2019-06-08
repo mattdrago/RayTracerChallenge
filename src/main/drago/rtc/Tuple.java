@@ -40,16 +40,16 @@ public class Tuple {
         return z;
     }
 
-    public double getW() {
+    double getW() {
         return w;
     }
 
 
-    public boolean isPoint() {
+    boolean isPoint() {
         return w == POINT;
     }
 
-    public boolean isVector() {
+    boolean isVector() {
         return w == VECTOR;
     }
 
@@ -91,7 +91,7 @@ public class Tuple {
         return new Tuple(this.x - operand.x, this.y - operand.y, this.z - operand.z, this.w - operand.w);
     }
 
-    public Tuple negate() {
+    Tuple negate() {
         return new Tuple(-this.x, -this.y, -this.z, -this.w);
     }
 
@@ -99,11 +99,11 @@ public class Tuple {
         return new Tuple(this.x * operand, this.y * operand, this.z * operand, this.w * operand );
     }
 
-    public Tuple divide(double operand) {
+    Tuple divide(double operand) {
         return new Tuple(this.x / operand, this.y /operand, this.z / operand, this.w / operand );
     }
 
-    public double magnitude() {
+    double magnitude() {
         return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
     }
 
@@ -111,13 +111,17 @@ public class Tuple {
         return this.divide(this.magnitude());
     }
 
-    public double dot(Tuple operand) {
+    double dot(Tuple operand) {
         return this.x * operand.x + this.y * operand.y + this.z * operand.z + this.w * operand.w;
     }
 
-    public Tuple cross(Tuple operand) {
+    Tuple cross(Tuple operand) {
         return vector(this.y * operand.z - this.z * operand.y,
                 this.z * operand.x - this.x * operand.z,
                 this.x * operand.y - this.y * operand.x);
+    }
+
+    Tuple reflect(Tuple normal) {
+        return this.subtract(normal.scale(2 * this.dot(normal)));
     }
 }
