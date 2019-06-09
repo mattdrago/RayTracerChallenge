@@ -18,8 +18,16 @@ public class Material {
         return color;
     }
 
+    public void setDiffuse(double diffuse) {
+        this.diffuse = diffuse;
+    }
+
     double getDiffuse() {
         return diffuse;
+    }
+
+    public void setSpecular(double specular) {
+        this.specular = specular;
     }
 
     double getSpecular() {

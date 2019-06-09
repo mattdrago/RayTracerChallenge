@@ -1,5 +1,7 @@
 package drago.rtc;
 
+import java.util.Objects;
+
 public class Light {
     private final Tuple position;
     private final Color intensity;
@@ -15,11 +17,33 @@ public class Light {
         return new Light(position, intensity);
     }
 
-    public Tuple getPosition() {
+    Tuple getPosition() {
         return position;
     }
 
-    public Color getIntensity() {
+    Color getIntensity() {
         return intensity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Light light = (Light) o;
+        return Objects.equals(position, light.position) &&
+                Objects.equals(intensity, light.intensity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, intensity);
+    }
+
+    @Override
+    public String toString() {
+        return "Light{" +
+                "position=" + position +
+                ", intensity=" + intensity +
+                '}';
     }
 }
