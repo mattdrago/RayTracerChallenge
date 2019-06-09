@@ -104,7 +104,7 @@ class SphereTest {
     }
 
     @Test
-    void intersectingATranslatedSPhereWithARay() {
+    void intersectingATranslatedSphereWithARay() {
         Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
         Sphere s = new Sphere();
         s.setTransform(Matrix.translation(5, 0, 0));
@@ -174,7 +174,7 @@ class SphereTest {
     }
 
     @Test
-    void computingTheNormailOnATransformedSphere() {
+    void computingTheNormalOnATransformedSphere() {
         Sphere s = new Sphere();
         s.setTransform(Matrix.scaling(1, 0.5, 1).multiplyBy(Matrix.rotationZ(Math.PI / 5)));
 
@@ -182,5 +182,26 @@ class SphereTest {
         Tuple actualNormal =  s.normalAt(Tuple.point(0, Math.sqrt(2) / 2, -Math.sqrt(2) / 2));
 
         assertEquals(expectedNormal, actualNormal);
+    }
+
+    @Test
+    void aSphereHasADefaultMaterial() {
+        Sphere s = new Sphere();
+
+        Material m = new Material();
+
+        assertEquals(m, s.getMaterial());
+    }
+
+    @Test
+    void aSphereMayBeAssignedAMaterial() {
+        Sphere s = new Sphere();
+
+        Material m = new Material();
+        m.setAmbient(1.0);
+
+        s.setMaterial(m);
+
+        assertEquals(m, s.getMaterial());
     }
 }

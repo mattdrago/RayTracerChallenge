@@ -2,6 +2,7 @@ package drago.rtc;
 
 public class Sphere {
     private Matrix transform = Matrix.identity(4);
+    private Material material = new Material();
 
     public Intersection[] intersects(Ray ray) {
         Ray transformedRay = ray.transform(transform.inverse());
@@ -46,5 +47,13 @@ public class Sphere {
         worldNormal = Tuple.vector(worldNormal.getX(), worldNormal.getY(), worldNormal.getZ());
 
         return worldNormal.normalise();
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 }

@@ -2,6 +2,8 @@ package drago.rtc;
 
 public class Color extends Tuple {
 
+    public static final Color BLACK = new Color(0, 0, 0);
+
     public Color(double red, double green, double blue) {
         super(red, green, blue, 0.0);
     }
