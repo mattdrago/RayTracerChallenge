@@ -15,11 +15,11 @@ public class Ray {
         return origin;
     }
 
-    Tuple getDirection() {
+    public Tuple getDirection() {
         return direction;
     }
 
-    Tuple position(double t) {
+    public Tuple position(double t) {
         return origin.add(direction.scale(t));
     }
 

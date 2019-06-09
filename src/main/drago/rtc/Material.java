@@ -2,13 +2,17 @@ package drago.rtc;
 
 import java.util.Objects;
 
-class Material {
+public class Material {
 
     private Color color = new Color(1, 1, 1);
     private double ambient = 0.1;
     private double diffuse = 0.9;
     private double specular = 0.9;
     private double shininess = 200.0;
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     public Color getColor() {
         return color;

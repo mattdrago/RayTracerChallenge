@@ -37,7 +37,7 @@ public class Sphere {
         this.transform = transform;
     }
 
-    Tuple normalAt(Tuple point) {
+    public Tuple normalAt(Tuple point) {
         Matrix transformInverse = transform.inverse();
 
         Tuple objectPoint = transformInverse.multiplyBy(point);

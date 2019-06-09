@@ -3,38 +3,40 @@ package drago.rtc.pit;
 import drago.rtc.*;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class RaySphere {
 
-    private final Tuple rayOrigin;
-    private Canvas c;
-    private Color color = new Color(1.0, 0.0, 0.0);
+    private final Tuple rayOrigin = Tuple.point(0, 0, -5);
+    private Canvas c = new Canvas(500, 500);
     private Sphere s;
-    private double wallZ;
+    private Light light = Light.pointLight(Tuple.point(-10, 10, -10), new Color(1, 1, 1));
 
-    private RaySphere(int size) {
-        c = new Canvas(size, size);
+    private double wallSize = 7.0;
+    private double wallZ = 10;
 
-        wallZ = size;
-        rayOrigin = Tuple.point(0, 0, -wallZ);
+    private double pixelSize = wallSize / c.getWidth();
+
+    private RaySphere() {
     }
 
     public static void main(String[] argv) {
-        RaySphere rs = new RaySphere(100);
+        RaySphere rs = new RaySphere();
 
-        rs.addSphere(20);
+        rs.addSphere();
 
         rs.paint();
         rs.save();
     }
 
-    private void addSphere(double size) {
+    private void addSphere() {
         s = new Sphere();
-        s.setTransform(Matrix.scaling(size, size, size));
+
+        Material m = new Material();
+        m.setColor(new Color(1, 0.2, 1));
+        s.setMaterial(m);
     }
 
     private void save() {
@@ -48,26 +50,31 @@ public class RaySphere {
     }
 
     private void paint() {
-        for (int x = 0; x < c.getWidth(); x++) {
-            for (int y = 0; y < c.getHeight(); y++) {
+        double half = wallSize / 2.0;
 
-                Tuple position = Tuple.point(canvasXToWorld(x), canvasYToWorld(y), wallZ);
+        for (int y = 0; y < c.getHeight(); y++) {
+            double worldY = half - pixelSize * y;
+
+            for (int x = 0; x < c.getWidth(); x++) {
+                double worldX = - half + pixelSize * x;
+
+                Tuple position = Tuple.point(worldX, worldY, wallZ);
 
                 Ray r = new Ray(rayOrigin, position.subtract(rayOrigin).normalise());
                 Intersection i = Intersection.hit(s.intersects(r));
 
                 if(i != null) {
+                    Tuple point = r.position(i.getT());
+                    Tuple normalAt = i.getObject().normalAt(point);
+
+                    Tuple eyeV = r.getDirection().scale(-1);
+
+
+                    Color color = i.getObject().getMaterial().lighting(light, point, eyeV, normalAt);
+
                     c.writePixel(x, y, color);
                 }
             }
         }
-    }
-
-    private double canvasYToWorld(int y) {
-        return (c.getHeight() / 2.0) - y;
-    }
-
-    private double canvasXToWorld(int x) {
-        return x - c.getWidth()/2.0;
     }
 }

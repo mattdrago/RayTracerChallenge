@@ -1,6 +1,6 @@
 package drago.rtc;
 
-class Light {
+public class Light {
     private final Tuple position;
     private final Color intensity;
 
@@ -11,7 +11,7 @@ class Light {
     }
 
 
-    static Light pointLight(Tuple position, Color intensity) {
+    public static Light pointLight(Tuple position, Color intensity) {
         return new Light(position, intensity);
     }
 
