@@ -6,7 +6,7 @@ import java.util.List;
 
 class World {
     private Light lightSource = null;
-    private List<Sphere> objects = new ArrayList<Sphere>();
+    private final List<Sphere> objects = new ArrayList<>();
 
     static World defaultWorld() {
         World w = new World();
@@ -34,6 +34,10 @@ class World {
         return this.objects;
     }
 
+    void setLightSource(Light lightSource) {
+        this.lightSource = lightSource;
+    }
+
     Light getLightSource() {
         return this.lightSource;
     }
@@ -48,5 +52,24 @@ class World {
         Intersection[] xs = xsList.toArray(new Intersection[0]);
         Arrays.sort(xs);
         return xs;
+    }
+
+    Color shadeHit(Computations comps) {
+        Material m = comps.getObject().getMaterial();
+
+        return m.lighting(this.lightSource, comps.getPoint(), comps.getEyeV(), comps.getNormalV());
+    }
+
+    Color colorAt(Ray ray) {
+
+        Color color = Color.BLACK;
+
+        Intersection hit = Intersection.hit(intersect(ray));
+
+        if(hit != null) {
+            color = shadeHit(hit.prepareComputations(ray));
+        }
+
+        return color;
     }
 }
