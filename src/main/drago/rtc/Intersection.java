@@ -42,4 +42,13 @@ public class Intersection implements Comparable<Intersection> {
     public int compareTo(Intersection o) {
         return Double.compare(this.t, o.t);
     }
+
+    Computations prepareComputations(Ray ray) {
+
+        Tuple position = ray.position(this.t);
+        Tuple eyeV = ray.getDirection().scale(-1);
+        Tuple normalV = this.object.normalAt(position);
+
+        return new Computations(this.t, this.object, position, eyeV, normalV);
+    }
 }

@@ -71,4 +71,44 @@ class IntersectionTest {
 
         assertEquals(i4, Intersection.hit(xs));
     }
+
+    @Test
+    void precomputingTheStateOfAnIntersection() {
+        Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
+        Sphere s = new Sphere();
+        Intersection i = new Intersection(4, s);
+
+        Computations comps = i.prepareComputations(r);
+
+        assertEquals(i.getT(), comps.getT());
+        assertEquals(i.getObject(), comps.getObject());
+        assertEquals(Tuple.point(0, 0, -1), comps.getPoint());
+        assertEquals(Tuple.vector(0, 0, -1), comps.getEyeV());
+        assertEquals(Tuple.vector(0, 0, -1), comps.getNormalV());
+    }
+
+    @Test
+    void theHitWhenAnIntersectionOccursOnTheOutside() {
+        Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
+        Sphere s = new Sphere();
+        Intersection i = new Intersection(4, s);
+
+        Computations comps = i.prepareComputations(r);
+
+        assertFalse(comps.isInside());
+    }
+
+    @Test
+    void theHitWhenAnIntersectionOccursOnTheInside() {
+        Ray r = new Ray(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
+        Sphere s = new Sphere();
+        Intersection i = new Intersection(1, s);
+
+        Computations comps = i.prepareComputations(r);
+
+        assertEquals(Tuple.point(0, 0, 1), comps.getPoint());
+        assertEquals(Tuple.vector(0, 0, -1), comps.getEyeV());
+        assertTrue(comps.isInside());
+        assertEquals(Tuple.vector(0, 0, -1), comps.getNormalV());
+    }
 }
