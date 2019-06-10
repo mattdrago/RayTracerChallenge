@@ -220,4 +220,55 @@ class MatrixTransformationTest {
 
         assertEquals(Tuple.point(15, 0, 7), result);
     }
+    
+    @Test
+    void theTransformationMatrixForTheDefaultOrientation() {
+        Tuple from = Tuple.point(0, 0, 0);
+        Tuple to = Tuple.point(0, 0, -1);
+        Tuple up = Tuple.vector(0, 1, 0);
+        
+        Matrix result = Matrix.viewTransform(from, to, up);
+        
+        assertEquals(Matrix.identity(4), result);
+    }
+    
+    @Test
+    void aViewTransformationMatrixLookingInPositiveZDirection() {
+        Tuple from = Tuple.point(0, 0, 0);
+        Tuple to = Tuple.point(0, 0, 1);
+        Tuple up = Tuple.vector(0, 1, 0);
+        
+        Matrix result = Matrix.viewTransform(from, to , up);
+        
+        assertEquals(Matrix.scaling(-1, 1, -1), result);
+    }
+    
+    @Test
+    void theViewTransformationMovesTheWorld() {
+        Tuple from = Tuple.point(0, 0, 8);
+        Tuple to = Tuple.point(0, 0, 0);
+        Tuple up = Tuple.vector(0, 1, 0);
+        
+        Matrix result = Matrix.viewTransform(from, to , up);
+        
+        assertEquals(Matrix.translation(0, 0, -8), result);
+    }
+    
+    @Test
+    void anArbitraryViewTransformation() {
+        Tuple from = Tuple.point(1, 3, 2);
+        Tuple to = Tuple.point(4, -2, 8);
+        Tuple up = Tuple.vector(1, 1, 0);
+        
+        Matrix expected = new Matrix(new double[][] {
+                {-0.50709, 0.50709, 0.67612, -2.36643},
+                {0.76772, 0.60609, 0.12122, -2.82843},
+                {-0.35857, 0.59761, -0.71714, 0.00000},
+                {0.00000, 0.00000, 0.00000, 1.00000}
+        });
+
+        Matrix actual = Matrix.viewTransform(from, to , up);
+
+        assertEquals(expected, actual);
+    }
 }

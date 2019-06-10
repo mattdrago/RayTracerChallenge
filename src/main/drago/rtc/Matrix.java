@@ -18,7 +18,7 @@ public class Matrix {
 
     }
 
-    public static Matrix translation(double x, double y, double z) {
+    static Matrix translation(double x, double y, double z) {
         Matrix translation = Matrix.identity(4);
         translation.values[0][3] = x;
         translation.values[1][3] = y;
@@ -27,7 +27,7 @@ public class Matrix {
         return translation;
     }
 
-    public static Matrix scaling(double x, double y, double z) {
+    static Matrix scaling(double x, double y, double z) {
         Matrix scaling = Matrix.identity(4);
         scaling.values[0][0] = x;
         scaling.values[1][1] = y;
@@ -36,7 +36,7 @@ public class Matrix {
         return scaling;
     }
 
-    public static Matrix rotationX(double radians) {
+    static Matrix rotationX(double radians) {
         Matrix rotationX = identity(4);
 
         double cosR = Math.cos(radians);
@@ -50,7 +50,7 @@ public class Matrix {
         return rotationX;
     }
 
-    public static Matrix rotationY(double radians) {
+    static Matrix rotationY(double radians) {
         Matrix rotationY = identity(4);
 
         double cosR = Math.cos(radians);
@@ -78,7 +78,7 @@ public class Matrix {
         return rotationZ;
     }
 
-    public static Matrix shearing(double xy, double xz, double yx, double yz, double zx, double zy) {
+    static Matrix shearing(double xy, double xz, double yx, double yz, double zx, double zy) {
         Matrix shearing = Matrix.identity(4);
 
         shearing.values[0][1] = xy;
@@ -89,6 +89,21 @@ public class Matrix {
         shearing.values[2][1] = zy;
 
         return shearing;
+    }
+
+    static Matrix viewTransform(Tuple from, Tuple to, Tuple up) {
+        Tuple forward = to.subtract(from).normalise();
+        Tuple left = forward.cross(up.normalise());
+        Tuple trueUp = left.cross((forward));
+
+        Matrix orientation = new Matrix(new double[][] {
+                {left.getX(), left.getY(), left.getZ(), 0},
+                {trueUp.getX(), trueUp.getY(), trueUp.getZ(), 0},
+                {-forward.getX(), -forward.getY(), -forward.getZ(), 0},
+                {0, 0, 0, 1}
+        });
+
+        return orientation.multiplyBy(Matrix.translation(-from.getX(), -from.getY(), -from.getZ()));
     }
 
     double get(int row, int column) {
