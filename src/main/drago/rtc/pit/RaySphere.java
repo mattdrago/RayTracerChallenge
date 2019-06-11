@@ -9,15 +9,8 @@ import java.nio.file.Paths;
 
 public class RaySphere {
 
-    private final Tuple rayOrigin = Tuple.point(0, 0, -5);
-    private Canvas c = new Canvas(500, 500);
-    private Sphere s;
-    private Light light = Light.pointLight(Tuple.point(-10, 10, -10), new Color(1, 1, 1));
-
-    private double wallSize = 7.0;
-    private double wallZ = 10;
-
-    private double pixelSize = wallSize / c.getWidth();
+    private World world = new World();
+    private Camera camera;
 
     private RaySphere() {
     }
@@ -25,56 +18,120 @@ public class RaySphere {
     public static void main(String[] argv) {
         RaySphere rs = new RaySphere();
 
-        rs.addSphere();
+        rs.buildWorld();
+        rs.addCamera();
+        rs.render("gallery/chapter7.ppm");
 
-        rs.paint();
-        rs.save();
     }
 
-    private void addSphere() {
-        s = new Sphere();
-
-        Material m = new Material();
-        m.setColor(new Color(1, 0.2, 1));
-        s.setMaterial(m);
+    private void render(String imageFileName) {
+        Canvas image = camera.render(world);
+        save(image, imageFileName);
     }
 
-    private void save() {
+    private void addCamera() {
+        camera = new Camera(1000, 500, Math.PI / 3);
+        camera.setTransform(Matrix.viewTransform(
+                Tuple.point(0, 1.5, -5),
+                Tuple.point(0, 1, 0),
+                Tuple.vector(0, 1, 0))
+        );
+    }
+
+    private void buildWorld() {
+        world.getObjects().add(floor());
+        world.getObjects().add(leftWall());
+        world.getObjects().add(rightWall());
+        world.getObjects().add(largeMiddle());
+        world.getObjects().add(smallLeft());
+        world.getObjects().add(smallRight());
+
+        world.setLightSource(Light.pointLight(Tuple.point(-10, 10, -10), Color.WHITE));
+    }
+
+    private Sphere floor() {
+        Sphere floor = new Sphere();
+        floor.setTransform(Matrix.scaling(10, 0.01, 10));
+        floor.getMaterial().setColor(new Color(1, 0.9, 0.9));
+        floor.getMaterial().setSpecular(0);
+
+        return floor;
+    }
+
+    private Sphere leftWall() {
+        Sphere leftWall = new Sphere();
+        leftWall.setTransform(
+                Matrix.translation(0, 0, 5)
+                        .multiplyBy(Matrix.rotationY(- Math.PI / 4))
+                        .multiplyBy(Matrix.rotationX(Math.PI / 2))
+                        .multiplyBy(Matrix.scaling(10, 0.001, 10))
+        );
+        leftWall.getMaterial().setColor(new Color(1, 0.9, 0.9));
+        leftWall.getMaterial().setSpecular(0);
+
+        return leftWall;
+    }
+
+    private Sphere rightWall() {
+        Sphere rightWall = new Sphere();
+        rightWall.setTransform(
+                Matrix.translation(0, 0, 5)
+                        .multiplyBy(Matrix.rotationY(Math.PI / 4))
+                        .multiplyBy(Matrix.rotationX(Math.PI / 2))
+                        .multiplyBy(Matrix.scaling(10, 0.001, 10))
+        );
+        rightWall.getMaterial().setColor(new Color(1, 0.9, 0.9));
+        rightWall.getMaterial().setSpecular(0);
+
+        return rightWall;
+
+    }
+
+    private Sphere largeMiddle() {
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(-0.5, 1, 0.5));
+        s.getMaterial().setColor(new Color(0.1, 1, 0.5));
+        s.getMaterial().setDiffuse(0.7);
+        s.getMaterial().setSpecular(0.3);
+
+        return s;
+    }
+
+    private Sphere smallRight() {
+        Sphere s = new Sphere();
+        s.setTransform(
+                Matrix.translation(1.5, 0.5, -0.5)
+                .multiplyBy(Matrix.scaling(0.5, 0.5, 0.5))
+        );
+
+        s.getMaterial().setColor(new Color(0.5, 1, 0.1));
+        s.getMaterial().setDiffuse(0.7);
+        s.getMaterial().setSpecular(0.3);
+
+        return s;
+    }
+
+    private Sphere smallLeft() {
+        Sphere s = new Sphere();
+        s.setTransform(
+                Matrix.translation(-1.5, 0.33, -0.75)
+                .multiplyBy(Matrix.scaling(0.33, 0.33, 0.33))
+        );
+
+        s.getMaterial().setColor(new Color(1, 0.8, 0.1));
+        s.getMaterial().setDiffuse(0.7);
+        s.getMaterial().setSpecular(0.3);
+
+        return s;
+    }
+
+    private void save(Canvas image, String imageFileName) {
         PPMWriter ppmWriter = new PPMWriter();
 
-        try(BufferedWriter bw = Files.newBufferedWriter(Paths.get("raySphere.ppm"))) {
-            bw.write(ppmWriter.write(c));
+        try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(imageFileName))) {
+            bw.write(ppmWriter.write(image));
         } catch (IOException e) {
             System.out.println("Unable to save RaySphere: " + e.getMessage());
-        }
-    }
-
-    private void paint() {
-        double half = wallSize / 2.0;
-
-        for (int y = 0; y < c.getHeight(); y++) {
-            double worldY = half - pixelSize * y;
-
-            for (int x = 0; x < c.getWidth(); x++) {
-                double worldX = - half + pixelSize * x;
-
-                Tuple position = Tuple.point(worldX, worldY, wallZ);
-
-                Ray r = new Ray(rayOrigin, position.subtract(rayOrigin).normalise());
-                Intersection i = Intersection.hit(s.intersects(r));
-
-                if(i != null) {
-                    Tuple point = r.position(i.getT());
-                    Tuple normalAt = i.getObject().normalAt(point);
-
-                    Tuple eyeV = r.getDirection().scale(-1);
-
-
-                    Color color = i.getObject().getMaterial().lighting(light, point, eyeV, normalAt);
-
-                    c.writePixel(x, y, color);
-                }
-            }
         }
     }
 }

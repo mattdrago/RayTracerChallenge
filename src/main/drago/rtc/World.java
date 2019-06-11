@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class World {
+public class World {
     private Light lightSource = null;
     private final List<Sphere> objects = new ArrayList<>();
 
@@ -30,11 +30,11 @@ class World {
         return w;
     }
 
-    List<Sphere> getObjects() {
+    public List<Sphere> getObjects() {
         return this.objects;
     }
 
-    void setLightSource(Light lightSource) {
+    public void setLightSource(Light lightSource) {
         this.lightSource = lightSource;
     }
 

@@ -18,7 +18,7 @@ public class Matrix {
 
     }
 
-    static Matrix translation(double x, double y, double z) {
+    public static Matrix translation(double x, double y, double z) {
         Matrix translation = Matrix.identity(4);
         translation.values[0][3] = x;
         translation.values[1][3] = y;
@@ -27,7 +27,7 @@ public class Matrix {
         return translation;
     }
 
-    static Matrix scaling(double x, double y, double z) {
+    public static Matrix scaling(double x, double y, double z) {
         Matrix scaling = Matrix.identity(4);
         scaling.values[0][0] = x;
         scaling.values[1][1] = y;
@@ -36,7 +36,7 @@ public class Matrix {
         return scaling;
     }
 
-    static Matrix rotationX(double radians) {
+    public static Matrix rotationX(double radians) {
         Matrix rotationX = identity(4);
 
         double cosR = Math.cos(radians);
@@ -50,7 +50,7 @@ public class Matrix {
         return rotationX;
     }
 
-    static Matrix rotationY(double radians) {
+    public static Matrix rotationY(double radians) {
         Matrix rotationY = identity(4);
 
         double cosR = Math.cos(radians);
@@ -91,7 +91,7 @@ public class Matrix {
         return shearing;
     }
 
-    static Matrix viewTransform(Tuple from, Tuple to, Tuple up) {
+    public static Matrix viewTransform(Tuple from, Tuple to, Tuple up) {
         Tuple forward = to.subtract(from).normalise();
         Tuple left = forward.cross(up.normalise());
         Tuple trueUp = left.cross((forward));
@@ -144,7 +144,7 @@ public class Matrix {
         return Arrays.deepHashCode(values);
     }
 
-    Matrix multiplyBy(Matrix operand) {
+    public Matrix multiplyBy(Matrix operand) {
         int itemCount = values.length;
         int rowCount = values.length;
         int colCount = operand.values[0].length;

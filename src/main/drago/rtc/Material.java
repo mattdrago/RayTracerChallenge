@@ -18,7 +18,7 @@ public class Material {
         return color;
     }
 
-    void setDiffuse(double diffuse) {
+    public void setDiffuse(double diffuse) {
         this.diffuse = diffuse;
     }
 
@@ -26,7 +26,7 @@ public class Material {
         return diffuse;
     }
 
-    void setSpecular(double specular) {
+    public void setSpecular(double specular) {
         this.specular = specular;
     }
 

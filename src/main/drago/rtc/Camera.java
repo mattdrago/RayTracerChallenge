@@ -1,6 +1,6 @@
 package drago.rtc;
 
-class Camera {
+public class Camera {
     private int hSize;
     private int vSize;
     private double fieldOfView;
@@ -10,7 +10,7 @@ class Camera {
     private double halfHeight;
     private double pixelSize;
 
-    Camera(int hSize, int vSize, double fieldOfView) {
+    public Camera(int hSize, int vSize, double fieldOfView) {
         this.hSize = hSize;
         this.vSize = vSize;
         this.fieldOfView = fieldOfView;
@@ -51,7 +51,7 @@ class Camera {
         return transform;
     }
 
-    void setTransform(Matrix transform) {
+    public void setTransform(Matrix transform) {
         this.transform = transform;
     }
 
@@ -93,7 +93,7 @@ class Camera {
         return new Ray(origin, direction);
     }
 
-    Canvas render(World world) {
+    public Canvas render(World world) {
         Canvas image = new Canvas(hSize, vSize);
 
         for (int y = 0; y < vSize; y++) {
