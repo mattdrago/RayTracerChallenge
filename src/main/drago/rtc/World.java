@@ -57,7 +57,9 @@ public class World {
     Color shadeHit(Computations comps) {
         Material m = comps.getObject().getMaterial();
 
-        return m.lighting(this.lightSource, comps.getPoint(), comps.getEyeV(), comps.getNormalV());
+        boolean isShadow = isShadowed(comps.getOverPoint());
+
+        return m.lighting(this.lightSource, comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
     }
 
     Color colorAt(Ray ray) {
@@ -71,5 +73,18 @@ public class World {
         }
 
         return color;
+    }
+
+    boolean isShadowed(Tuple point) {
+        Tuple toLight = lightSource.getPosition().subtract(point);
+        double distance = toLight.magnitude();
+        Tuple direction = toLight.normalise();
+
+        Ray ray = new Ray(point, direction);
+        Intersection[] xs = intersect(ray);
+
+        Intersection hit = Intersection.hit(xs);
+
+        return (hit != null && hit.getT() < distance);
     }
 }

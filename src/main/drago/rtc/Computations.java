@@ -1,12 +1,15 @@
 package drago.rtc;
 
 class Computations {
+    static final double EPSILON = 0.000001;
+
     private final double t;
     private final Sphere object;
     private final Tuple point;
     private final Tuple eyeV;
     private final Tuple normalV;
     private final boolean isInside;
+    private final Tuple overPoint;
 
     Computations(double t, Sphere object, Tuple point, Tuple eyeV, Tuple normalV) {
         this.t = t;
@@ -21,6 +24,9 @@ class Computations {
             isInside = false;
             this.normalV = normalV;
         }
+
+        overPoint = point.add(this.normalV.scale(Computations.EPSILON));
+
     }
 
     double getT() {
@@ -45,5 +51,9 @@ class Computations {
 
     boolean isInside() {
         return isInside;
+    }
+
+    Tuple getOverPoint() {
+        return overPoint;
     }
 }

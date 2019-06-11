@@ -70,15 +70,15 @@ public class Material {
                 '}';
     }
 
-    public void setAmbient(double ambient) {
+    void setAmbient(double ambient) {
         this.ambient = ambient;
     }
 
-    public double getAmbient() {
+    double getAmbient() {
         return ambient;
     }
 
-    public Color lighting(Light light, Tuple point, Tuple eyeV, Tuple normalV) {
+    Color lighting(Light light, Tuple point, Tuple eyeV, Tuple normalV, boolean inShadow) {
 
         Color ambientColor;
         Color diffuseColor = Color.BLACK;
@@ -86,20 +86,22 @@ public class Material {
 
         Color effectiveColor = color.hadamardProduct(light.getIntensity());
 
-        Tuple lightV = light.getPosition().subtract(point).normalise();
         ambientColor = effectiveColor.scale(this.ambient);
 
-        double lightDotNormal = lightV.dot(normalV);
+        if(!inShadow) {
+            Tuple lightV = light.getPosition().subtract(point).normalise();
+            double lightDotNormal = lightV.dot(normalV);
 
-        if(lightDotNormal >= 0) {
-            diffuseColor = effectiveColor.scale(this.diffuse * lightDotNormal);
+            if (lightDotNormal >= 0) {
+                diffuseColor = effectiveColor.scale(this.diffuse * lightDotNormal);
 
-            Tuple reflectV = lightV.scale(-1).reflect(normalV);
-            double reflectDotEye = reflectV.dot(eyeV);
+                Tuple reflectV = lightV.scale(-1).reflect(normalV);
+                double reflectDotEye = reflectV.dot(eyeV);
 
-            if(reflectDotEye > 0) {
-                double factor = Math.pow(reflectDotEye, this.shininess);
-                specularColor = light.getIntensity().scale(this.specular * factor);
+                if (reflectDotEye > 0) {
+                    double factor = Math.pow(reflectDotEye, this.shininess);
+                    specularColor = light.getIntensity().scale(this.specular * factor);
+                }
             }
         }
 

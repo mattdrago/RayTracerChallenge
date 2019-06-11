@@ -125,4 +125,57 @@ class WorldTest {
 
         assertEquals(inner.getMaterial().getColor(), w.colorAt(r));
     }
+
+    @Test
+    void thereIsNoShadowWhenNothingIsCollinearWithPointAndLight() {
+        World w = World.defaultWorld();
+        Tuple p = Tuple.point(0, 10, 0);
+
+        assertFalse(w.isShadowed(p));
+    }
+
+    @Test
+    void theShadowWhenAnObjectIsBetweenThePOintAndTheLight() {
+        World w = World.defaultWorld();
+        Tuple p = Tuple.point(10, -10, 10);
+
+        assertTrue(w.isShadowed(p));
+    }
+
+    @Test
+    void thereIsNoShadowWhenAnObjectIsBehindTheLight() {
+        World w = World.defaultWorld();
+        Tuple p = Tuple.point(-20, 20, -20);
+
+        assertFalse(w.isShadowed(p));
+    }
+
+    @Test
+    void thereIsNoShadowWhenAnObjectIsBehindThePoint() {
+        World w = World.defaultWorld();
+        Tuple p = Tuple.point(-2, 2, -2);
+
+        assertFalse(w.isShadowed(p));
+    }
+
+    @Test
+    void shadeHitIsGivenAnIntersectionInShadow() {
+        World w = new World();
+        w.setLightSource(Light.pointLight(Tuple.point(0, 0, -10), Color.WHITE));
+
+        Sphere s1 = new Sphere();
+        w.getObjects().add(s1);
+
+        Sphere s2 = new Sphere();
+        s2.setTransform(Matrix.translation(0, 0, 10));
+        w.getObjects().add(s2);
+
+        Ray r = new Ray(Tuple.point(0, 0, 5), Tuple.vector(0, 0, 1));
+        Intersection i = new Intersection(4, s2);
+
+        Computations comps = i.prepareComputations(r);
+        Color c = w.shadeHit(comps);
+
+        assertEquals(new Color(0.1, 0.1, 0.1), c);
+    }
 }

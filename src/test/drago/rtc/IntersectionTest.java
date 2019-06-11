@@ -111,4 +111,17 @@ class IntersectionTest {
         assertTrue(comps.isInside());
         assertEquals(Tuple.vector(0, 0, -1), comps.getNormalV());
     }
+
+    @Test
+    void theHitShouldOffsetThePoint() {
+        Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(0, 0, 1));
+        Intersection i = new Intersection(5, s);
+
+        Computations comps = i.prepareComputations(r);
+
+        assertTrue(comps.getOverPoint().getZ() < -Computations.EPSILON / 2);
+        assertTrue(comps.getPoint().getZ() > comps.getOverPoint().getZ());
+    }
 }

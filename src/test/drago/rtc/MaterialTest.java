@@ -32,7 +32,7 @@ class MaterialTest {
         Light light = Light.pointLight(Tuple.point(0, 0, -10), new Color(1,1, 1));
 
         Color expectedColor = new Color(1.9, 1.9, 1.9);
-        Color actualColor = material.lighting(light, position, eyeV, normalV);
+        Color actualColor = material.lighting(light, position, eyeV, normalV, false);
 
         assertEquals(expectedColor, actualColor);
     }
@@ -44,7 +44,7 @@ class MaterialTest {
         Light light = Light.pointLight(Tuple.point(0, 0, -10), new Color(1,1, 1));
 
         Color expectedColor = new Color(1.0, 1.0, 1.0);
-        Color actualColor = material.lighting(light, position, eyeV, normalV);
+        Color actualColor = material.lighting(light, position, eyeV, normalV, false);
 
         assertEquals(expectedColor, actualColor);
     }
@@ -56,7 +56,7 @@ class MaterialTest {
         Light light = Light.pointLight(Tuple.point(0, 10, -10), new Color(1,1, 1));
 
         Color expectedColor = new Color(0.7364, 0.7364, 0.7364);
-        Color actualColor = material.lighting(light, position, eyeV, normalV);
+        Color actualColor = material.lighting(light, position, eyeV, normalV, false);
 
         assertEquals(expectedColor, actualColor);
     }
@@ -68,7 +68,7 @@ class MaterialTest {
         Light light = Light.pointLight(Tuple.point(0, 10, -10), new Color(1,1, 1));
 
         Color expectedColor = new Color(1.6364, 1.6364, 1.6364);
-        Color actualColor = material.lighting(light, position, eyeV, normalV);
+        Color actualColor = material.lighting(light, position, eyeV, normalV, false);
 
         assertEquals(expectedColor, actualColor);
     }
@@ -80,8 +80,21 @@ class MaterialTest {
         Light light = Light.pointLight(Tuple.point(0, 0, 10), new Color(1, 1, 1));
 
         Color expectedColor = new Color(0.1, 0.1, 0.1);
-        Color actualColor = material.lighting(light, position, eyeV, normalV);
+        Color actualColor = material.lighting(light, position, eyeV, normalV, false);
 
         assertEquals(expectedColor, actualColor);
+    }
+
+    @Test
+    void lightingWithTheSurfaceInShadow() {
+        Tuple eyeV = Tuple.vector(0, 0, -1);
+        Tuple normalV = Tuple.vector(0, 0, -1);
+        Light light = Light.pointLight(Tuple.point(0, 0, -10), Color.WHITE);
+        boolean inShadow = true;
+
+        Color expected = new Color(0.1, 0.1, 0.1);
+        Color actual = material.lighting(light, position, eyeV, normalV, inShadow);
+
+        assertEquals(expected, actual);
     }
 }
