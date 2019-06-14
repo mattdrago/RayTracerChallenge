@@ -30,8 +30,8 @@ class WorldTest {
         assertEquals(l, w.getLightSource());
         assertEquals(2, w.getObjects().size());
 
-        Sphere s1 = w.getObjects().get(0);
-        Sphere s2 = w.getObjects().get(1);
+        Shape s1 = w.getObjects().get(0);
+        Shape s2 = w.getObjects().get(1);
 
         assertTrue((
                     s1.getMaterial().equals(m) &&
@@ -64,7 +64,7 @@ class WorldTest {
     void shadingAnIntersection() {
         World w = World.defaultWorld();
         Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
-        Sphere s = w.getObjects().get(0);
+        Shape s = w.getObjects().get(0);
         Intersection i = new Intersection(4, s);
 
         Computations comps = i.prepareComputations(r);
@@ -81,7 +81,7 @@ class WorldTest {
         World w = World.defaultWorld();
         w.setLightSource(Light.pointLight(Tuple.point(0, 0.25, 0), Color.WHITE));
         Ray r = new Ray(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
-        Sphere s = w.getObjects().get(1);
+        Shape s = w.getObjects().get(1);
         Intersection i = new Intersection(0.5, s);
 
         Computations comps = i.prepareComputations(r);
@@ -116,9 +116,9 @@ class WorldTest {
     @Test
     void theColorWithAnIntersectionBehindTheRay() {
         World w = World.defaultWorld();
-        Sphere outer = w.getObjects().get(0);
+        Shape outer = w.getObjects().get(0);
         outer.getMaterial().setAmbient(1.0);
-        Sphere inner = w.getObjects().get(1);
+        Shape inner = w.getObjects().get(1);
         inner.getMaterial().setAmbient(1);
 
         Ray r = new Ray(Tuple.point(0, 0, 0.75), Tuple.vector(0, 0, -1));

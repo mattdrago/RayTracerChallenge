@@ -6,7 +6,7 @@ import java.util.List;
 
 public class World {
     private Light lightSource = null;
-    private final List<Sphere> objects = new ArrayList<>();
+    private final List<Shape> objects = new ArrayList<>();
 
     static World defaultWorld() {
         World w = new World();
@@ -30,7 +30,7 @@ public class World {
         return w;
     }
 
-    public List<Sphere> getObjects() {
+    public List<Shape> getObjects() {
         return this.objects;
     }
 
@@ -45,7 +45,7 @@ public class World {
     Intersection[] intersect(Ray ray) {
         List<Intersection> xsList = new ArrayList<>();
 
-        for (Sphere s : objects) {
+        for (Shape s : objects) {
             xsList.addAll(Arrays.asList(s.intersects(ray)));
         }
 
