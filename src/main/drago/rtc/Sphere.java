@@ -1,11 +1,8 @@
 package drago.rtc;
 
-public class Sphere {
-    private Matrix transform = Matrix.identity(4);
-    private Material material = new Material();
-
-    public Intersection[] intersects(Ray ray) {
-        Ray transformedRay = ray.transform(transform.inverse());
+public class Sphere extends Shape {
+    @Override
+    Intersection[] localIntersect(Ray transformedRay) {
         // Calculate the Discriminant
         Tuple sphereToRay = transformedRay.getOrigin().subtract(Tuple.point(0, 0, 0));
 
@@ -29,31 +26,8 @@ public class Sphere {
         return ts;
     }
 
-    Matrix getTransform() {
-        return transform;
-    }
-
-    public void setTransform(Matrix transform) {
-        this.transform = transform;
-    }
-
-    public Tuple normalAt(Tuple point) {
-        Matrix transformInverse = transform.inverse();
-
-        Tuple objectPoint = transformInverse.multiplyBy(point);
-        Tuple objectNormal = objectPoint.subtract(Tuple.point(0, 0, 0));
-
-        Tuple worldNormal = transformInverse.transpose().multiplyBy(objectNormal);
-        worldNormal = Tuple.vector(worldNormal.getX(), worldNormal.getY(), worldNormal.getZ());
-
-        return worldNormal.normalise();
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
+    @Override
+    Tuple localNormalAt(Tuple objectPoint) {
+        return objectPoint.subtract(Tuple.point(0, 0, 0));
     }
 }

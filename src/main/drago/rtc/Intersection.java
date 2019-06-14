@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class Intersection implements Comparable<Intersection> {
     private final double t;
-    private final Sphere object;
+    private final Shape object;
 
-    Intersection(double t, Sphere object) {
+    Intersection(double t, Shape object) {
         this.t = t;
         this.object = object;
     }
@@ -15,7 +15,7 @@ public class Intersection implements Comparable<Intersection> {
         return is;
     }
 
-    public static Intersection hit(Intersection[] xs) {
+    static Intersection hit(Intersection[] xs) {
         Arrays.sort(xs);
 
         Intersection hit = null;
@@ -30,11 +30,11 @@ public class Intersection implements Comparable<Intersection> {
         return hit;
     }
 
-    public double getT() {
+    double getT() {
         return t;
     }
 
-    public Sphere getObject() {
+    Shape getObject() {
         return object;
     }
 
