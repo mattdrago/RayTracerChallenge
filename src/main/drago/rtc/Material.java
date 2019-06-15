@@ -70,7 +70,7 @@ public class Material {
                 '}';
     }
 
-    void setAmbient(double ambient) {
+    public void setAmbient(double ambient) {
         this.ambient = ambient;
     }
 

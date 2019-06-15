@@ -20,8 +20,11 @@ public class RaySphere {
 
         rs.buildWorld();
         rs.addCamera();
-        rs.render("gallery/chapter7.ppm");
 
+        long start = System.currentTimeMillis();
+        rs.render("gallery/chapter9.ppm");
+        long end = System.currentTimeMillis();
+        System.out.println("Total Render Time: " + (end - start) + "ms");
     }
 
     private void render(String imageFileName) {
@@ -30,7 +33,7 @@ public class RaySphere {
     }
 
     private void addCamera() {
-        camera = new Camera(1000, 500, Math.PI / 3);
+        camera = new Camera(1200, 600, Math.PI / 3);
         camera.setTransform(Matrix.viewTransform(
                 Tuple.point(0, 1.5, -5),
                 Tuple.point(0, 1, 0),
@@ -46,45 +49,42 @@ public class RaySphere {
         world.getObjects().add(smallLeft());
         world.getObjects().add(smallRight());
 
-        world.setLightSource(Light.pointLight(Tuple.point(-10, 10, -10), Color.WHITE));
+        world.setLightSource(Light.pointLight(Tuple.point(-5, 10, -10), Color.WHITE));
     }
 
-    private Sphere floor() {
-        Sphere floor = new Sphere();
-        floor.setTransform(Matrix.scaling(10, 0.01, 10));
+    private Plane floor() {
+        Plane floor = new Plane();
+
         floor.getMaterial().setColor(new Color(1, 0.9, 0.9));
         floor.getMaterial().setSpecular(0);
+        floor.getMaterial().setAmbient(0.2);
+        floor.getMaterial().setDiffuse(0.8);
 
         return floor;
     }
 
-    private Sphere leftWall() {
-        Sphere leftWall = new Sphere();
-        leftWall.setTransform(
-                Matrix.translation(0, 0, 5)
-                        .multiplyBy(Matrix.rotationY(- Math.PI / 4))
-                        .multiplyBy(Matrix.rotationX(Math.PI / 2))
-                        .multiplyBy(Matrix.scaling(10, 0.001, 10))
-        );
-        leftWall.getMaterial().setColor(new Color(1, 0.9, 0.9));
-        leftWall.getMaterial().setSpecular(0);
+    private Plane leftWall() {
+        Plane wall = new Plane();
 
-        return leftWall;
+        wall.setTransform(Matrix.translation(-11, 0, 0).multiplyBy(Matrix.rotationY(- Math.PI / 2)).multiplyBy(Matrix.rotationX(Math.PI / 2)));
+        wall.getMaterial().setColor(new Color(1, 0.9, 0.9));
+        wall.getMaterial().setSpecular(0);
+        wall.getMaterial().setAmbient(0.2);
+        wall.getMaterial().setDiffuse(0.8);
+
+        return wall;
     }
 
-    private Sphere rightWall() {
-        Sphere rightWall = new Sphere();
-        rightWall.setTransform(
-                Matrix.translation(0, 0, 5)
-                        .multiplyBy(Matrix.rotationY(Math.PI / 4))
-                        .multiplyBy(Matrix.rotationX(Math.PI / 2))
-                        .multiplyBy(Matrix.scaling(10, 0.001, 10))
-        );
-        rightWall.getMaterial().setColor(new Color(1, 0.9, 0.9));
-        rightWall.getMaterial().setSpecular(0);
+    private Plane rightWall() {
+        Plane wall = new Plane();
 
-        return rightWall;
+        wall.setTransform(Matrix.translation(11, 0, 0).multiplyBy(Matrix.rotationY(Math.PI / 2)).multiplyBy(Matrix.rotationX(Math.PI / 2)));
+        wall.getMaterial().setColor(new Color(1, 0.9, 0.9));
+        wall.getMaterial().setSpecular(0);
+        wall.getMaterial().setAmbient(0.2);
+        wall.getMaterial().setDiffuse(0.8);
 
+        return wall;
     }
 
     private Sphere largeMiddle() {
