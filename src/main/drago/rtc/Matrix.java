@@ -1,10 +1,15 @@
 package drago.rtc;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Matrix {
 
     private final double[][] values;
+
+    private Double determinant;
+    private Matrix inverse;
 
     private static final double EPSILON= 0.00001;
 
@@ -212,21 +217,24 @@ public class Matrix {
     }
 
     double determinant() {
-        double determinant = 0;
-        int matrixSize = values.length;
+        if(determinant == null) {
+            determinant = 0.0;
 
-        if(matrixSize == 2) {
-            determinant = values[0][0] * values[1][1] - values[0][1] * values [1][0];
-        } else {
-            for (int colI = 0; colI < matrixSize; colI++) {
-                determinant += values[0][colI] * cofactor(0, colI);
+            int matrixSize = values.length;
+
+            if (matrixSize == 2) {
+                determinant = values[0][0] * values[1][1] - values[0][1] * values[1][0];
+            } else {
+                for (int colI = 0; colI < matrixSize; colI++) {
+                    determinant += values[0][colI] * cofactor(0, colI);
+                }
             }
         }
 
         return determinant;
     }
 
-    public Matrix submatrix(int rowToRemove, int columnToRemove) {
+    Matrix submatrix(int rowToRemove, int columnToRemove) {
         int oldRows = values.length;
         int oldCols = values[0].length;
 
@@ -260,7 +268,7 @@ public class Matrix {
     }
 
     boolean isInvertible() {
-        return determinant() != 0;
+        return  determinant() != 0;
     }
 
     Matrix inverse() {
@@ -268,15 +276,19 @@ public class Matrix {
             return null;
         }
 
-        double determinant = determinant();
-        double[][] newValues = new double[values.length][values[0].length];
+        if(inverse == null) {
+            double determinant = determinant();
+            double[][] newValues = new double[values.length][values[0].length];
 
-        for (int rowI = 0; rowI < values.length; rowI++) {
-            for (int colI = 0; colI < values[0].length; colI++) {
-                newValues[colI][rowI] = cofactor(rowI, colI) / determinant;
+            for (int rowI = 0; rowI < values.length; rowI++) {
+                for (int colI = 0; colI < values[0].length; colI++) {
+                    newValues[colI][rowI] = cofactor(rowI, colI) / determinant;
+                }
             }
+
+            inverse = new Matrix(newValues);
         }
 
-        return new Matrix(newValues);
+        return inverse;
     }
 }
