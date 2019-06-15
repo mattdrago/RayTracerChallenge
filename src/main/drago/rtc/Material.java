@@ -9,6 +9,7 @@ public class Material {
     private double diffuse = 0.9;
     private double specular = 0.9;
     private double shininess = 200.0;
+    private Pattern pattern;
 
     public void setColor(Color color) {
         this.color = color;
@@ -78,13 +79,19 @@ public class Material {
         return ambient;
     }
 
-    Color lighting(Light light, Tuple point, Tuple eyeV, Tuple normalV, boolean inShadow) {
+    Color lighting(Light light, Shape object, Tuple point, Tuple eyeV, Tuple normalV, boolean inShadow) {
 
         Color ambientColor;
         Color diffuseColor = Color.BLACK;
         Color specularColor = Color.BLACK;
 
-        Color effectiveColor = color.hadamardProduct(light.getIntensity());
+        Color effectiveColor = color;
+
+        if(pattern != null) {
+            effectiveColor = pattern.colorAtObject(object, point);
+        }
+
+        effectiveColor.hadamardProduct(light.getIntensity());
 
         ambientColor = effectiveColor.scale(this.ambient);
 
@@ -106,5 +113,9 @@ public class Material {
         }
 
         return ambientColor.add(diffuseColor).add(specularColor);
+    }
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 }

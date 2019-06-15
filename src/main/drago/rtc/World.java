@@ -59,7 +59,7 @@ public class World {
 
         boolean isShadow = isShadowed(comps.getOverPoint());
 
-        return m.lighting(this.lightSource, comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
+        return m.lighting(this.lightSource, comps.getObject(), comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
     }
 
     Color colorAt(Ray ray) {
