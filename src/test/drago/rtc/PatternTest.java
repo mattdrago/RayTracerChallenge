@@ -2,76 +2,70 @@ package drago.rtc;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PatternTest {
 
-    @Test
-    void creatingAStripePattern() {
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+    private Pattern testPattern() {
+        return new Pattern() {
 
-        assertEquals(Color.WHITE, p.getColorA());
-        assertEquals(Color.BLACK, p.getColorB());
+            @Override
+            Color patternAt(Tuple point) {
+                return new Color(point.getX(), point.getY(), point.getZ());
+            }
+        };
     }
 
     @Test
-    void aStripePatternIsConstantInY() {
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+    void theDefaultPatternTransformation() {
+        Pattern p = testPattern();
 
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0, 0, 0)));
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0, 1, 0)));
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0, 2, 0)));
+        assertEquals(Matrix.identity(4), p.getTransform());
     }
 
     @Test
-    void aStripePatternIsConstantInZ() {
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+    void assigningATransformation() {
+        Pattern p = testPattern();
+        Matrix transform = Matrix.scaling(1, 2, 3);
 
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0, 0, 0)));
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0, 0, 1)));
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0, 0, 2)));
+        p.setTransform(transform);
+
+        assertEquals(transform, p.getTransform());
     }
 
     @Test
-    void aStripePatternAlternatesInX() {
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+    void aPatternWithAnObjectTransform() {
+        Shape s = new Sphere();
+        s.setTransform(Matrix.scaling(2, 2, 2));
 
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0, 0, 0)));
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(0.9, 0, 0)));
-        assertEquals(Color.BLACK, p.colorAt(Tuple.point(1, 0, 0)));
-        assertEquals(Color.BLACK, p.colorAt(Tuple.point(1.1, 0, 0)));
-        assertEquals(Color.BLACK, p.colorAt(Tuple.point(-0.1, 0, 0)));
-        assertEquals(Color.BLACK, p.colorAt(Tuple.point(-1, 0, 0)));
-        assertEquals(Color.WHITE, p.colorAt(Tuple.point(-1.1, 0, 0)));
+        Pattern p = testPattern();
+
+        Color expected = new Color(1, 1.5, 2);
+
+        assertEquals(expected, p.patternAtShape(s, Tuple.point(2, 3, 4)));
     }
 
     @Test
-    void stripesWithAnObjectTransformation() {
-        Shape object = new Sphere();
-        object.setTransform(Matrix.scaling(2, 2, 2));
+    void aPatternWithAPatternTransformation() {
+        Shape s = new Sphere();
+        Pattern p = testPattern();
+        p.setTransform(Matrix.scaling(2, 2, 2));
 
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+        Color expected = new Color(1, 1.5, 2);
 
-        assertEquals(Color.WHITE, p.colorAtObject(object, Tuple.point(1.5, 0, 0)));
+        assertEquals(expected, p.patternAtShape(s, Tuple.point(2, 3, 4)));
     }
 
     @Test
-    void stripesWithAPatternTransformation() {
-        Shape object = new Sphere();
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
-        p.setTransformation(Matrix.scaling(2, 2, 2));
+    void aPatternWithBothAnObjectAndAPatternTransform() {
+        Shape s = new Sphere();
+        s.setTransform(Matrix.scaling(2, 2, 2));
 
-        assertEquals(Color.WHITE, p.colorAtObject(object, Tuple.point(1.5, 0, 0)));
-    }
+        Pattern p = testPattern();
+        p.setTransform(Matrix.translation(0.5, 1, 1.5));
 
-    @Test
-    void stripesWithBothAnObjectAndAPatternTransformation() {
-        Shape object = new Sphere();
-        object.setTransform(Matrix.scaling(2, 2, 2));
+        Color expected = new Color(0.75, 0.5, 0.25);
 
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
-        p.setTransformation(Matrix.translation(0.5, 0, 0));
-
-        assertEquals(Color.WHITE, p.colorAtObject(object, Tuple.point(2.5, 0, 0)));
+        assertEquals(expected, p.patternAtShape(s, Tuple.point(2.5, 3, 3.5)));
     }
 }

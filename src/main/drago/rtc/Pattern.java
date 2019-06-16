@@ -1,48 +1,45 @@
 package drago.rtc;
 
-public class Pattern {
+public abstract class Pattern {
 
-    private final Color colorA;
-    private final Color colorB;
-    private Matrix transformation = Matrix.identity(4);
+    private Matrix transform = Matrix.identity(4);
 
-    private Pattern(Color colorA, Color colorB) {
-
-        this.colorA = colorA;
-        this.colorB = colorB;
+    Pattern() {
     }
 
-    public static Pattern stripePattern(Color colorA, Color colorB) {
-        return new Pattern(colorA, colorB);
+    public static Pattern stripePattern(Color a, Color b) {
+        return new Pattern() {
+            private Color colorA = a;
+            private Color colorB = b;
+
+            @Override
+            Color patternAt(Tuple point) {
+                int modulo = (int)(point.getX() % 2 + 2) % 2;
+
+                if(modulo == 0) {
+                    return colorA;
+                } else {
+                    return colorB;
+                }
+            }
+        };
     }
 
-    Color getColorA() {
-        return colorA;
+
+    public void setTransform(Matrix transform) {
+        this.transform = transform;
     }
 
-    Color getColorB() {
-        return colorB;
+    Matrix getTransform() {
+        return transform;
     }
 
-    Color colorAt(Tuple point) {
+    Color patternAtShape(Shape shape, Tuple point) {
+        Tuple objectPoint = shape.getTransform().inverse().multiplyBy(point);
+        Tuple patternPoint = transform.inverse().multiplyBy(objectPoint);
 
-        int modulo = (int)(point.getX() % 2 + 2) % 2;
-
-        if(modulo == 0) {
-            return colorA;
-        } else {
-            return colorB;
-        }
+        return patternAt(patternPoint);
     }
 
-    public void setTransformation(Matrix transformation) {
-        this.transformation = transformation;
-    }
-
-    Color colorAtObject(Shape object, Tuple point) {
-        Tuple objectPoint = object.getTransform().inverse().multiplyBy(point);
-        Tuple patternPoint = transformation.inverse().multiplyBy(objectPoint);
-
-        return colorAt(patternPoint);
-    }
+    abstract Color patternAt(Tuple point);
 }

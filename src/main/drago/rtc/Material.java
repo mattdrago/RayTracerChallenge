@@ -88,7 +88,7 @@ public class Material {
         Color effectiveColor = color;
 
         if(pattern != null) {
-            effectiveColor = pattern.colorAtObject(object, point);
+            effectiveColor = pattern.patternAtShape(object, point);
         }
 
         effectiveColor.hadamardProduct(light.getIntensity());

@@ -98,7 +98,7 @@ public class RaySphere {
         s.getMaterial().setSpecular(0.3);
 
         Pattern p = Pattern.stripePattern(new Color(0.1, 1, 0.5), new Color(0.9, 0, 0.5));
-        p.setTransformation(Matrix.rotationY(Math.PI / 7).multiplyBy(Matrix.rotationZ(Math.PI / 5)).multiplyBy(Matrix.scaling(0.1, 1, 1)));
+        p.setTransform(Matrix.rotationY(Math.PI / 7).multiplyBy(Matrix.rotationZ(Math.PI / 5)).multiplyBy(Matrix.scaling(0.1, 1, 1)));
         s.getMaterial().setPattern(p);
 
 
