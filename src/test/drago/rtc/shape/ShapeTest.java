@@ -1,5 +1,8 @@
-package drago.rtc;
+package drago.rtc.shape;
 
+import drago.rtc.*;
+import drago.rtc.shape.Shape;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +13,7 @@ class ShapeTest {
     void theDefaultTransformation() {
         Shape s = testShape();
 
-        assertEquals(Matrix.identity(4), s.getTransform());
+        Assertions.assertEquals(Matrix.identity(4), s.getTransform());
     }
 
     @Test

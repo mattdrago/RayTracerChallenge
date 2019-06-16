@@ -1,4 +1,8 @@
-package drago.rtc;
+package drago.rtc.shape;
+
+import drago.rtc.Intersection;
+import drago.rtc.Ray;
+import drago.rtc.Tuple;
 
 public class Plane extends Shape {
 

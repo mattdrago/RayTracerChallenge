@@ -1,5 +1,6 @@
 package drago.rtc;
 
+import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

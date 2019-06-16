@@ -2,7 +2,7 @@ package drago.rtc.pattern;
 
 import drago.rtc.Color;
 import drago.rtc.Matrix;
-import drago.rtc.Shape;
+import drago.rtc.shape.Shape;
 import drago.rtc.Tuple;
 
 public abstract class Pattern {

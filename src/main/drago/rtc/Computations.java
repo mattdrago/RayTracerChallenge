@@ -1,5 +1,7 @@
 package drago.rtc;
 
+import drago.rtc.shape.Shape;
+
 class Computations {
     static final double EPSILON = 0.000001;
 

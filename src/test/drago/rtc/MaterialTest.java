@@ -1,7 +1,7 @@
 package drago.rtc;
 
-import drago.rtc.pattern.Pattern;
 import drago.rtc.pattern.StripePattern;
+import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

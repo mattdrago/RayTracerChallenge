@@ -111,7 +111,7 @@ public class Tuple {
         return this.divide(this.magnitude());
     }
 
-    double dot(Tuple operand) {
+    public double dot(Tuple operand) {
         return this.x * operand.x + this.y * operand.y + this.z * operand.z + this.w * operand.w;
     }
 

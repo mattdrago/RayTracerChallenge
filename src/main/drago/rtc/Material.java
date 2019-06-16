@@ -1,6 +1,7 @@
 package drago.rtc;
 
 import drago.rtc.pattern.Pattern;
+import drago.rtc.shape.Shape;
 
 import java.util.Objects;
 

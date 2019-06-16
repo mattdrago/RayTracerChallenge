@@ -1,5 +1,8 @@
 package drago.rtc;
 
+import drago.rtc.shape.Shape;
+import drago.rtc.shape.Sphere;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

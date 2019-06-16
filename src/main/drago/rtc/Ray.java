@@ -11,7 +11,7 @@ public class Ray {
         this.direction = direction;
     }
 
-    Tuple getOrigin() {
+    public Tuple getOrigin() {
         return origin;
     }
 
@@ -19,11 +19,11 @@ public class Ray {
         return direction;
     }
 
-    public Tuple position(double t) {
+    Tuple position(double t) {
         return origin.add(direction.scale(t));
     }
 
-    Ray transform(Matrix transform) {
+    public Ray transform(Matrix transform) {
 
         return new Ray(transform.multiplyBy(origin), transform.multiplyBy(direction));
     }

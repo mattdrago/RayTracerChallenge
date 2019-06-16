@@ -1,5 +1,10 @@
-package drago.rtc;
+package drago.rtc.shape;
 
+import drago.rtc.Intersection;
+import drago.rtc.Ray;
+import drago.rtc.Tuple;
+import drago.rtc.shape.Shape;
+import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

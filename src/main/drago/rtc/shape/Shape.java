@@ -1,4 +1,6 @@
-package drago.rtc;
+package drago.rtc.shape;
+
+import drago.rtc.*;
 
 public abstract class Shape {
 
@@ -17,17 +19,17 @@ public abstract class Shape {
         return material;
     }
 
-    final void setMaterial(Material material) {
+    final public void setMaterial(Material material) {
         this.material = material;
     }
 
-    final Intersection[] intersects(Ray ray) {
+    public final Intersection[] intersects(Ray ray) {
         Ray transformedRay = ray.transform(transform.inverse());
 
         return localIntersect(transformedRay);
     }
 
-    final Tuple normalAt(Tuple point) {
+    public final Tuple normalAt(Tuple point) {
         Matrix transformInverse = transform.inverse();
 
         Tuple objectPoint = transformInverse.multiplyBy(point);

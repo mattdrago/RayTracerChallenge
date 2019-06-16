@@ -1,12 +1,14 @@
 package drago.rtc;
 
+import drago.rtc.shape.Shape;
+
 import java.util.Arrays;
 
 public class Intersection implements Comparable<Intersection> {
     private final double t;
     private final Shape object;
 
-    Intersection(double t, Shape object) {
+    public Intersection(double t, Shape object) {
         this.t = t;
         this.object = object;
     }
@@ -30,11 +32,11 @@ public class Intersection implements Comparable<Intersection> {
         return hit;
     }
 
-    double getT() {
+    public double getT() {
         return t;
     }
 
-    Shape getObject() {
+    public Shape getObject() {
         return object;
     }
 

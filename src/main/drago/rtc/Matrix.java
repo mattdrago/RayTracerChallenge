@@ -201,7 +201,7 @@ public class Matrix {
         return new Matrix(values);
     }
 
-    Matrix transpose() {
+    public Matrix transpose() {
         int rows = values.length;
         int cols = values[0].length;
 
