@@ -1,4 +1,4 @@
-package drago.rtc;
+package drago.rtc.foundations;
 
 import java.util.Objects;
 
@@ -103,7 +103,7 @@ public class Tuple {
         return new Tuple(this.x / operand, this.y /operand, this.z / operand, this.w / operand );
     }
 
-    double magnitude() {
+    public double magnitude() {
         return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
     }
 
@@ -121,7 +121,7 @@ public class Tuple {
                 this.x * operand.y - this.y * operand.x);
     }
 
-    Tuple reflect(Tuple normal) {
+    public Tuple reflect(Tuple normal) {
         return this.subtract(normal.scale(2 * this.dot(normal)));
     }
 }

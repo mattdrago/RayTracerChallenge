@@ -1,6 +1,6 @@
 package drago.rtc.pit;
 
-import drago.rtc.Tuple;
+import drago.rtc.foundations.Tuple;
 
 class Projectile {
     final Tuple position;

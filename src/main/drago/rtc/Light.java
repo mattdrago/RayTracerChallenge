@@ -1,5 +1,7 @@
 package drago.rtc;
 
+import drago.rtc.foundations.Tuple;
+
 import java.util.Objects;
 
 public class Light {

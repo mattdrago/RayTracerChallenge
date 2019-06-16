@@ -1,8 +1,8 @@
-package drago.rtc;
+package drago.rtc.foundations;
 
 import drago.rtc.shape.Shape;
 
-class Computations {
+public class Computations {
     static final double EPSILON = 0.000001;
 
     private final double t;
@@ -35,7 +35,7 @@ class Computations {
         return t;
     }
 
-    Shape getObject() {
+    public Shape getObject() {
         return object;
     }
 
@@ -43,11 +43,11 @@ class Computations {
         return point;
     }
 
-    Tuple getEyeV() {
+    public Tuple getEyeV() {
         return eyeV;
     }
 
-    Tuple getNormalV() {
+    public Tuple getNormalV() {
         return normalV;
     }
 
@@ -55,7 +55,7 @@ class Computations {
         return isInside;
     }
 
-    Tuple getOverPoint() {
+    public Tuple getOverPoint() {
         return overPoint;
     }
 }

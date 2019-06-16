@@ -1,4 +1,4 @@
-package drago.rtc;
+package drago.rtc.foundations;
 
 import drago.rtc.shape.Shape;
 
@@ -17,7 +17,7 @@ public class Intersection implements Comparable<Intersection> {
         return is;
     }
 
-    static Intersection hit(Intersection[] xs) {
+    public static Intersection hit(Intersection[] xs) {
         Arrays.sort(xs);
 
         Intersection hit = null;
@@ -45,7 +45,7 @@ public class Intersection implements Comparable<Intersection> {
         return Double.compare(this.t, o.t);
     }
 
-    Computations prepareComputations(Ray ray) {
+    public Computations prepareComputations(Ray ray) {
 
         Tuple position = ray.position(this.t);
         Tuple eyeV = ray.getDirection().scale(-1);

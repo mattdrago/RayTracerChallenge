@@ -1,5 +1,6 @@
-package drago.rtc;
+package drago.rtc.foundations;
 
+import drago.rtc.foundations.Matrix;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

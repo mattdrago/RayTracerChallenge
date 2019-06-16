@@ -1,7 +1,7 @@
 package drago.rtc.pattern;
 
 import drago.rtc.Color;
-import drago.rtc.Tuple;
+import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

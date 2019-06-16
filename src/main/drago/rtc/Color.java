@@ -1,5 +1,7 @@
 package drago.rtc;
 
+import drago.rtc.foundations.Tuple;
+
 public class Color extends Tuple {
 
     public static final Color BLACK = new Color(0, 0, 0);

@@ -1,6 +1,8 @@
 package drago.rtc.pattern;
 
 import drago.rtc.*;
+import drago.rtc.foundations.Matrix;
+import drago.rtc.foundations.Tuple;
 import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;

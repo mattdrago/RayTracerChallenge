@@ -1,6 +1,10 @@
 package drago.rtc.shape;
 
 import drago.rtc.*;
+import drago.rtc.foundations.Intersection;
+import drago.rtc.foundations.Matrix;
+import drago.rtc.foundations.Ray;
+import drago.rtc.foundations.Tuple;
 
 public abstract class Shape {
 

@@ -1,8 +1,6 @@
-package drago.rtc;
+package drago.rtc.foundations;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Matrix {
 

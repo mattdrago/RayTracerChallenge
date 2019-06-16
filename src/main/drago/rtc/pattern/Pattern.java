@@ -1,9 +1,9 @@
 package drago.rtc.pattern;
 
 import drago.rtc.Color;
-import drago.rtc.Matrix;
+import drago.rtc.foundations.Matrix;
 import drago.rtc.shape.Shape;
-import drago.rtc.Tuple;
+import drago.rtc.foundations.Tuple;
 
 public abstract class Pattern {
 

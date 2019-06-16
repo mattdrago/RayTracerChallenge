@@ -1,6 +1,8 @@
 package drago.rtc.pit;
 
 import drago.rtc.*;
+import drago.rtc.foundations.Matrix;
+import drago.rtc.foundations.Tuple;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

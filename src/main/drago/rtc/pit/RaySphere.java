@@ -1,6 +1,8 @@
 package drago.rtc.pit;
 
 import drago.rtc.*;
+import drago.rtc.foundations.Matrix;
+import drago.rtc.foundations.Tuple;
 import drago.rtc.pattern.*;
 import drago.rtc.shape.Plane;
 import drago.rtc.shape.Sphere;

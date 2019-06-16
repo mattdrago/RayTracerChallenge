@@ -1,4 +1,4 @@
-package drago.rtc;
+package drago.rtc.foundations;
 
 import java.util.Objects;
 

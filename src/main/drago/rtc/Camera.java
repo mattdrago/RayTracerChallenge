@@ -1,5 +1,9 @@
 package drago.rtc;
 
+import drago.rtc.foundations.Matrix;
+import drago.rtc.foundations.Ray;
+import drago.rtc.foundations.Tuple;
+
 public class Camera {
     private int hSize;
     private int vSize;

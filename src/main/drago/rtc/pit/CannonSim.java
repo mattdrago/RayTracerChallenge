@@ -3,7 +3,7 @@ package drago.rtc.pit;
 import drago.rtc.Canvas;
 import drago.rtc.Color;
 import drago.rtc.PPMWriter;
-import drago.rtc.Tuple;
+import drago.rtc.foundations.Tuple;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

@@ -1,5 +1,6 @@
-package drago.rtc;
+package drago.rtc.foundations;
 
+import drago.rtc.foundations.*;
 import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;
 
