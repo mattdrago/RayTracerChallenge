@@ -33,9 +33,9 @@ public class RaySphere {
     }
 
     private void addCamera() {
-        camera = new Camera(1200, 600, Math.PI / 3);
+        camera = new Camera(1200, 600, Math.PI / 4);
         camera.setTransform(Matrix.viewTransform(
-                Tuple.point(0, 1.5, -5),
+                Tuple.point(0, 1.5, -8),
                 Tuple.point(0, 1, 0),
                 Tuple.vector(0, 1, 0))
         );
@@ -72,7 +72,7 @@ public class RaySphere {
         wall.getMaterial().setSpecular(0);
         wall.getMaterial().setAmbient(0.2);
         wall.getMaterial().setDiffuse(0.8);
-        wall.getMaterial().setPattern(Pattern.stripePattern(Color.WHITE, Color.BLACK));
+        wall.getMaterial().setPattern(Pattern.checkersPattern(Color.WHITE, Color.BLACK));
 
         return wall;
     }
@@ -115,6 +115,9 @@ public class RaySphere {
         s.getMaterial().setColor(new Color(0.5, 1, 0.1));
         s.getMaterial().setDiffuse(0.7);
         s.getMaterial().setSpecular(0.3);
+        Pattern pattern = Pattern.gradientPattern(new Color(0.5, 1, 0.1), new Color(0.5, 0, 0.9));
+        pattern.setTransform(Matrix.translation(1, 0, 0).multiplyBy(Matrix.scaling(2, 1, 1)));
+        s.getMaterial().setPattern(pattern);
 
         return s;
     }
@@ -129,6 +132,9 @@ public class RaySphere {
         s.getMaterial().setColor(new Color(1, 0.8, 0.1));
         s.getMaterial().setDiffuse(0.7);
         s.getMaterial().setSpecular(0.3);
+        Pattern pattern = Pattern.ringPattern(new Color(1, 0.8, 0.1), new Color(0, 0.2, 0.9));
+        pattern.setTransform(Matrix.translation(0, 0, 0).multiplyBy(Matrix.scaling(.15, 1, .1)));
+        s.getMaterial().setPattern(pattern);
 
         return s;
     }

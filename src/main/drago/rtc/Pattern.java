@@ -25,7 +25,7 @@ public abstract class Pattern {
         };
     }
 
-    static Pattern gradientPattern(Color a, Color b) {
+    public static Pattern gradientPattern(Color a, Color b) {
         return new Pattern() {
 
             private Color from = a;
@@ -38,7 +38,7 @@ public abstract class Pattern {
         };
     }
 
-    static Pattern ringPattern(Color a, Color b) {
+    public static Pattern ringPattern(Color a, Color b) {
         return new Pattern() {
 
             private Color colorA = a;
@@ -54,7 +54,7 @@ public abstract class Pattern {
         };
     }
 
-    static Pattern checkersPattern(Color a, Color b) {
+    public static Pattern checkersPattern(Color a, Color b) {
         return new Pattern() {
 
             Color colorA = a;
