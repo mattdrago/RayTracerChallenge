@@ -191,7 +191,7 @@ public class Matrix {
         return new Tuple(m.values[0][0], m.values[1][0], m.values[2][0], m.values[3][0]);
     }
 
-    static Matrix identity(int size) {
+    public static Matrix identity(int size) {
         double[][] values = new double[size][size];
 
         for (int i = 0; i < size; i++) {
@@ -271,7 +271,7 @@ public class Matrix {
         return  determinant() != 0;
     }
 
-    Matrix inverse() {
+    public Matrix inverse() {
         if(!isInvertible()) {
             return null;
         }

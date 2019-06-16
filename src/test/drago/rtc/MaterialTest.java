@@ -1,5 +1,7 @@
 package drago.rtc;
 
+import drago.rtc.pattern.Pattern;
+import drago.rtc.pattern.StripePattern;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -100,7 +102,7 @@ class MaterialTest {
 
     @Test
     void lightingWithAPatternApplied() {
-        material.setPattern(Pattern.stripePattern(Color.WHITE, Color.BLACK));
+        material.setPattern(new StripePattern(Color.WHITE, Color.BLACK));
         material.setAmbient(1);
         material.setDiffuse(0);
         material.setSpecular(0);

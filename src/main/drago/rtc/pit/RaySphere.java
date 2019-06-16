@@ -1,6 +1,7 @@
 package drago.rtc.pit;
 
 import drago.rtc.*;
+import drago.rtc.pattern.*;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class RaySphere {
         floor.getMaterial().setSpecular(0);
         floor.getMaterial().setAmbient(0.2);
         floor.getMaterial().setDiffuse(0.8);
-        floor.getMaterial().setPattern(Pattern.stripePattern(Color.WHITE, Color.BLACK));
+        floor.getMaterial().setPattern(new StripePattern(Color.WHITE, Color.BLACK));
 
         return floor;
     }
@@ -72,7 +73,7 @@ public class RaySphere {
         wall.getMaterial().setSpecular(0);
         wall.getMaterial().setAmbient(0.2);
         wall.getMaterial().setDiffuse(0.8);
-        wall.getMaterial().setPattern(Pattern.checkersPattern(Color.WHITE, Color.BLACK));
+        wall.getMaterial().setPattern(new CheckersPattern(Color.WHITE, Color.BLACK));
 
         return wall;
     }
@@ -85,7 +86,7 @@ public class RaySphere {
         wall.getMaterial().setSpecular(0);
         wall.getMaterial().setAmbient(0.2);
         wall.getMaterial().setDiffuse(0.8);
-        wall.getMaterial().setPattern(Pattern.stripePattern(Color.WHITE, Color.BLACK));
+        wall.getMaterial().setPattern(new StripePattern(Color.WHITE, Color.BLACK));
 
         return wall;
     }
@@ -97,7 +98,7 @@ public class RaySphere {
         s.getMaterial().setDiffuse(0.7);
         s.getMaterial().setSpecular(0.3);
 
-        Pattern p = Pattern.stripePattern(new Color(0.1, 1, 0.5), new Color(0.9, 0, 0.5));
+        Pattern p = new StripePattern(new Color(0.1, 1, 0.5), new Color(0.9, 0, 0.5));
         p.setTransform(Matrix.rotationY(Math.PI / 7).multiplyBy(Matrix.rotationZ(Math.PI / 5)).multiplyBy(Matrix.scaling(0.1, 1, 1)));
         s.getMaterial().setPattern(p);
 
@@ -115,7 +116,7 @@ public class RaySphere {
         s.getMaterial().setColor(new Color(0.5, 1, 0.1));
         s.getMaterial().setDiffuse(0.7);
         s.getMaterial().setSpecular(0.3);
-        Pattern pattern = Pattern.gradientPattern(new Color(0.5, 1, 0.1), new Color(0.5, 0, 0.9));
+        Pattern pattern = new GradientPattern(new Color(0.5, 1, 0.1), new Color(0.5, 0, 0.9));
         pattern.setTransform(Matrix.translation(1, 0, 0).multiplyBy(Matrix.scaling(2, 1, 1)));
         s.getMaterial().setPattern(pattern);
 
@@ -132,7 +133,7 @@ public class RaySphere {
         s.getMaterial().setColor(new Color(1, 0.8, 0.1));
         s.getMaterial().setDiffuse(0.7);
         s.getMaterial().setSpecular(0.3);
-        Pattern pattern = Pattern.ringPattern(new Color(1, 0.8, 0.1), new Color(0, 0.2, 0.9));
+        Pattern pattern = new RingPattern(new Color(1, 0.8, 0.1), new Color(0, 0.2, 0.9));
         pattern.setTransform(Matrix.translation(0, 0, 0).multiplyBy(Matrix.scaling(.15, 1, .1)));
         s.getMaterial().setPattern(pattern);
 

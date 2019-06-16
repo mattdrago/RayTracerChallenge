@@ -1,11 +1,11 @@
 package drago.rtc;
 
-abstract class Shape {
+public abstract class Shape {
 
     private Matrix transform = Matrix.identity(4);
     private Material material = new Material();
 
-    final Matrix getTransform() {
+    public final Matrix getTransform() {
         return transform;
     }
 

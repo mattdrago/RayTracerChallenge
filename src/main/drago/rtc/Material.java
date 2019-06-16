@@ -1,5 +1,7 @@
 package drago.rtc;
 
+import drago.rtc.pattern.Pattern;
+
 import java.util.Objects;
 
 public class Material {

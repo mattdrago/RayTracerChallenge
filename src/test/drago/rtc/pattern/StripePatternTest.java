@@ -1,14 +1,16 @@
-package drago.rtc;
+package drago.rtc.pattern;
 
+import drago.rtc.Color;
+import drago.rtc.Tuple;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StripePatternTest {
 
     @Test
     void aStripePatternIsConstantInY() {
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+        Pattern p = new StripePattern(Color.WHITE, Color.BLACK);
 
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 0)));
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 1, 0)));
@@ -17,7 +19,7 @@ class StripePatternTest {
 
     @Test
     void aStripePatternIsConstantInZ() {
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+        Pattern p = new StripePattern(Color.WHITE, Color.BLACK);
 
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 0)));
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 1)));
@@ -26,7 +28,7 @@ class StripePatternTest {
 
     @Test
     void aStripePatternAlternatesInX() {
-        Pattern p = Pattern.stripePattern(Color.WHITE, Color.BLACK);
+        Pattern p = new StripePattern(Color.WHITE, Color.BLACK);
 
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 0)));
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0.9, 0, 0)));

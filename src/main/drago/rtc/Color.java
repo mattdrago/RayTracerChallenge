@@ -21,12 +21,12 @@ public class Color extends Tuple {
         return super.getZ();
     }
 
-    Color add(Color operand) {
+    public Color add(Color operand) {
 
         return fromTuple(super.add(operand));
     }
 
-    Color subtract(Color operand) {
+    public Color subtract(Color operand) {
 
         return fromTuple(super.subtract(operand));
     }
@@ -39,7 +39,7 @@ public class Color extends Tuple {
         return new Color(result.getX(), result.getY(), result.getZ());
     }
 
-    public Color hadamardProduct(Color operand) {
+    Color hadamardProduct(Color operand) {
         return new Color(this.getRed() * operand.getRed(),
                 this.getGreen() * operand.getGreen(),
                 this.getBlue() * operand.getBlue());

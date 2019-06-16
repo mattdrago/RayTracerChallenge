@@ -1,5 +1,7 @@
-package drago.rtc;
+package drago.rtc.pattern;
 
+import drago.rtc.*;
+import drago.rtc.pattern.Pattern;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

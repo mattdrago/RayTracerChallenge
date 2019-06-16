@@ -1,5 +1,7 @@
-package drago.rtc;
+package drago.rtc.pattern;
 
+import drago.rtc.Color;
+import drago.rtc.Tuple;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,7 +10,7 @@ class ThreeDCheckerPatternTest {
 
     @Test
     void checkersShouldRepeatInX() {
-        Pattern p = Pattern.checkersPattern(Color.WHITE, Color.BLACK);
+        Pattern p = new CheckersPattern(Color.WHITE, Color.BLACK);
 
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 0)));
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0.99, 0, 0)));
@@ -17,7 +19,7 @@ class ThreeDCheckerPatternTest {
 
     @Test
     void checkersShouldRepeatInY() {
-        Pattern p = Pattern.checkersPattern(Color.WHITE, Color.BLACK);
+        Pattern p = new CheckersPattern(Color.WHITE, Color.BLACK);
 
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 0)));
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0.99, 0)));
@@ -26,7 +28,7 @@ class ThreeDCheckerPatternTest {
 
     @Test
     void checkersShouldRepeatInZ() {
-        Pattern p = Pattern.checkersPattern(Color.WHITE, Color.BLACK);
+        Pattern p = new CheckersPattern(Color.WHITE, Color.BLACK);
 
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 0)));
         assertEquals(Color.WHITE, p.patternAt(Tuple.point(0, 0, 0.99)));
