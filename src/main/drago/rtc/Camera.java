@@ -5,6 +5,7 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 
 public class Camera {
+    private static final int REFLECTION_MAX_DEPTH = 5;
     private int hSize;
     private int vSize;
     private double fieldOfView;
@@ -103,7 +104,7 @@ public class Camera {
         for (int y = 0; y < vSize; y++) {
             for (int x = 0; x < hSize; x++) {
                 Ray ray = rayForPixel(x, y);
-                Color color = world.colorAt(ray);
+                Color color = world.colorAt(ray, REFLECTION_MAX_DEPTH);
                 image.writePixel(x, y, color);
             }
         }

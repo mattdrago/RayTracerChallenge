@@ -10,6 +10,7 @@ public class Computations {
     private final Tuple point;
     private final Tuple eyeV;
     private final Tuple normalV;
+    private final Tuple reflectV;
     private final boolean isInside;
     private final Tuple overPoint;
 
@@ -28,6 +29,7 @@ public class Computations {
         }
 
         overPoint = point.add(this.normalV.scale(Computations.EPSILON));
+        reflectV = eyeV.scale(-1).reflect(this.normalV);
 
     }
 
@@ -57,5 +59,9 @@ public class Computations {
 
     public Tuple getOverPoint() {
         return overPoint;
+    }
+
+    public Tuple getReflectV() {
+        return reflectV;
     }
 }

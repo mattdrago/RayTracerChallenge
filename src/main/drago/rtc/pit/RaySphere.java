@@ -65,6 +65,7 @@ public class RaySphere {
         floor.getMaterial().setAmbient(0.2);
         floor.getMaterial().setDiffuse(0.8);
         floor.getMaterial().setPattern(new StripePattern(Color.WHITE, Color.BLACK));
+        floor.getMaterial().setReflective(0.3);
 
         return floor;
     }
@@ -77,7 +78,6 @@ public class RaySphere {
         wall.getMaterial().setSpecular(0);
         wall.getMaterial().setAmbient(0.2);
         wall.getMaterial().setDiffuse(0.8);
-        wall.getMaterial().setPattern(new CheckersPattern(Color.WHITE, Color.BLACK));
 
         return wall;
     }
@@ -90,7 +90,6 @@ public class RaySphere {
         wall.getMaterial().setSpecular(0);
         wall.getMaterial().setAmbient(0.2);
         wall.getMaterial().setDiffuse(0.8);
-        wall.getMaterial().setPattern(new StripePattern(Color.WHITE, Color.BLACK));
 
         return wall;
     }
@@ -101,6 +100,7 @@ public class RaySphere {
         s.getMaterial().setColor(new Color(0.1, 1, 0.5));
         s.getMaterial().setDiffuse(0.7);
         s.getMaterial().setSpecular(0.3);
+        s.getMaterial().setReflective(0.2);
 
         Pattern p = new StripePattern(new Color(0.1, 1, 0.5), new Color(0.9, 0, 0.5));
         p.setTransform(Matrix.rotationY(Math.PI / 7).multiplyBy(Matrix.rotationZ(Math.PI / 5)).multiplyBy(Matrix.scaling(0.1, 1, 1)));

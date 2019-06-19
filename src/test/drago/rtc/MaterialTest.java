@@ -26,6 +26,7 @@ class MaterialTest {
         assertEquals(0.9, material.getDiffuse());
         assertEquals(0.9, material.getSpecular());
         assertEquals(200.0, material.getShininess());
+        assertEquals(0.0, material.getReflective());
     }
 
     @Test

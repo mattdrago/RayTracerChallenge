@@ -13,6 +13,7 @@ public class Material {
     private double diffuse = 0.9;
     private double specular = 0.9;
     private double shininess = 200.0;
+    private double reflective = 0.0;
     private Pattern pattern;
 
     public void setColor(Color color) {
@@ -47,6 +48,27 @@ public class Material {
         return shininess;
     }
 
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
+    }
+
+    public void setReflective(double reflective) {
+        this.reflective = reflective;
+    }
+
+    double getReflective() {
+        return reflective;
+    }
+
+    public void setAmbient(double ambient) {
+        this.ambient = ambient;
+    }
+
+    double getAmbient() {
+        return ambient;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,14 +95,6 @@ public class Material {
                 ", specular=" + specular +
                 ", shininess=" + shininess +
                 '}';
-    }
-
-    public void setAmbient(double ambient) {
-        this.ambient = ambient;
-    }
-
-    double getAmbient() {
-        return ambient;
     }
 
     Color lighting(Light light, Shape object, Tuple point, Tuple eyeV, Tuple normalV, boolean inShadow) {
@@ -117,9 +131,5 @@ public class Material {
         }
 
         return ambientColor.add(diffuseColor).add(specularColor);
-    }
-
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
     }
 }

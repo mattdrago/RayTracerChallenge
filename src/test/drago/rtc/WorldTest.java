@@ -1,6 +1,7 @@
 package drago.rtc;
 
 import drago.rtc.foundations.*;
+import drago.rtc.shape.Plane;
 import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;
@@ -73,7 +74,7 @@ class WorldTest {
         Computations comps = i.prepareComputations(r);
 
         Color expectedColor = new Color(0.38066, 0.47583, 0.2855);
-        Color actualColor = w.shadeHit(comps);
+        Color actualColor = w.shadeHit(comps, 1);
 
         assertEquals(expectedColor, actualColor);
 
@@ -90,7 +91,7 @@ class WorldTest {
         Computations comps = i.prepareComputations(r);
 
         Color expectedColor = new Color(0.90498, 0.90498, 0.90498);
-        Color actualColor = w.shadeHit(comps);
+        Color actualColor = w.shadeHit(comps, 1);
 
         assertEquals(expectedColor, actualColor);
     }
@@ -100,7 +101,7 @@ class WorldTest {
         World w = World.defaultWorld();
         Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 1, 0));
 
-        Color result = w.colorAt(r);
+        Color result = w.colorAt(r, 1);
 
         assertEquals(Color.BLACK, result);
     }
@@ -111,7 +112,7 @@ class WorldTest {
         Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
 
         Color expectedColor = new Color(0.38066, 0.47583, 0.2855);
-        Color actualColor = w.colorAt(r);
+        Color actualColor = w.colorAt(r, 1);
 
         assertEquals(expectedColor, actualColor);
     }
@@ -126,7 +127,7 @@ class WorldTest {
 
         Ray r = new Ray(Tuple.point(0, 0, 0.75), Tuple.vector(0, 0, -1));
 
-        assertEquals(inner.getMaterial().getColor(), w.colorAt(r));
+        assertEquals(inner.getMaterial().getColor(), w.colorAt(r, 1));
     }
 
     @Test
@@ -177,8 +178,89 @@ class WorldTest {
         Intersection i = new Intersection(4, s2);
 
         Computations comps = i.prepareComputations(r);
-        Color c = w.shadeHit(comps);
+        Color c = w.shadeHit(comps, 1);
 
         assertEquals(new Color(0.1, 0.1, 0.1), c);
+    }
+
+    @Test
+    void theReflectedColorForANonReflectiveMaterial() {
+        World w = World.defaultWorld();
+        Ray r = new Ray(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
+
+        Shape s = w.getObjects().get(1);
+        s.getMaterial().setAmbient(1);
+
+        Intersection i = new Intersection(1, s);
+
+        Computations comps = i.prepareComputations(r);
+
+        Color expected = Color.BLACK;
+        Color actual = w.reflectedColor(comps, 0);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void theReflectedColorForAReflectiveMaterial() {
+        World w = World.defaultWorld();
+
+        Shape plane = new Plane();
+        plane.getMaterial().setReflective(0.5);
+        plane.setTransform(Matrix.translation(0, -1, 0));
+
+        w.getObjects().add(plane);
+
+        Ray r = new Ray(Tuple.point(0, 0, -3), Tuple.vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+        Intersection i = new Intersection(Math.sqrt(2), plane);
+
+        Computations comps = i.prepareComputations(r);
+
+        // Numbers here are more exact than in the book
+        Color expectedReflected = new Color(0.19033, 0.23791, 0.14274);
+
+        assertEquals(expectedReflected, w.reflectedColor(comps, 1));
+
+        // Numbers here do not match exactly in the book.
+        Color expectedShade = new Color(0.87676, 0.92434, 0.82917);
+        assertEquals(expectedShade, w.shadeHit(comps, 1));
+    }
+
+    @Test
+    void colorAtWithMutuallyReflectiveSurfaces() {
+        World w = new World();
+        w.setLightSource(Light.pointLight(Tuple.point(0, 0, 0), Color.WHITE));
+
+        Shape lower = new Plane();
+        lower.getMaterial().setReflective(1);
+        lower.setTransform(Matrix.translation(0, -1, 0));
+        w.getObjects().add(lower);
+
+        Shape upper = new Plane();
+        upper.getMaterial().setReflective(1);
+        upper.setTransform(Matrix.translation(0, 1, 0));
+        w.getObjects().add(upper);
+
+        Ray r = new Ray(Tuple.point(0, 0, 0), Tuple.vector(0, 1, 0));
+
+        w.colorAt(r, 10);
+    }
+
+    @Test
+    void theReflectedColorForAReflectiveMaterialAtTheMaximumRecursiveDepth() {
+        World w = World.defaultWorld();
+
+        Shape plane = new Plane();
+        plane.getMaterial().setReflective(0.5);
+        plane.setTransform(Matrix.translation(0, -1, 0));
+
+        w.getObjects().add(plane);
+
+        Ray r = new Ray(Tuple.point(0, 0, -3), Tuple.vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+        Intersection i = new Intersection(Math.sqrt(2), plane);
+
+        Computations comps = i.prepareComputations(r);
+
+        assertEquals(Color.BLACK, w.reflectedColor(comps, 0));
     }
 }

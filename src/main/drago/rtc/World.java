@@ -58,22 +58,25 @@ public class World {
         return xs;
     }
 
-    Color shadeHit(Computations comps) {
+    Color shadeHit(Computations comps, int remaining) {
         Material m = comps.getObject().getMaterial();
 
         boolean isShadow = isShadowed(comps.getOverPoint());
 
-        return m.lighting(this.lightSource, comps.getObject(), comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
+        Color surfaceColor = m.lighting(this.lightSource, comps.getObject(), comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
+        Color reflectedColor = reflectedColor(comps, remaining);
+
+        return surfaceColor.add(reflectedColor);
     }
 
-    Color colorAt(Ray ray) {
+    Color colorAt(Ray ray, int remaining) {
 
         Color color = Color.BLACK;
 
         Intersection hit = Intersection.hit(intersect(ray));
 
         if(hit != null) {
-            color = shadeHit(hit.prepareComputations(ray));
+            color = shadeHit(hit.prepareComputations(ray), remaining);
         }
 
         return color;
@@ -90,5 +93,18 @@ public class World {
         Intersection hit = Intersection.hit(xs);
 
         return (hit != null && hit.getT() < distance);
+    }
+
+    Color reflectedColor(Computations comps, int remaining) {
+        Color reflectedColor = Color.BLACK;
+
+        Material m = comps.getObject().getMaterial();
+
+        if(m.getReflective() != 0 && remaining > 0) {
+            Ray reflectRay = new Ray(comps.getOverPoint(), comps.getReflectV());
+            reflectedColor = colorAt(reflectRay, remaining-1).scale(m.getReflective());
+        }
+
+        return reflectedColor;
     }
 }

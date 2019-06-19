@@ -1,6 +1,8 @@
 package drago.rtc.foundations;
 
 import drago.rtc.foundations.*;
+import drago.rtc.shape.Plane;
+import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;
 
@@ -125,5 +127,16 @@ class IntersectionTest {
 
         assertTrue(comps.getOverPoint().getZ() < -Computations.EPSILON / 2);
         assertTrue(comps.getPoint().getZ() > comps.getOverPoint().getZ());
+    }
+
+    @Test
+    void precomputeTheReflectionVector() {
+        Shape s = new Plane();
+        Ray r = new Ray(Tuple.point(0, 1, -1), Tuple.vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+        Intersection i = new Intersection(Math.sqrt(2), s);
+
+        Computations c = i.prepareComputations(r);
+
+        assertEquals(Tuple.vector(0, Math.sqrt(2) / 2, Math.sqrt(2) / 2), c.getReflectV());
     }
 }
