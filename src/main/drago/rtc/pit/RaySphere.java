@@ -38,10 +38,10 @@ public class RaySphere {
     }
 
     private void addCamera() {
-        camera = new Camera(1200, 600, Math.PI / 4);
+        camera = new Camera(1200, 600, Math.PI / 2);
         camera.setTransform(Matrix.viewTransform(
-                Tuple.point(0, 1.5, -8),
-                Tuple.point(0, 1, 0),
+                Tuple.point(2, 1.5, -3),
+                Tuple.point(0, 0.75, 0),
                 Tuple.vector(0, 1, 0))
         );
     }
@@ -64,8 +64,7 @@ public class RaySphere {
         floor.getMaterial().setSpecular(0);
         floor.getMaterial().setAmbient(0.2);
         floor.getMaterial().setDiffuse(0.8);
-        floor.getMaterial().setPattern(new StripePattern(Color.WHITE, Color.BLACK));
-        floor.getMaterial().setReflective(0.3);
+        floor.getMaterial().setReflective(0.15);
 
         return floor;
     }
@@ -78,6 +77,7 @@ public class RaySphere {
         wall.getMaterial().setSpecular(0);
         wall.getMaterial().setAmbient(0.2);
         wall.getMaterial().setDiffuse(0.8);
+        wall.getMaterial().setPattern(new CheckersPattern(Color.WHITE, Color.BLACK));
 
         return wall;
     }
@@ -85,11 +85,12 @@ public class RaySphere {
     private Plane rightWall() {
         Plane wall = new Plane();
 
-        wall.setTransform(Matrix.translation(11, 0, 0).multiplyBy(Matrix.rotationY(Math.PI / 2)).multiplyBy(Matrix.rotationX(Math.PI / 2)));
-        wall.getMaterial().setColor(new Color(1, 0.9, 0.9));
+        wall.setTransform(Matrix.translation(0, 0, 11).multiplyBy(Matrix.rotationX(Math.PI / 2)));
+        wall.getMaterial().setColor(new Color(0, 0.1, 0.1));
         wall.getMaterial().setSpecular(0);
         wall.getMaterial().setAmbient(0.2);
         wall.getMaterial().setDiffuse(0.8);
+        wall.getMaterial().setPattern(new StripePattern(Color.WHITE, Color.BLACK));
 
         return wall;
     }
