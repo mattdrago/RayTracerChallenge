@@ -5,6 +5,15 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 
 public class Sphere extends Shape {
+    public static Sphere glassSphere() {
+        Sphere s = new Sphere();
+
+        s.getMaterial().setTransparency(1.0);
+        s.getMaterial().setRefractiveIndex(1.5);
+
+        return s;
+    }
+
     @Override
     Intersection[] localIntersect(Ray transformedRay) {
         // Calculate the Discriminant

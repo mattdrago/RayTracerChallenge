@@ -1,6 +1,7 @@
 package drago.rtc.shape;
 
 import drago.rtc.foundations.Intersection;
+import drago.rtc.foundations.Matrix;
 import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
@@ -121,5 +122,14 @@ class SphereTest {
     @Test
     void aSphereIsAShape() {
         assertTrue((new Sphere()) instanceof Shape);
+    }
+
+    @Test
+    void aHelperForProducingASphereWithAGlassyMaterial() {
+        Sphere s = Sphere.glassSphere();
+
+        assertEquals(Matrix.identity(4), s.getTransform());
+        assertEquals(1.0, s.getMaterial().getTransparency());
+        assertEquals(1.5, s.getMaterial().getRefractiveIndex());
     }
 }

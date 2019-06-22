@@ -65,18 +65,20 @@ public class World {
 
         Color surfaceColor = m.lighting(this.lightSource, comps.getObject(), comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
         Color reflectedColor = reflectedColor(comps, remaining);
+        Color refractedColor = refractedColor(comps, remaining);
 
-        return surfaceColor.add(reflectedColor);
+        return surfaceColor.add(reflectedColor).add(refractedColor);
     }
 
     Color colorAt(Ray ray, int remaining) {
 
         Color color = Color.BLACK;
 
-        Intersection hit = Intersection.hit(intersect(ray));
+        Intersection[] xs = intersect(ray);
+        Intersection hit = Intersection.hit(xs);
 
         if(hit != null) {
-            color = shadeHit(hit.prepareComputations(ray), remaining);
+            color = shadeHit(hit.prepareComputations(ray, xs), remaining);
         }
 
         return color;
@@ -106,5 +108,32 @@ public class World {
         }
 
         return reflectedColor;
+    }
+
+    Color refractedColor(Computations comps, int remaining) {
+        Color refractedColor = Color.BLACK;
+
+        if(comps.getObject().getMaterial().getTransparency() > 0 && remaining > 0) {
+            double nRatio = comps.getN1() / comps.getN2();
+            double cosIncident = comps.getEyeV().dot(comps.getNormalV());
+
+            double sin2Refracted = nRatio * nRatio * (1 - cosIncident * cosIncident);
+
+            boolean isTotalInternalRefraction = sin2Refracted > 1.0;
+
+            if(!isTotalInternalRefraction) {
+                double cosRefracted = Math.sqrt(1.0 - sin2Refracted);
+
+                Tuple direction = comps.getNormalV().scale(nRatio * cosIncident - cosRefracted)
+                        .subtract(comps.getEyeV().scale(nRatio));
+
+                Ray refractRay = new Ray(comps.getUnderPoint(), direction);
+
+                refractedColor = colorAt(refractRay, remaining - 1).scale(comps.getObject().getMaterial().getTransparency());
+            }
+
+        }
+
+        return refractedColor;
     }
 }

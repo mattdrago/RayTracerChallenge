@@ -51,6 +51,7 @@ public class RaySphere {
         world.getObjects().add(leftWall());
         world.getObjects().add(rightWall());
         world.getObjects().add(largeMiddle());
+        world.getObjects().add(airBubble());
         world.getObjects().add(smallLeft());
         world.getObjects().add(smallRight());
 
@@ -98,15 +99,32 @@ public class RaySphere {
     private Sphere largeMiddle() {
         Sphere s = new Sphere();
         s.setTransform(Matrix.translation(-0.5, 1, 0.5));
-        s.getMaterial().setColor(new Color(0.1, 1, 0.5));
+        s.getMaterial().setColor(new Color(0.1, 0.3, 0.1));
         s.getMaterial().setDiffuse(0.7);
         s.getMaterial().setSpecular(0.3);
-        s.getMaterial().setReflective(0.2);
+        s.getMaterial().setReflective(0.0);
+        s.getMaterial().setTransparency(1.0);
+        s.getMaterial().setRefractiveIndex(1.5);
 
-        Pattern p = new StripePattern(new Color(0.1, 1, 0.5), new Color(0.9, 0, 0.5));
-        p.setTransform(Matrix.rotationY(Math.PI / 7).multiplyBy(Matrix.rotationZ(Math.PI / 5)).multiplyBy(Matrix.scaling(0.1, 1, 1)));
-        s.getMaterial().setPattern(p);
 
+
+//        Pattern p = new StripePattern(new Color(0.1, 1, 0.5), new Color(0.9, 0, 0.5));
+//        p.setTransform(Matrix.rotationY(Math.PI / 7).multiplyBy(Matrix.rotationZ(Math.PI / 5)).multiplyBy(Matrix.scaling(0.1, 1, 1)));
+//        s.getMaterial().setPattern(p);
+
+
+        return s;
+    }
+
+    private Sphere airBubble() {
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(-0.5, 1.0, 0.5).multiplyBy(Matrix.scaling(0.5, 0.5, 0.5)));
+        s.getMaterial().setColor(Color.BLACK);
+        s.getMaterial().setRefractiveIndex(1.0);
+        s.getMaterial().setTransparency(1.0);
+        s.getMaterial().setSpecular(0);
+        s.getMaterial().setAmbient(0);
+        s.getMaterial().setDiffuse(0);
 
         return s;
     }

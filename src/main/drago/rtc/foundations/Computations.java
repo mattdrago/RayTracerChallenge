@@ -13,8 +13,11 @@ public class Computations {
     private final Tuple reflectV;
     private final boolean isInside;
     private final Tuple overPoint;
+    private final double n1;
+    private final double n2;
+    private Tuple underPoint;
 
-    Computations(double t, Shape object, Tuple point, Tuple eyeV, Tuple normalV) {
+    Computations(double t, Shape object, Tuple point, Tuple eyeV, Tuple normalV, double n1, double n2) {
         this.t = t;
         this.object = object;
         this.point = point;
@@ -28,8 +31,13 @@ public class Computations {
             this.normalV = normalV;
         }
 
-        overPoint = point.add(this.normalV.scale(Computations.EPSILON));
+        Tuple epsilonScaledNormal = this.normalV.scale(Computations.EPSILON);
+        overPoint = point.add(epsilonScaledNormal);
+        underPoint = point.subtract(epsilonScaledNormal);
         reflectV = eyeV.scale(-1).reflect(this.normalV);
+
+        this.n1 = n1;
+        this.n2 = n2;
 
     }
 
@@ -63,5 +71,17 @@ public class Computations {
 
     public Tuple getReflectV() {
         return reflectV;
+    }
+
+    public double getN1() {
+        return n1;
+    }
+
+    public double getN2() {
+        return n2;
+    }
+
+    public Tuple getUnderPoint() {
+        return underPoint;
     }
 }

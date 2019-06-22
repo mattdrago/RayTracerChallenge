@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class PatternTest {
+public class PatternTest {
 
-    private Pattern testPattern() {
+    public static Pattern testPattern() {
         return new Pattern() {
 
             @Override

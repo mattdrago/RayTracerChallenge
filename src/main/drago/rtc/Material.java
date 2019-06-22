@@ -15,6 +15,8 @@ public class Material {
     private double shininess = 200.0;
     private double reflective = 0.0;
     private Pattern pattern;
+    private double transparency = 0.0;
+    private double refractiveIndex = 1.0;
 
     public void setColor(Color color) {
         this.color = color;
@@ -67,6 +69,22 @@ public class Material {
 
     double getAmbient() {
         return ambient;
+    }
+
+    public void setTransparency(double transparency) {
+        this.transparency = transparency;
+    }
+
+    public double getTransparency() {
+        return transparency;
+    }
+
+    public void setRefractiveIndex(double refractiveIndex) {
+        this.refractiveIndex = refractiveIndex;
+    }
+
+    public double getRefractiveIndex() {
+        return refractiveIndex;
     }
 
     @Override
