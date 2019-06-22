@@ -42,7 +42,7 @@ public class Material {
         return specular;
     }
 
-    void setShininess(double shininess) {
+    public void setShininess(double shininess) {
         this.shininess = shininess;
     }
 

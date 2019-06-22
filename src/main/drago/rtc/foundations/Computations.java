@@ -84,4 +84,24 @@ public class Computations {
     public Tuple getUnderPoint() {
         return underPoint;
     }
+
+    public double schlick() {
+        double cos = eyeV.dot(normalV);
+
+        if(n1 > n2) {
+            double n = n1 / n2;
+            double sin2T = n * n * (1.0 - cos * cos);
+
+            if(sin2T > 1.0) {
+                return 1.0;
+            }
+
+            cos = Math.sqrt(1 - sin2T);
+        }
+
+        double r0 = ((n1 - n2) / (n1 + n2));
+        r0 *= r0;
+
+        return r0 + (1 - r0) * Math.pow((1 - cos), 5);
+    }
 }

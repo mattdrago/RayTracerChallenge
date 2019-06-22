@@ -190,4 +190,45 @@ class IntersectionTest {
         assertTrue(comps.getUnderPoint().getZ() > Computations.EPSILON / 2);
         assertTrue(comps.getPoint().getZ() < comps.getUnderPoint().getZ());
     }
+
+    @Test
+    void theSchlickApproximationUnderTotalInternalReflection() {
+        Shape s = Sphere.glassSphere();
+        Ray r = new Ray(Tuple.point(0, 0, Math.sqrt(2) / 2), Tuple.vector(0, 1, 0));
+        Intersection[] xs = {
+                new Intersection(-Math.sqrt(2) / 2, s),
+                new Intersection(Math.sqrt(2) / 2, s)
+        };
+
+        Computations comps = xs[1].prepareComputations(r, xs);
+
+        assertEquals(1.0, comps.schlick());
+    }
+
+    @Test
+    void theSchlickApproximationWithAPerpendicularViewingAngle() {
+        Shape s = Sphere.glassSphere();
+        Ray r = new Ray(Tuple.point(0, 0, 0), Tuple.vector(0, 1, 0));
+        Intersection[] xs = {
+                new Intersection(-1, s),
+                new Intersection(1, s)
+        };
+
+        Computations comps = xs[1].prepareComputations(r, xs);
+
+        assertTrue(Math.abs(0.04 - comps.schlick()) < Computations.EPSILON);
+    }
+
+    @Test
+    void theSchlickApproximationWithSmallAngleAndN2GreaterN1() {
+        Shape s = Sphere.glassSphere();
+        Ray r = new Ray(Tuple.point(0, 0.99, -2), Tuple.vector(0, 0, 1));
+        Intersection[] xs = {
+                new Intersection(1.8589, s),
+        };
+
+        Computations comps = xs[0].prepareComputations(r, xs);
+
+        assertTrue(Math.abs(0.48873 - comps.schlick()) < Computations.EPSILON);
+    }
 }

@@ -372,4 +372,34 @@ class WorldTest {
 
         assertEquals(expectedColor, actualColor);
     }
+
+    @Test
+    void shadeHitWithAReflectiveTransparentMaterial() {
+        World w = World.defaultWorld();
+        Ray r = new Ray(Tuple.point(0, 0, -3), Tuple.vector(0, -Math.sqrt(2) / 2, Math.sqrt(2) / 2));
+
+        Plane floor = new Plane();
+        floor.setTransform(Matrix.translation(0, -1, 0));
+        floor.getMaterial().setReflective(0.5);
+        floor.getMaterial().setTransparency(0.5);
+        floor.getMaterial().setRefractiveIndex(1.5);
+        w.getObjects().add(floor);
+
+        Shape ball = new Sphere();
+        ball.setTransform(Matrix.translation(0, -3.5, -0.5));
+        ball.getMaterial().setColor(new Color(1, 0, 0));
+        ball.getMaterial().setAmbient(0.5);
+        w.getObjects().add(ball);
+
+        Intersection[] xs = {
+                new Intersection(Math.sqrt(2), floor)
+        };
+
+        Computations comps = xs[0].prepareComputations(r, xs);
+
+        Color expected = new Color(0.93391, 0.69643, 0.69243);
+        Color actual = w.shadeHit(comps, 5);
+
+        assertEquals(expected, actual);
+    }
 }

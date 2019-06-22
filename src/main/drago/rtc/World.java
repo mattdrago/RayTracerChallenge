@@ -67,7 +67,12 @@ public class World {
         Color reflectedColor = reflectedColor(comps, remaining);
         Color refractedColor = refractedColor(comps, remaining);
 
-        return surfaceColor.add(reflectedColor).add(refractedColor);
+        if(comps.getObject().getMaterial().getReflective() > 0 && comps.getObject().getMaterial().getTransparency() > 0) {
+            double reflectance = comps.schlick();
+            return surfaceColor.add(reflectedColor.scale(reflectance)).add(refractedColor.scale(1 - reflectance));
+        } else {
+            return surfaceColor.add(reflectedColor).add(refractedColor);
+        }
     }
 
     Color colorAt(Ray ray, int remaining) {

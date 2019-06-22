@@ -100,10 +100,12 @@ public class RaySphere {
         Sphere s = new Sphere();
         s.setTransform(Matrix.translation(-0.5, 1, 0.5));
         s.getMaterial().setColor(new Color(0.1, 0.3, 0.1));
-        s.getMaterial().setDiffuse(0.7);
-        s.getMaterial().setSpecular(0.3);
+        s.getMaterial().setDiffuse(0.4);
+        s.getMaterial().setAmbient(0.1);
+        s.getMaterial().setSpecular(1.0);
+        s.getMaterial().setShininess(300);
         s.getMaterial().setReflective(0.0);
-        s.getMaterial().setTransparency(1.0);
+        s.getMaterial().setTransparency(0.63);
         s.getMaterial().setRefractiveIndex(1.5);
 
 
@@ -121,10 +123,11 @@ public class RaySphere {
         s.setTransform(Matrix.translation(-0.5, 1.0, 0.5).multiplyBy(Matrix.scaling(0.5, 0.5, 0.5)));
         s.getMaterial().setColor(Color.BLACK);
         s.getMaterial().setRefractiveIndex(1.0);
-        s.getMaterial().setTransparency(1.0);
+        s.getMaterial().setTransparency(0.5);
         s.getMaterial().setSpecular(0);
         s.getMaterial().setAmbient(0);
         s.getMaterial().setDiffuse(0);
+        s.getMaterial().setReflective(0.5);
 
         return s;
     }
