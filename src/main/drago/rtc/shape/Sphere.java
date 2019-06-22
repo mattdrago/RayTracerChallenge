@@ -9,7 +9,12 @@ public class Sphere extends Shape {
         Sphere s = new Sphere();
 
         s.getMaterial().setTransparency(1.0);
+        s.getMaterial().setReflective(1.0);
         s.getMaterial().setRefractiveIndex(1.5);
+        s.getMaterial().setDiffuse(0.4);
+        s.getMaterial().setAmbient(0.1);
+        s.getMaterial().setSpecular(1);
+        s.getMaterial().setShininess(300);
 
         return s;
     }

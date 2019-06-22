@@ -30,7 +30,7 @@ public class Material {
         this.diffuse = diffuse;
     }
 
-    double getDiffuse() {
+    public double getDiffuse() {
         return diffuse;
     }
 
@@ -38,7 +38,7 @@ public class Material {
         this.specular = specular;
     }
 
-    double getSpecular() {
+    public double getSpecular() {
         return specular;
     }
 
@@ -46,7 +46,7 @@ public class Material {
         this.shininess = shininess;
     }
 
-    double getShininess() {
+    public double getShininess() {
         return shininess;
     }
 
@@ -59,7 +59,7 @@ public class Material {
         this.reflective = reflective;
     }
 
-    double getReflective() {
+    public double getReflective() {
         return reflective;
     }
 
@@ -67,7 +67,7 @@ public class Material {
         this.ambient = ambient;
     }
 
-    double getAmbient() {
+    public double getAmbient() {
         return ambient;
     }
 

@@ -131,5 +131,10 @@ class SphereTest {
         assertEquals(Matrix.identity(4), s.getTransform());
         assertEquals(1.0, s.getMaterial().getTransparency());
         assertEquals(1.5, s.getMaterial().getRefractiveIndex());
+        assertEquals(1.0, s.getMaterial().getReflective());
+        assertEquals(0.4, s.getMaterial().getDiffuse());
+        assertEquals(0.1, s.getMaterial().getAmbient());
+        assertEquals(1, s.getMaterial().getSpecular());
+        assertEquals(300, s.getMaterial().getShininess());
     }
 }
