@@ -3,7 +3,7 @@ package drago.rtc.foundations;
 import drago.rtc.shape.Shape;
 
 public class Computations {
-    static final double EPSILON = 0.000001;
+    public static final double EPSILON = 0.000001;
 
     private final double t;
     private final Shape object;
