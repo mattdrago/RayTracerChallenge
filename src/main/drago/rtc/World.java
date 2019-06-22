@@ -89,6 +89,7 @@ public class World {
         return color;
     }
 
+    // TODO Can this be modified to handle light going through a transparent material?
     boolean isShadowed(Tuple point) {
         Tuple toLight = lightSource.getPosition().subtract(point);
         double distance = toLight.magnitude();
