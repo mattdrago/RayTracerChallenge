@@ -4,7 +4,9 @@ import drago.rtc.*;
 import drago.rtc.foundations.Matrix;
 import drago.rtc.foundations.Tuple;
 import drago.rtc.pattern.*;
+import drago.rtc.shape.Cube;
 import drago.rtc.shape.Plane;
+import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
 
 import java.io.BufferedWriter;
@@ -54,6 +56,7 @@ public class RaySphere {
         world.getObjects().add(airBubble());
         world.getObjects().add(smallLeft());
         world.getObjects().add(smallRight());
+        world.getObjects().add(aCube());
 
         world.setLightSource(Light.pointLight(Tuple.point(-5, 10, -10), Color.WHITE));
     }
@@ -164,6 +167,24 @@ public class RaySphere {
         s.getMaterial().setPattern(pattern);
 
         return s;
+    }
+
+    private Shape aCube() {
+        Cube c = new Cube();
+
+        c.setTransform(
+                Matrix.translation(1.8, 1.1, 3)
+                .multiplyBy(Matrix.rotationY(Math.PI / 3))
+                .multiplyBy(Matrix.rotationX(Math.PI / 8))
+                .multiplyBy(Matrix.rotationZ(Math.PI / 5))
+                .multiplyBy(Matrix.scaling(0.8, 0.46, 0.68))
+        );
+        Pattern p = new CheckersPattern(new Color(0.2, 0.1, 0.7), new Color(0.5, 0.2, 0.6));
+        p.setTransform(Matrix.scaling(0.2, 0.2, 0.2));
+        c.getMaterial().setPattern(p);
+
+
+        return c;
     }
 
     private void save(Canvas image, String imageFileName) {
