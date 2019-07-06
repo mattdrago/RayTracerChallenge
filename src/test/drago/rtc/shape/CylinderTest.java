@@ -6,8 +6,7 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CylinderTest {
 
@@ -107,6 +106,66 @@ class CylinderTest {
             Intersection[] xs = cyl.localIntersect(rays[i]);
 
             assertEquals(expectedIntersectionCount[i], xs.length);
+        }
+    }
+
+    @Test
+    void theDefaultClosedValueForACylinder() {
+        assertFalse((new Cylinder().isClosed()));
+    }
+
+    @Test
+    void intersectingTheCapsOfAClosedCylinder() {
+        Cylinder cyl = new Cylinder();
+        cyl.setMinimum(1);
+        cyl.setMaximum(2);
+        cyl.setClosed(true);
+
+        Ray[] rays = {
+                new Ray(Tuple.point(0, 3, 0), Tuple.vector(0, -1, 0).normalise()),
+                new Ray(Tuple.point(0, 3, -2), Tuple.vector(0, -1, 2).normalise()),
+                new Ray(Tuple.point(0, 4, -2), Tuple.vector(0, -1, 1).normalise()),
+                new Ray(Tuple.point(0, 0, -2), Tuple.vector(0, 1, 2).normalise()),
+                new Ray(Tuple.point(0, -1, -2), Tuple.vector(0, 1, 1).normalise())
+        };
+
+        int[] expectedIntersectionCount = {2, 2, 2, 2, 2};
+
+        for (int i = 0; i < rays.length; i++) {
+            Intersection[] xs = cyl.localIntersect(rays[i]);
+
+            assertEquals(expectedIntersectionCount[i], xs.length);
+        }
+
+    }
+
+    @Test
+    void theNormalVectorOnACylindersEndCaps() {
+        Cylinder cyl = new Cylinder();
+        cyl.setMinimum(1);
+        cyl.setMaximum(2);
+        cyl.setClosed(true);
+
+        Tuple[] points = {
+                Tuple.point(0, 1, 0),
+                Tuple.point(0.5, 1, 0),
+                Tuple.point(0, 1, 0.5),
+                Tuple.point(0, 2, 0),
+                Tuple.point(0.5, 2, 0),
+                Tuple.point(0, 2, 0.5)
+        };
+
+        Tuple[] normals = {
+                Tuple.vector(0, -1, 0),
+                Tuple.vector(0, -1, 0),
+                Tuple.vector(0, -1, 0),
+                Tuple.vector(0, 1, 0),
+                Tuple.vector(0, 1, 0),
+                Tuple.vector(0, 1, 0)
+        };
+
+        for (int i = 0; i < points.length; i++) {
+            assertEquals(normals[i], cyl.localNormalAt(points[i]));
         }
     }
 }

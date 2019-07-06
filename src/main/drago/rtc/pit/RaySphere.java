@@ -189,6 +189,7 @@ public class RaySphere {
         Cylinder cyl = new Cylinder();
         cyl.setMinimum(0.5);
         cyl.setMaximum(3.2);
+        cyl.setClosed(true);
 
         cyl.setTransform(
                 Matrix.translation(-4.57, 0, 1.37)
