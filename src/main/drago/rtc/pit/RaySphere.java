@@ -187,9 +187,12 @@ public class RaySphere {
 
     private Shape aCylinder() {
         Cylinder cyl = new Cylinder();
+        cyl.setMinimum(0.5);
+        cyl.setMaximum(3.2);
 
         cyl.setTransform(
                 Matrix.translation(-4.57, 0, 1.37)
+                .multiplyBy(Matrix.rotationZ(- Math.PI / 5))
                 .multiplyBy(Matrix.scaling(0.8, 1, 0.8))
         );
 

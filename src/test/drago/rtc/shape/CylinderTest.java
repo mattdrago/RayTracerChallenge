@@ -77,4 +77,36 @@ class CylinderTest {
             assertEquals(expectedNormals[i], actualNormal);
         }
     }
+
+    @Test
+    void theDefaultMinimumAndMaximumForACylinder() {
+        Cylinder cyl = new Cylinder();
+
+        assertEquals(Double.NEGATIVE_INFINITY, cyl.getMinimum());
+        assertEquals(Double.POSITIVE_INFINITY, cyl.getMaximum());
+    }
+
+    @Test
+    void intersectingAConstrainedCylinder() {
+        Cylinder cyl = new Cylinder();
+        cyl.setMinimum(1);
+        cyl.setMaximum(2);
+
+        Ray[] rays = {
+                new Ray(Tuple.point(0, 1.5, 0), Tuple.vector(0.1, 1, 0).normalise()),
+                new Ray(Tuple.point(0, 3, -5), Tuple.vector(0, 0, 1)),
+                new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1)),
+                new Ray(Tuple.point(0, 2, -5), Tuple.vector(0, 0, 1)),
+                new Ray(Tuple.point(0, 1, -5), Tuple.vector(0, 0, 1)),
+                new Ray(Tuple.point(0, 1.5, -5), Tuple.vector(0, 0, 1))
+        };
+
+        int[] expectedIntersectionCount = {0, 0, 0, 0, 0, 2};
+
+        for (int i = 0; i < rays.length; i++) {
+            Intersection[] xs = cyl.localIntersect(rays[i]);
+
+            assertEquals(expectedIntersectionCount[i], xs.length);
+        }
+    }
 }
