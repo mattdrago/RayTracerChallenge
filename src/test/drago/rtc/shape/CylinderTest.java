@@ -53,7 +53,7 @@ class CylinderTest {
     }
 
     @Test
-    void NormalVectorOnACylinder() {
+    void normalVectorOnACylinder() {
         Cylinder cyl = new Cylinder();
 
         Tuple[] ps = {
