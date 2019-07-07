@@ -55,6 +55,7 @@ public class RaySphere {
         world.getObjects().add(smallRight());
         world.getObjects().add(aCube());
         world.getObjects().add(aCylinder());
+        world.getObjects().add(aCone());
 
         world.setLightSource(Light.pointLight(Tuple.point(-5, 10, -10), Color.WHITE));
     }
@@ -201,6 +202,19 @@ public class RaySphere {
         cyl.getMaterial().setColor(new Color(0.3, 0.9, 0.15));
 
         return cyl;
+    }
+
+    private Shape aCone() {
+        Cone c = new Cone();
+
+        c.setTransform(
+                Matrix.translation(-4, 1.0, -1)
+                .multiplyBy(Matrix.scaling(0.4, 1, 0.4))
+        );
+
+        c.getMaterial().setColor(new Color(0, 0, 0.69));
+
+        return c;
     }
 
     private void save(Canvas image, String imageFileName) {
