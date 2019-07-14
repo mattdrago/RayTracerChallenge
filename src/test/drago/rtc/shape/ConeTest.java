@@ -6,8 +6,7 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ConeTest {
 
@@ -72,6 +71,65 @@ class ConeTest {
                 Tuple.vector(0, 0, 0),
                 Tuple.vector(1, -Math.sqrt(2), 1),
                 Tuple.vector(-1, 1, 0)
+        };
+
+        for (int i = 0; i < points.length; i++) {
+            assertEquals(normals[i], c.localNormalAt(points[i]));
+        }
+    }
+
+    @Test
+    void aDefaultConeIsOpenAndUnlimited() {
+        Cone c = new Cone();
+
+        assertFalse(c.isClosed());
+        assertEquals(Double.POSITIVE_INFINITY, c.getMaximum());
+        assertEquals(Double.NEGATIVE_INFINITY, c.getMinimum());
+    }
+
+    @Test
+    void intersectingAConesEndCaps() {
+        Cone c = new Cone();
+        c.setMinimum(-0.5);
+        c.setMaximum(0.5);
+        c.setClosed(true);
+
+        Ray[] rs = {
+                new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 1, 0).normalise()),
+                new Ray(Tuple.point(0, 0, -0.25), Tuple.vector(0, 1, 1).normalise()),
+                new Ray(Tuple.point(0, 0, -0.25), Tuple.vector(0, 1, 0).normalise())
+        };
+
+        int[] xsCount = {0, 2, 4};
+
+        for (int i = 0; i < rs.length; i++) {
+            assertEquals(xsCount[i], c.localIntersect(rs[i]).length);
+        }
+    }
+
+    @Test
+    void theNormalVectorOnAConesEndCaps() {
+        Cone c = new Cone();
+        c.setMinimum(-0.5);
+        c.setMaximum(0.5);
+        c.setClosed(true);
+
+        Tuple[] points = {
+                Tuple.point(0, 0.5, 0),
+                Tuple.point(0.25, 0.5, 0),
+                Tuple.point(0, 0.5, 0.25),
+                Tuple.point(0, -0.5, 0),
+                Tuple.point(0.25, -0.5, 0),
+                Tuple.point(0, -0.5, 0.25),
+        };
+
+        Tuple[] normals = {
+                Tuple.vector(0, 1, 0),
+                Tuple.vector(0, 1, 0),
+                Tuple.vector(0, 1, 0),
+                Tuple.vector(0, -1, 0),
+                Tuple.vector(0, -1, 0),
+                Tuple.vector(0, -1, 0),
         };
 
         for (int i = 0; i < points.length; i++) {

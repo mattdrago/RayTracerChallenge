@@ -101,7 +101,7 @@ public class RaySphere {
     private Sphere largeMiddle() {
         Sphere s = new Sphere();
         s.setTransform(Matrix.translation(-0.5, 1, 0.5));
-        s.getMaterial().setColor(new Color(0.1, 0.3, 0.1));
+        s.getMaterial().setColor(new Color(0.2, 0.05, 0.1));
         s.getMaterial().setDiffuse(0.4);
         s.getMaterial().setAmbient(0.1);
         s.getMaterial().setSpecular(1.0);
@@ -206,13 +206,18 @@ public class RaySphere {
 
     private Shape aCone() {
         Cone c = new Cone();
+        c.setMinimum(-0.75);
+        c.setMaximum(0.5);
+        c.setClosed(true);
 
         c.setTransform(
                 Matrix.translation(-4, 1.0, -1)
+                .multiplyBy(Matrix.rotationX(-Math.PI / 13))
+                .multiplyBy(Matrix.rotationZ(-Math.PI / 9))
                 .multiplyBy(Matrix.scaling(0.4, 1, 0.4))
         );
 
-        c.getMaterial().setColor(new Color(0, 0, 0.69));
+        c.getMaterial().setColor(new Color(0.45, 0.45, 1.0));
 
         return c;
     }
