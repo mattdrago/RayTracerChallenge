@@ -105,6 +105,73 @@ class ShapeTest {
         assertEquals(normal.normalise(), normal);
     }
 
+    @Test
+    void aShapeHasAParentAttribute() {
+        Shape s = testShape();
+
+        assertNull(s.getParent());
+    }
+
+    @Test
+    void convertingAPointFromWorldToObjectSpace() {
+        Group g1 = new Group();
+        g1.setTransform(Matrix.rotationY(Math.PI / 2.0));
+
+        Group g2 = new Group();
+        g2.setTransform(Matrix.scaling(2, 2, 2));
+
+        g1.addChild(g2);
+
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(5, 0, 0));
+
+        g2.addChild(s);
+
+        Tuple calculatedPoint = s.worldToObject(Tuple.point(-2, 0, -10));
+        Tuple expectedPoint = Tuple.point(0, 0, -1);
+
+        assertEquals(expectedPoint, calculatedPoint);
+    }
+
+    @Test
+    void convertingANormalFromObjectToWorldSpace() {
+        Group g1 = new Group();
+        g1.setTransform(Matrix.rotationY(Math.PI / 2.0));
+
+        Group g2 = new Group();
+        g2.setTransform(Matrix.scaling(1, 2, 3));
+        g1.addChild(g2);
+
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(5, 0, 0));
+        g2.addChild(s);
+
+        double val = Math.sqrt(3) / 3;
+        Tuple calculatedNormal = s.normalToWorld(Tuple.vector(val, val, val));
+        Tuple expectedNormal = Tuple.vector(0.28571, 0.42857, -0.85714);
+
+        assertEquals(expectedNormal, calculatedNormal);
+    }
+
+    @Test
+    void findingTheNormalOnAChildObject() {
+        Group g1 = new Group();
+        g1.setTransform(Matrix.rotationY(Math.PI / 2.0));
+
+        Group g2 = new Group();
+        g2.setTransform(Matrix.scaling(1, 2, 3));
+        g1.addChild(g2);
+
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.translation(5, 0,0));
+        g2.addChild(s);
+
+        Tuple calculatedNormal = s.normalAt(Tuple.point(1.7321, 1.1547, -5.5774));
+        Tuple expectedNormal = Tuple.vector(0.28570, 0.42854, -0.85716);
+
+        assertEquals(expectedNormal, calculatedNormal);
+    }
+
     private TestShape testShape() {
         return new TestShape();
     }

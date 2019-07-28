@@ -20,8 +20,8 @@ public abstract class Pattern {
         return transform;
     }
 
-    public final Color patternAtShape(Shape shape, Tuple point) {
-        Tuple objectPoint = shape.getTransform().inverse().multiplyBy(point);
+    public final Color patternAtShape(Shape shape, Tuple worldPoint) {
+        Tuple objectPoint = shape.worldToObject(worldPoint);
         Tuple patternPoint = transform.inverse().multiplyBy(objectPoint);
 
         return patternAt(patternPoint);

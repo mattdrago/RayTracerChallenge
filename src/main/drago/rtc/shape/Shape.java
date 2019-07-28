@@ -10,6 +10,7 @@ public abstract class Shape {
 
     private Matrix transform = Matrix.identity(4);
     private Material material = new Material();
+    private Shape parent;
 
     public final Matrix getTransform() {
         return transform;
@@ -33,19 +34,45 @@ public abstract class Shape {
         return localIntersect(transformedRay);
     }
 
-    public final Tuple normalAt(Tuple point) {
-        Matrix transformInverse = transform.inverse();
+    public final Tuple normalAt(Tuple worldPoint) {
 
-        Tuple objectPoint = transformInverse.multiplyBy(point);
-
+        Tuple objectPoint = worldToObject(worldPoint);
         Tuple objectNormal = localNormalAt(objectPoint);
 
-        Tuple worldNormal = transformInverse.transpose().multiplyBy(objectNormal);
-        worldNormal = Tuple.vector(worldNormal.getX(), worldNormal.getY(), worldNormal.getZ());
-
-        return worldNormal.normalise();
+        return normalToWorld(objectNormal);
     }
 
     abstract Intersection[] localIntersect(Ray transformedRay);
     abstract Tuple localNormalAt(Tuple objectPoint);
+
+    Shape getParent() {
+        return parent;
+    }
+
+    void setParent(Shape parent) {
+        this.parent = parent;
+    }
+
+    public Tuple worldToObject(Tuple worldPoint) {
+        Tuple parentPoint = worldPoint;
+
+        if(parent != null) {
+            parentPoint = parent.worldToObject(worldPoint);
+        }
+
+        Matrix transformInverse = transform.inverse();
+        return transformInverse.multiplyBy(parentPoint);
+    }
+
+    Tuple normalToWorld(Tuple objectNormal) {
+        Matrix transformInverse = transform.inverse();
+        Tuple worldNormal = transformInverse.transpose().multiplyBy(objectNormal);
+        worldNormal = Tuple.vector(worldNormal.getX(), worldNormal.getY(), worldNormal.getZ()).normalise();
+
+        if(parent != null) {
+            worldNormal = parent.normalToWorld(worldNormal);
+        }
+
+        return worldNormal;
+    }
 }

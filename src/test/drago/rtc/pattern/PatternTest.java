@@ -3,6 +3,7 @@ package drago.rtc.pattern;
 import drago.rtc.*;
 import drago.rtc.foundations.Matrix;
 import drago.rtc.foundations.Tuple;
+import drago.rtc.shape.Group;
 import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;
@@ -72,5 +73,22 @@ public class PatternTest {
         Color expected = new Color(0.75, 0.5, 0.25);
 
         assertEquals(expected, p.patternAtShape(s, Tuple.point(2.5, 3, 3.5)));
+    }
+
+    @Test
+    void aPatternWithBothAGroupedObjectAndAPatternTransform() {
+        Group g = new Group();
+        g.setTransform(Matrix.rotationY(Math.PI / 2.0));
+
+        Shape s = new Sphere();
+        s.setTransform(Matrix.scaling(2, 2, 2));
+        g.addChild(s);
+
+        Pattern p = testPattern();
+        p.setTransform(Matrix.translation(5, 0, 0));
+
+        Color expected = new Color(0, 0, -1);
+
+        assertEquals(expected, p.patternAtShape(s, Tuple.point(-2, 0, -10)));
     }
 }
