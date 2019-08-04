@@ -256,4 +256,12 @@ class TupleTest {
         assertEquals(expectedReflection, actualReflection);
     }
 
+    @Test
+    void pointsAtInfinityAreEquivalent() {
+        Tuple p1 = Tuple.point(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+        Tuple p2 = Tuple.point(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+
+        assertEquals(p1, p2);
+    }
+
 }

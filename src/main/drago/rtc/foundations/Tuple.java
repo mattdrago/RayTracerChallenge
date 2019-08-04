@@ -80,7 +80,7 @@ public class Tuple {
     }
 
     private boolean equalDoubles(double d1, double d2) {
-        return Math.abs(d1 - d2) < EPSILON;
+        return d1 == d2 || Math.abs(d1 - d2) < EPSILON;
     }
 
     public Tuple add(Tuple operand) {
