@@ -5,14 +5,13 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CubeTest {
 
 
     @Test
-    void aSphereIsAShape() {
+    void aCubeIsAShape() {
         assertTrue((new Cube()) instanceof Shape);
     }
 
@@ -88,5 +87,19 @@ class CubeTest {
         for (int i = 0; i < ps.length; i++) {
             assertEquals(normals[i], c.localNormalAt(ps[i]));
         }
+    }
+
+    @Test
+    void aCubeHasABound() {
+        Cube c = new Cube();
+
+        Tuple expectedMin = Tuple.point(-1, -1, -1);
+        Tuple expectedMax = Tuple.point(1, 1, 1);
+
+        Bounds b = c.getBounds();
+
+        assertNotNull(b);
+        assertEquals(expectedMin, b.getMin());
+        assertEquals(expectedMax, b.getMax());
     }
 }

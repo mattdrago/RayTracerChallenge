@@ -72,4 +72,18 @@ class PlaneTest {
         assertEquals(-1, xs[0].getT());
         assertEquals(p, xs[0].getObject());
     }
+
+    @Test
+    void aPlaneHasABounds() {
+        Plane p = new Plane();
+
+        Tuple expectedMin = Tuple.point(Double.NEGATIVE_INFINITY, 0, Double.NEGATIVE_INFINITY);
+        Tuple expectedMax = Tuple.point(Double.POSITIVE_INFINITY, 0, Double.POSITIVE_INFINITY);
+
+        Bounds b = p.getBounds();
+
+        assertNotNull(b);
+        assertEquals(expectedMin, b.getMin());
+        assertEquals(expectedMax, b.getMax());
+    }
 }

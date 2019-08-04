@@ -44,6 +44,7 @@ public abstract class Shape {
 
     abstract Intersection[] localIntersect(Ray transformedRay);
     abstract Tuple localNormalAt(Tuple objectPoint);
+    abstract Bounds getBounds();
 
     Shape getParent() {
         return parent;

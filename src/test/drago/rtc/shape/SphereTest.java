@@ -137,4 +137,18 @@ class SphereTest {
         assertEquals(1, s.getMaterial().getSpecular());
         assertEquals(300, s.getMaterial().getShininess());
     }
+
+    @Test
+    void aSphereHasABound() {
+        Sphere s = new Sphere();
+
+        Tuple expectedMin = Tuple.point(-1, -1, -1);
+        Tuple expectedMax = Tuple.point(1, 1, 1);
+
+        Bounds b = s.getBounds();
+
+        assertNotNull(b);
+        assertEquals(expectedMin, b.getMin());
+        assertEquals(expectedMax, b.getMax());
+    }
 }

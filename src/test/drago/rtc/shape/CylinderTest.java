@@ -168,4 +168,54 @@ class CylinderTest {
             assertEquals(normals[i], cyl.localNormalAt(points[i]));
         }
     }
+
+    @Test
+    void anUnlimitedCylinderHasABounds() {
+        Cylinder c = new Cylinder();
+
+        Tuple expectedMin = Tuple.point(-1, Double.NEGATIVE_INFINITY, -1);
+        Tuple expectedMax = Tuple.point(1, Double.POSITIVE_INFINITY, 1);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    @Test
+    void aLimitedCylinderHasABounds() {
+        Cylinder c = new Cylinder();
+        c.setMinimum(-10);
+        c.setMaximum(5);
+
+        Tuple expectedMin = Tuple.point(-1, -10, -1);
+        Tuple expectedMax = Tuple.point(1, 5, 1);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    @Test
+    void aHeightLimitedCylinderHasBounds() {
+        Cylinder c = new Cylinder();
+        c.setMaximum(10);
+
+        Tuple expectedMin = Tuple.point(-1, Double.NEGATIVE_INFINITY, -1);
+        Tuple expectedMax = Tuple.point(1, 10, 1);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    @Test
+    void aDepthLimitedCylinderHasBounds() {
+        Cylinder c = new Cylinder();
+        c.setMinimum(-10);
+
+        Tuple expectedMin = Tuple.point(-1, -10, -1);
+        Tuple expectedMax = Tuple.point(1, Double.POSITIVE_INFINITY, 1);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    private void assertBounds(Bounds b, Tuple expectedMin, Tuple expectedMax) {
+        assertNotNull(b);
+        assertEquals(expectedMin, b.getMin());
+        assertEquals(expectedMax, b.getMax());
+    }
 }

@@ -107,6 +107,16 @@ public class Cone extends Shape {
 
     }
 
+    @Override
+    Bounds getBounds() {
+        double largestRadius = Math.max(Math.abs(minimum), Math.abs(maximum));
+
+        Tuple minBounds = Tuple.point(-largestRadius, minimum, -largestRadius);
+        Tuple maxBounds = Tuple.point(largestRadius, maximum, largestRadius);
+
+        return new Bounds(minBounds, maxBounds);
+    }
+
     public void setMinimum(double minimum) {
         this.minimum = minimum;
     }

@@ -111,4 +111,11 @@ public class Cylinder extends Shape {
 
         return normal;
     }
+
+    @Override
+    Bounds getBounds() {
+        Tuple minBound = Tuple.point(-1, minimum, -1);
+        Tuple maxBound = Tuple.point(1, maximum, 1);
+        return new Bounds(minBound,  maxBound);
+    }
 }

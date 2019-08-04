@@ -190,5 +190,10 @@ class ShapeTest {
         Tuple localNormalAt(Tuple point) {
             return Tuple.vector(point.getX(), point.getY(), point.getZ());
         }
+
+        @Override
+        Bounds getBounds() {
+            return null;
+        }
     }
 }

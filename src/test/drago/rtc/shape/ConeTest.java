@@ -136,4 +136,54 @@ class ConeTest {
             assertEquals(normals[i], c.localNormalAt(points[i]));
         }
     }
+
+    @Test
+    void anUnlimitedConeHasABounds() {
+        Cone c = new Cone();
+
+        Tuple expectedMin = Tuple.point(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
+        Tuple expectedMax = Tuple.point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    @Test
+    void aLimitedConeHasABounds() {
+        Cone c = new Cone();
+        c.setMinimum(-10);
+        c.setMaximum(5);
+
+        Tuple expectedMin = Tuple.point(-10, -10, -10);
+        Tuple expectedMax = Tuple.point(10, 5, 10);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    @Test
+    void aHeightLimitedConeHasBounds() {
+        Cone c = new Cone();
+        c.setMaximum(10);
+
+        Tuple expectedMin = Tuple.point(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
+        Tuple expectedMax = Tuple.point(Double.POSITIVE_INFINITY, 10, Double.POSITIVE_INFINITY);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    @Test
+    void aDepthLimitedConeHasBounds() {
+        Cone c = new Cone();
+        c.setMinimum(-10);
+
+        Tuple expectedMin = Tuple.point(Double.NEGATIVE_INFINITY, -10, Double.NEGATIVE_INFINITY);
+        Tuple expectedMax = Tuple.point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+
+        assertBounds(c.getBounds(), expectedMin, expectedMax);
+    }
+
+    private void assertBounds(Bounds b, Tuple expectedMin, Tuple expectedMax) {
+        assertNotNull(b);
+        assertEquals(expectedMin, b.getMin());
+        assertEquals(expectedMax, b.getMax());
+    }
 }

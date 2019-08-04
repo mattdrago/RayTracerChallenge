@@ -48,4 +48,9 @@ public class Sphere extends Shape {
     Tuple localNormalAt(Tuple objectPoint) {
         return objectPoint.subtract(Tuple.point(0, 0, 0));
     }
+
+    @Override
+    Bounds getBounds() {
+        return new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
+    }
 }

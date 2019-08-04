@@ -27,4 +27,10 @@ public class Plane extends Shape {
     Tuple localNormalAt(Tuple objectPoint) {
         return Tuple.vector(0,1,0);
     }
+
+    @Override
+    Bounds getBounds() {
+        return new Bounds(Tuple.point(Double.NEGATIVE_INFINITY, 0, Double.NEGATIVE_INFINITY),
+                Tuple.point(Double.POSITIVE_INFINITY, 0, Double.POSITIVE_INFINITY));
+    }
 }

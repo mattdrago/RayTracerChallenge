@@ -49,6 +49,11 @@ public class Cube extends Shape {
         return normal;
     }
 
+    @Override
+    Bounds getBounds() {
+        return new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
+    }
+
     private double[] checkAxis(double origin, double direction) {
         double tMinNumerator = -1 - origin;
         double tMaxNumerator = 1 - origin;

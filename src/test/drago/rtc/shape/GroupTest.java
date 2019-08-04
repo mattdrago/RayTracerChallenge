@@ -42,6 +42,11 @@ class GroupTest {
             Tuple localNormalAt(Tuple objectPoint) {
                 return null;
             }
+
+            @Override
+            Bounds getBounds() {
+                return null;
+            }
         };
     }
 

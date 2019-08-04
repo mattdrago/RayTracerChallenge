@@ -31,6 +31,11 @@ public class Group extends Shape {
         throw new AbstractMethodError("Groups do not have a local Normal");
     }
 
+    @Override
+    Bounds getBounds() {
+        return null;
+    }
+
     boolean hasChildren() {
         return children.size() > 0;
     }
