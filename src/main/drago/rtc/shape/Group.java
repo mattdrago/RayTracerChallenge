@@ -14,15 +14,20 @@ public class Group extends Shape {
 
     @Override
     Intersection[] localIntersect(Ray transformedRay) {
-        List<Intersection> allXsList = new ArrayList<>();
+        Intersection[] allXs = {};
 
-        for(Shape s: children) {
-            Intersection[] xs = s.intersects(transformedRay);
-            allXsList.addAll(Arrays.asList(xs));
+        if(hasChildren() && getBounds().intersected(transformedRay)) {
+            List<Intersection> allXsList = new ArrayList<>();
+
+            for (Shape s : children) {
+                Intersection[] xs = s.intersects(transformedRay);
+                allXsList.addAll(Arrays.asList(xs));
+            }
+
+            allXs = allXsList.toArray(new Intersection[0]);
+            Arrays.sort(allXs);
         }
 
-        Intersection[] allXs = allXsList.toArray(new Intersection[0]);
-        Arrays.sort(allXs);
         return allXs;
     }
 
