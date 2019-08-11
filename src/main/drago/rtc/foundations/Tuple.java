@@ -115,7 +115,7 @@ public class Tuple {
         return this.x * operand.x + this.y * operand.y + this.z * operand.z + this.w * operand.w;
     }
 
-    Tuple cross(Tuple operand) {
+    public Tuple cross(Tuple operand) {
         return vector(this.y * operand.z - this.z * operand.y,
                 this.z * operand.x - this.x * operand.z,
                 this.x * operand.y - this.y * operand.x);
