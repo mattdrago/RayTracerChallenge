@@ -103,4 +103,38 @@ class GroupTest {
 
         assertEquals(2, xs.length);
     }
+
+    @Test
+    void childrenBoundsAreTransformedIntoGroupSpace() {
+        Sphere s = new Sphere();
+        s.setTransform(Matrix.scaling(2, 2, 2));
+
+        Group g = new Group();
+        g.addChild(s);
+
+        Bounds actual = g.getBounds();
+        Bounds expected = new Bounds(Tuple.point(-2, -2, -2), Tuple.point(2, 2, 2));
+
+        assertEquals(expected.getMin(), actual.getMin());
+        assertEquals(expected.getMax(), actual.getMax());
+    }
+
+    @Test
+    void allChildrenContributeToBounds() {
+        Sphere s1 = new Sphere();
+        s1.setTransform(Matrix.translation(10, 10, 10));
+
+        Sphere s2 = new Sphere();
+        s2.setTransform(Matrix.translation(-5, -4, 5));
+
+        Group g = new Group();
+        g.addChild(s1);
+        g.addChild(s2);
+
+        Bounds actual = g.getBounds();
+        Bounds expected = new Bounds(Tuple.point(-6, -5, 4), Tuple.point(11, 11, 11));
+
+        assertEquals(expected.getMin(), actual.getMin());
+        assertEquals(expected.getMax(), actual.getMax());
+    }
 }

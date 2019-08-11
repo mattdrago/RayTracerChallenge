@@ -33,7 +33,13 @@ public class Group extends Shape {
 
     @Override
     Bounds getBounds() {
-        return null;
+        Bounds b = null;
+
+        for (Shape child: children) {
+            b = child.getBounds().transform(child.getTransform()).combine(b);
+        }
+
+        return b;
     }
 
     boolean hasChildren() {
