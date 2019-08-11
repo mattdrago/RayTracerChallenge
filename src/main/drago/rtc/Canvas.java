@@ -1,5 +1,9 @@
 package drago.rtc;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class Canvas {
@@ -50,4 +54,15 @@ public class Canvas {
             && y >=0
             && y < height;
     }
+
+    public void save(String imageFileName) {
+        PPMWriter ppmWriter = new PPMWriter();
+
+        try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(imageFileName))) {
+            bw.write(ppmWriter.write(this));
+        } catch (IOException e) {
+            System.out.println("Unable to save " + imageFileName + ": " + e.getMessage());
+        }
+    }
+
 }
