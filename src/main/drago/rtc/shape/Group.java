@@ -11,6 +11,7 @@ import java.util.List;
 public class Group extends Shape {
 
     private List<Shape> children = new ArrayList<>();
+    private Bounds bounds = null;
 
     @Override
     Intersection[] localIntersect(Ray transformedRay) {
@@ -38,13 +39,17 @@ public class Group extends Shape {
 
     @Override
     Bounds getBounds() {
+        return bounds;
+    }
+
+    private void calculateBounds() {
         Bounds b = null;
 
         for (Shape child: children) {
             b = child.getBounds().transform(child.getTransform()).combine(b);
         }
 
-        return b;
+        this.bounds = b;
     }
 
     boolean hasChildren() {
@@ -58,5 +63,7 @@ public class Group extends Shape {
     public void addChild(Shape s) {
         children.add(s);
         s.setParent(this);
+
+        calculateBounds();
     }
 }
