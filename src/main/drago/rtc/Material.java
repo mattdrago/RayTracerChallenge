@@ -127,7 +127,7 @@ public class Material {
             effectiveColor = pattern.patternAtShape(object, point);
         }
 
-        effectiveColor.hadamardProduct(light.getIntensity());
+        effectiveColor = effectiveColor.hadamardProduct(light.getIntensity());
 
         ambientColor = effectiveColor.scale(this.ambient);
 
