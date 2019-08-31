@@ -5,7 +5,7 @@ import drago.rtc.foundations.Intersection;
 import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 
-class Triangle extends Shape {
+public class Triangle extends Shape {
     private final Tuple point1;
     private final Tuple point2;
     private final Tuple point3;
@@ -14,7 +14,7 @@ class Triangle extends Shape {
     private final Tuple edge2;
     private final Tuple normal;
 
-    Triangle(Tuple point1, Tuple point2, Tuple point3) {
+    public Triangle(Tuple point1, Tuple point2, Tuple point3) {
 
         this.point1 = point1;
         this.point2 = point2;
