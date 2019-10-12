@@ -46,7 +46,10 @@ public class Group extends Shape {
         Bounds b = null;
 
         for (Shape child: children) {
-            b = child.getBounds().transform(child.getTransform()).combine(b);
+            Bounds childBounds = child.getBounds();
+            if(childBounds != null) {
+                b = childBounds.transform(child.getTransform()).combine(b);
+            }
         }
 
         this.bounds = b;
