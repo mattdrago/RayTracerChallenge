@@ -69,10 +69,11 @@ class OBJReader {
 
     private void parseFace(String line) {
         String[] lineParts = line.split(" ");
+        Tuple rootVertex = vertices.get(Integer.parseInt(lineParts[1]));
 
         for(int i = 2, j = 3; j < lineParts.length; ++i, ++j) {
             currentGroup.addChild(new Triangle(
-                    vertices.get(Integer.parseInt(lineParts[1])),
+                    rootVertex,
                     vertices.get(Integer.parseInt(lineParts[i])),
                     vertices.get(Integer.parseInt(lineParts[j]))
             ));
