@@ -15,21 +15,10 @@ public class Chapter15 extends ChapterBase {
 
     public static void main(String[] argv) {
         Chapter15 c15 = new Chapter15();
-
-        long start = System.currentTimeMillis();
-        System.out.println("Build world: 0");
-        c15.buildWorld();
-        System.out.println("Add a Camera: " + (System.currentTimeMillis() - start));
-        c15.addCamera();
-
-        c15.addShapes();
-
-        System.out.println("Start Render:" + (System.currentTimeMillis() - start));
-        c15.render("gallery/chapter15.ppm");
-        System.out.println("Completed: " + (System.currentTimeMillis() - start));
+        c15.renderWorld("gallery/chapter15.ppm");
     }
 
-    private void addShapes() {
+    void addShapes() {
 
         Group g = new Group();
 
