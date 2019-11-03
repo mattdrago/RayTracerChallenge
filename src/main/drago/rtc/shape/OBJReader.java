@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class OBJReader {
+public class OBJReader {
     private BufferedReader sourceReader;
     private List<Tuple> vertices = new ArrayList<>();
     private Group defaultGroup = new Group();
@@ -25,12 +25,12 @@ class OBJReader {
         vertices.add(Tuple.point(0, 0, 0));
     }
 
-    OBJReader(Reader sourceReader) {
+    public OBJReader(Reader sourceReader) {
         this();
         this.sourceReader = new BufferedReader(sourceReader);
     }
 
-    void parse() {
+    public void parse() {
         try {
             String line;
             while ((line = sourceReader.readLine()) != null) {
@@ -113,7 +113,7 @@ class OBJReader {
         return groups.get(groupName);
     }
 
-    Group toGroup() {
+    public Group toGroup() {
         Group g = new Group();
 
         for (Group loadedGroup : this.groups.values()) {
