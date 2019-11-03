@@ -1,14 +1,10 @@
 package drago.rtc.pit;
 
 import drago.rtc.*;
-import drago.rtc.foundations.Matrix;
 import drago.rtc.foundations.Tuple;
-import drago.rtc.pattern.CheckersPattern;
-import drago.rtc.pattern.Pattern;
-import drago.rtc.pattern.RingPattern;
 import drago.rtc.shape.*;
 
-public class Chapter15 extends ChapterBase {
+class Chapter15 extends ChapterBase {
 
     private Chapter15() {
     }

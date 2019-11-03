@@ -5,7 +5,6 @@ import drago.rtc.foundations.Intersection;
 import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 
-import java.beans.IntrospectionException;
 import java.util.ArrayList;
 import java.util.List;
 

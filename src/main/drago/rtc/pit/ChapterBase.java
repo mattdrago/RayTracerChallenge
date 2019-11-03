@@ -7,7 +7,7 @@ import drago.rtc.pattern.CheckersPattern;
 import drago.rtc.shape.Plane;
 
 abstract class ChapterBase {
-    World world = new World();
+    final World world = new World();
     private Camera camera;
 
     private void buildWorld() {

@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class RaySphere {
+class RaySphere {
 
-    private World world = new World();
+    private final World world = new World();
     private Camera camera;
 
     private RaySphere() {
@@ -26,14 +26,14 @@ public class RaySphere {
         rs.addCamera();
 
         long start = System.currentTimeMillis();
-        rs.render("gallery/chapter9.ppm");
+        rs.render();
         long end = System.currentTimeMillis();
         System.out.println("Total Render Time: " + (end - start) + "ms");
     }
 
-    private void render(String imageFileName) {
+    private void render() {
         Canvas image = camera.render(world);
-        save(image, imageFileName);
+        save(image);
     }
 
     private void addCamera() {
@@ -222,10 +222,10 @@ public class RaySphere {
         return c;
     }
 
-    private void save(Canvas image, String imageFileName) {
+    private void save(Canvas image) {
         PPMWriter ppmWriter = new PPMWriter();
 
-        try(BufferedWriter bw = Files.newBufferedWriter(Paths.get(imageFileName))) {
+        try(BufferedWriter bw = Files.newBufferedWriter(Paths.get("gallery/chapter9.ppm"))) {
             bw.write(ppmWriter.write(image));
         } catch (IOException e) {
             System.out.println("Unable to save RaySphere: " + e.getMessage());

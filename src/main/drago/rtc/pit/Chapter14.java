@@ -11,8 +11,8 @@ import drago.rtc.shape.Group;
 import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
 
-public class Chapter14 {
-    private World world = new World();
+class Chapter14 {
+    private final World world = new World();
     private Camera camera;
 
     private Chapter14() {
@@ -28,7 +28,7 @@ public class Chapter14 {
         c14.addCamera();
 
         System.out.println("Start Render:" + (System.currentTimeMillis() - start));
-        c14.render("gallery/chapter14.ppm");
+        c14.render();
         System.out.println("Completed: " + (System.currentTimeMillis() - start));
     }
 
@@ -48,10 +48,10 @@ public class Chapter14 {
         );
     }
 
-    private void render(String filename) {
+    private void render() {
         long start = System.currentTimeMillis();
 
-        camera.render(world).save(filename);
+        camera.render(world).save("gallery/chapter14.ppm");
 
         long end = System.currentTimeMillis();
         System.out.println("Total Render Time: " + (end - start) + "ms");

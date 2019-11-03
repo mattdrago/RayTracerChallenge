@@ -96,10 +96,9 @@ class MaterialTest {
         Tuple eyeV = Tuple.vector(0, 0, -1);
         Tuple normalV = Tuple.vector(0, 0, -1);
         Light light = Light.pointLight(Tuple.point(0, 0, -10), Color.WHITE);
-        boolean inShadow = true;
 
         Color expected = new Color(0.1, 0.1, 0.1);
-        Color actual = material.lighting(light, new Sphere(), position, eyeV, normalV, inShadow);
+        Color actual = material.lighting(light, new Sphere(), position, eyeV, normalV, true);
 
         assertEquals(expected, actual);
     }

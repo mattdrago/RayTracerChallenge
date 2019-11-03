@@ -5,7 +5,6 @@ import drago.rtc.foundations.Tuple;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,9 +12,9 @@ import java.util.Map;
 
 public class OBJReader {
     private BufferedReader sourceReader;
-    private List<Tuple> vertices = new ArrayList<>();
-    private Group defaultGroup = new Group();
-    private Map<String, Group> groups = new HashMap<>();
+    private final List<Tuple> vertices = new ArrayList<>();
+    private final Group defaultGroup = new Group();
+    private final Map<String, Group> groups = new HashMap<>();
     private Group currentGroup = defaultGroup; 
 
     private int linesRead = 0;

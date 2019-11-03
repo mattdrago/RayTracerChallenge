@@ -15,7 +15,7 @@ public class Computations {
     private final Tuple overPoint;
     private final double n1;
     private final double n2;
-    private Tuple underPoint;
+    private final Tuple underPoint;
 
     Computations(double t, Shape object, Tuple point, Tuple eyeV, Tuple normalV, double n1, double n2) {
         this.t = t;

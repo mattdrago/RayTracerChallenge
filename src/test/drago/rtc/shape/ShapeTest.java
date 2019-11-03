@@ -14,14 +14,14 @@ class ShapeTest {
 
     @Test
     void theDefaultTransformation() {
-        Shape s = testShape();
+        Shape s = new TestShape();
 
         Assertions.assertEquals(Matrix.identity(4), s.getTransform());
     }
 
     @Test
     void assigningATransformation() {
-        Shape s = testShape();
+        Shape s = new TestShape();
         Matrix t = Matrix.translation(2, 3, 4);
 
         s.setTransform(t);
@@ -31,7 +31,7 @@ class ShapeTest {
 
     @Test
     void aShapeHasADefaultMaterial() {
-        Shape s = testShape();
+        Shape s = new TestShape();
 
         Material m = new Material();
 
@@ -40,7 +40,7 @@ class ShapeTest {
 
     @Test
     void aShapeMayBeAssignedAMaterial() {
-        Shape s = testShape();
+        Shape s = new TestShape();
 
         Material m = new Material();
         m.setAmbient(1.0);
@@ -53,10 +53,10 @@ class ShapeTest {
     @Test
     void intersectingAScaledShapeWithARay() {
         Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
-        TestShape s = testShape();
+        TestShape s = new TestShape();
 
         s.setTransform(Matrix.scaling(2, 2, 2));
-        Intersection[] xs = s.intersects(r);
+        s.intersects(r);
 
         assertEquals(Tuple.point(0, 0, -2.5), s.savedRay.getOrigin());
         assertEquals(Tuple.vector(0, 0, 0.5), s.savedRay.getDirection());
@@ -65,10 +65,10 @@ class ShapeTest {
     @Test
     void intersectingATranslatedShapeWithARay() {
         Ray r = new Ray(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
-        TestShape s = testShape();
+        TestShape s = new TestShape();
 
         s.setTransform(Matrix.translation(5, 0, 0));
-        Intersection[] xs = s.intersects(r);
+        s.intersects(r);
 
         assertEquals(Tuple.point(-5, 0, -5), s.savedRay.getOrigin());
         assertEquals(Tuple.vector(0, 0, 1), s.savedRay.getDirection());
@@ -76,7 +76,7 @@ class ShapeTest {
 
     @Test
     void computingTheNormalOnaATranslatedShape() {
-        Shape s = testShape();
+        Shape s = new TestShape();
         s.setTransform(Matrix.translation(0, 1, 0));
 
         Tuple expectedNormal = Tuple.vector(0, 0.70711, -0.70711);
@@ -87,7 +87,7 @@ class ShapeTest {
 
     @Test
     void computingTheNormalOnATransformedShape() {
-        Shape s = testShape();
+        Shape s = new TestShape();
         s.setTransform(Matrix.scaling(1, 0.5, 1).multiplyBy(Matrix.rotationZ(Math.PI / 5)));
 
         Tuple expectedNormal = Tuple.vector(0, 0.97014, -0.24254);
@@ -99,7 +99,7 @@ class ShapeTest {
 
     @Test
     void theNormalIsANormalisedVector() {
-        Shape s = testShape();
+        Shape s = new TestShape();
         Tuple normal = s.normalAt(Tuple.point(1, 2, 3));
 
         assertEquals(normal.normalise(), normal);
@@ -107,7 +107,7 @@ class ShapeTest {
 
     @Test
     void aShapeHasAParentAttribute() {
-        Shape s = testShape();
+        Shape s = new TestShape();
 
         assertNull(s.getParent());
     }
@@ -172,11 +172,7 @@ class ShapeTest {
         assertEquals(expectedNormal, calculatedNormal);
     }
 
-    private TestShape testShape() {
-        return new TestShape();
-    }
-
-    private class TestShape extends Shape {
+    private static class TestShape extends Shape {
         Ray savedRay;
 
         @Override

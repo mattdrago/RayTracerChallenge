@@ -4,7 +4,6 @@ import drago.rtc.foundations.Computations;
 import drago.rtc.foundations.Intersection;
 import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
-import org.omg.CORBA.COMM_FAILURE;
 
 import java.util.ArrayList;
 import java.util.List;

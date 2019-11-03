@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Group extends Shape {
 
-    private List<Shape> children = new ArrayList<>();
+    private final List<Shape> children = new ArrayList<>();
     private Bounds bounds = null;
 
     @Override

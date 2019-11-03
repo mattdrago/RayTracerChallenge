@@ -5,11 +5,10 @@ import drago.rtc.foundations.Matrix;
 import drago.rtc.foundations.Tuple;
 import drago.rtc.shape.OBJReader;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Teapot extends ChapterBase {
+class Teapot extends ChapterBase {
     private Teapot() {
 
     }

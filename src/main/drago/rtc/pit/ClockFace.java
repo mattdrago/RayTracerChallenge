@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class ClockFace {
+class ClockFace {
     public static void main(String[] argv) {
         Tuple point = Tuple.point(0, 100, 0);
         Matrix rotationZ = Matrix.rotationZ(Math.PI / 6);

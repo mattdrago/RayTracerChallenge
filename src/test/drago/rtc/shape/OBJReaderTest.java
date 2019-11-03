@@ -3,7 +3,6 @@ package drago.rtc.shape;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;

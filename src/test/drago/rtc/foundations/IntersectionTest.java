@@ -1,11 +1,9 @@
 package drago.rtc.foundations;
 
-import drago.rtc.foundations.*;
 import drago.rtc.shape.Plane;
 import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
 import org.junit.jupiter.api.Test;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import static org.junit.jupiter.api.Assertions.*;
 
