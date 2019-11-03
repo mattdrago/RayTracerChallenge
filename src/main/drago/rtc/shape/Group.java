@@ -39,6 +39,10 @@ public class Group extends Shape {
 
     @Override
     Bounds getBounds() {
+        if(bounds == null) {
+            calculateBounds();
+        }
+
         return bounds;
     }
 
@@ -67,6 +71,5 @@ public class Group extends Shape {
         children.add(s);
         s.setParent(this);
 
-        calculateBounds();
     }
 }
