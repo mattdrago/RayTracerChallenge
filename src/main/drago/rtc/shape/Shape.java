@@ -31,7 +31,11 @@ public abstract class Shape {
     public final Intersection[] intersects(Ray ray) {
         Ray transformedRay = ray.transform(transform.inverse());
 
-        return localIntersect(transformedRay);
+        Intersection[] intersections = localIntersect(transformedRay);
+
+        IntersectHitLogger.log(this, intersections);
+
+        return intersections;
     }
 
     public final Tuple normalAt(Tuple worldPoint) {
@@ -46,7 +50,7 @@ public abstract class Shape {
     abstract Tuple localNormalAt(Tuple objectPoint);
     abstract Bounds getBounds();
 
-    Shape getParent() {
+    public Shape getParent() {
         return parent;
     }
 

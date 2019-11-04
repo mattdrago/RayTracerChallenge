@@ -70,6 +70,9 @@ abstract class ChapterBase {
         System.out.println("Start Render:" + (System.currentTimeMillis() - start));
         render(filename);
         System.out.println("Completed: " + (System.currentTimeMillis() - start));
+
+        System.out.println();
+        System.out.println(IntersectHitLogger.report());
     }
 
     abstract void addShapes();
