@@ -104,4 +104,8 @@ class Bounds {
         return ts;
     }
 
+    boolean contains(Bounds other) {
+        return (min.getX() < other.min.getX() && min.getY() < other.min.getY() && min.getZ() < other.min.getY()) &&
+                (max.getX() > other.max.getX() && max.getY() > other.max.getY() && max.getZ() > other.max.getZ());
+    }
 }

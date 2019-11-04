@@ -119,4 +119,28 @@ class BoundsTest {
         }
     }
 
+    @Test
+    void aBoundThatOverlapsAnotherIsNotContainedInIt() {
+        Bounds b = new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
+        Bounds c = new Bounds(Tuple.point(0, 0, 0), Tuple.point(2, 2, 2));
+
+        assertFalse(b.contains(c));
+    }
+
+    @Test
+    void aBoundThatIsOutsideAnotherBoundIsNotContainedInIt() {
+        Bounds b = new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
+        Bounds c = new Bounds(Tuple.point(2, 2, 2), Tuple.point(3, 4, 5));
+
+        assertFalse(b.contains(c));
+    }
+
+    @Test
+    void aBoundThatIsCompletelyInsideAnotherBoundIsContainedInIt() {
+        Bounds b = new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
+        Bounds c = new Bounds(Tuple.point(0, 0, 0), Tuple.point(0.5, 0.5, 0.5));
+
+        assertTrue(b.contains(c));
+    }
+
 }
