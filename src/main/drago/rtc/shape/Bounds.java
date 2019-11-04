@@ -2,6 +2,9 @@ package drago.rtc.shape;
 
 import drago.rtc.foundations.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 class Bounds {
@@ -107,5 +110,43 @@ class Bounds {
     boolean contains(Bounds other) {
         return (min.getX() < other.min.getX() && min.getY() < other.min.getY() && min.getZ() < other.min.getY()) &&
                 (max.getX() > other.max.getX() && max.getY() > other.max.getY() && max.getZ() > other.max.getZ());
+    }
+
+    List<Bounds> divide() {
+
+        Tuple center = Tuple.point(
+                (min.getX() + max.getX()) / 2.0,
+                (min.getY() + max.getZ()) / 2.0,
+                (min.getZ() + max.getZ()) / 2.0
+        );
+
+        List<Bounds> bounds = new ArrayList<>(8);
+        bounds.add(new Bounds(min, center));
+
+        bounds.add(new Bounds(Tuple.point(center.getX(), min.getY(), min.getZ()), Tuple.point(max.getX(), center.getY(), center.getZ())));
+        bounds.add(new Bounds(Tuple.point(min.getX(), center.getY(), min.getZ()), Tuple.point(center.getX(), max.getY(), center.getZ())));
+        bounds.add(new Bounds(Tuple.point(min.getX(), min.getY(), center.getZ()), Tuple.point(center.getX(), center.getY(), max.getZ())));
+
+        bounds.add(new Bounds(Tuple.point(center.getX(), center.getY(), min.getZ()), Tuple.point(max.getX(), max.getY(), center.getZ())));
+        bounds.add(new Bounds(Tuple.point(center.getX(), min.getY(), center.getZ()), Tuple.point(max.getX(), center.getY(), max.getZ())));
+        bounds.add(new Bounds(Tuple.point(min.getX(), center.getY(), center.getZ()), Tuple.point(center.getX(), max.getY(), max.getZ())));
+
+        bounds.add(new Bounds(center, max));
+
+        return bounds;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bounds bounds = (Bounds) o;
+        return Objects.equals(min, bounds.min) &&
+                Objects.equals(max, bounds.max);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(min, max);
     }
 }

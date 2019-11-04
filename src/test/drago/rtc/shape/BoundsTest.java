@@ -5,6 +5,8 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoundsTest {
@@ -141,6 +143,31 @@ class BoundsTest {
         Bounds c = new Bounds(Tuple.point(0, 0, 0), Tuple.point(0.5, 0.5, 0.5));
 
         assertTrue(b.contains(c));
+    }
+
+    @Test
+    void dividingABoundsCreates8Bounds() {
+        Bounds b = new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
+
+        List<Bounds> bounds = b.divide();
+
+        assertEquals(8, bounds.size());
+    }
+
+    @Test
+    void dividingABoundsCreatesSmallerBounds() {
+        Bounds b = new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
+
+        List<Bounds> bounds = b.divide();
+
+        assertTrue(bounds.contains(new Bounds(Tuple.point(-1, -1, -1), Tuple.point(0, 0, 0))));
+        assertTrue(bounds.contains(new Bounds(Tuple.point( 0, -1, -1), Tuple.point(1, 0, 0))));
+        assertTrue(bounds.contains(new Bounds(Tuple.point(-1,  0, -1), Tuple.point(0, 1, 0))));
+        assertTrue(bounds.contains(new Bounds(Tuple.point(-1, -1,  0), Tuple.point(0, 0, 1))));
+        assertTrue(bounds.contains(new Bounds(Tuple.point( 0,  0, -1), Tuple.point(1, 1, 0))));
+        assertTrue(bounds.contains(new Bounds(Tuple.point( 0, -1,  0), Tuple.point(1, 0, 1))));
+        assertTrue(bounds.contains(new Bounds(Tuple.point(-1,  0,  0), Tuple.point(0, 1, 1))));
+        assertTrue(bounds.contains(new Bounds(Tuple.point( 0,  0,  0), Tuple.point(1, 1, 1))));
     }
 
 }
