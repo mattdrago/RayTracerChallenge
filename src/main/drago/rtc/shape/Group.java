@@ -40,13 +40,13 @@ public class Group extends Shape {
     @Override
     Bounds getBounds() {
         if(bounds == null) {
-            calculateBounds();
+            bounds = calculateBounds();
         }
 
         return bounds;
     }
 
-    private void calculateBounds() {
+    private Bounds calculateBounds() {
         Bounds b = null;
 
         for (Shape child: children) {
@@ -56,7 +56,7 @@ public class Group extends Shape {
             }
         }
 
-        this.bounds = b;
+        return b;
     }
 
     boolean hasChildren() {
@@ -70,6 +70,5 @@ public class Group extends Shape {
     public void addChild(Shape s) {
         children.add(s);
         s.setParent(this);
-
     }
 }
