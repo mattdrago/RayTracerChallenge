@@ -146,6 +146,13 @@ class BoundsTest {
     }
 
     @Test
+    void aBoundShouldContainItself() {
+        Bounds b = new Bounds(Tuple.point(-1, -2, -0.5), Tuple.point(1, 2, 3));
+
+        assertTrue(b.contains(b));
+    }
+
+    @Test
     void dividingABoundsCreates8Bounds() {
         Bounds b = new Bounds(Tuple.point(-1, -1, -1), Tuple.point(1, 1, 1));
 
