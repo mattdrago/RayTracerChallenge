@@ -38,7 +38,7 @@ public class IntersectHitLogger {
     static private class ShapeHitCount {
 
         private final String key;
-        private boolean hasParent;
+        private final boolean hasParent;
         private long calls;
         private long hits;
 

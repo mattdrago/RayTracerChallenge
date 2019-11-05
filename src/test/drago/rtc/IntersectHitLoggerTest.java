@@ -27,7 +27,7 @@ class IntersectHitLoggerTest {
 
         String report = IntersectHitLogger.report();
         String expected = String.join(",", new String[] {
-                ((Object)s).toString(),
+                s.toString(),
                 "1", "1", Boolean.FALSE.toString()
         }) + "\n";
 
@@ -48,7 +48,7 @@ class IntersectHitLoggerTest {
 
         String report = IntersectHitLogger.report();
         String expected = String.join(",", new String[] {
-                ((Object)s).toString(),
+                s.toString(),
                 "1", "1", Boolean.TRUE.toString()
         }) + "\n";
 
@@ -68,7 +68,7 @@ class IntersectHitLoggerTest {
 
         String report = IntersectHitLogger.report();
         String expected = String.join(",", new String[] {
-                ((Object)s).toString(),
+                s.toString(),
                 "3", "3", Boolean.FALSE.toString()
         }) + "\n";
 
@@ -92,7 +92,7 @@ class IntersectHitLoggerTest {
 
         String report = IntersectHitLogger.report();
         String expected = String.join(",", new String[] {
-                ((Object)s).toString(),
+                s.toString(),
                 "5", "3", Boolean.FALSE.toString()
         }) + "\n";
 
