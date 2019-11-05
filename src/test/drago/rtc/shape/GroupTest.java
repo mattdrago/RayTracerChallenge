@@ -6,6 +6,8 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -136,5 +138,151 @@ class GroupTest {
 
         assertEquals(expected.getMin(), actual.getMin());
         assertEquals(expected.getMax(), actual.getMax());
+    }
+
+    @Test
+    void putsShapesIntoSubGroups() {
+        Group g = new Group();
+
+        Sphere s1 = new Sphere();
+        s1.setTransform(Matrix.translation(-2, -2, -2));
+        g.addChild(s1);
+
+        Sphere s2 = new Sphere();
+        s2.setTransform(Matrix.translation(2, -2, -2));
+        g.addChild(s2);
+
+        Sphere s3 = new Sphere();
+        s3.setTransform(Matrix.translation(-2, 2, -2));
+        g.addChild(s3);
+
+        Sphere s4 = new Sphere();
+        s4.setTransform(Matrix.translation(-2, -2, 2));
+        g.addChild(s4);
+
+        Sphere s5 = new Sphere();
+        s5.setTransform(Matrix.translation(2, 2, -2));
+        g.addChild(s5);
+
+        Sphere s6 = new Sphere();
+        s6.setTransform(Matrix.translation(2, -2, 2));
+        g.addChild(s6);
+
+        Sphere s7 = new Sphere();
+        s7.setTransform(Matrix.translation(-2, 2, 2));
+        g.addChild(s7);
+
+        Sphere s8 = new Sphere();
+        s8.setTransform(Matrix.translation(2, 2, 2));
+        g.addChild(s8);
+
+        g.subDivide();
+
+        assertNotEquals(g, s1.getParent());
+        assertNotEquals(g, s2.getParent());
+        assertNotEquals(g, s3.getParent());
+        assertNotEquals(g, s4.getParent());
+        assertNotEquals(g, s5.getParent());
+        assertNotEquals(g, s6.getParent());
+        assertNotEquals(g, s7.getParent());
+        assertNotEquals(g, s8.getParent());
+
+        List<Shape> children = g.getChildren();
+
+        assertEquals(8, children.size());
+
+        for (Shape child: children) {
+            assertTrue(child instanceof Group);
+            assertEquals(1, ((Group)child).getChildren().size());
+        }
+    }
+
+    @Test
+    void shapesOverlappingSubGroupsStayInParentGroup() {
+        Group g = new Group();
+
+        Sphere s1 = new Sphere();
+        s1.setTransform(Matrix.translation(-2, -2, -2));
+        g.addChild(s1);
+
+        Sphere s2 = new Sphere();
+        s2.setTransform(Matrix.translation(2, -2, -2));
+        g.addChild(s2);
+
+        Sphere s3 = new Sphere();
+        s3.setTransform(Matrix.translation(-2, 2, -2));
+        g.addChild(s3);
+
+        Sphere s4 = new Sphere();
+        s4.setTransform(Matrix.translation(-2, -2, 2));
+        g.addChild(s4);
+
+        Sphere s5 = new Sphere();
+        s5.setTransform(Matrix.translation(2, 2, -2));
+        g.addChild(s5);
+
+        Sphere s6 = new Sphere();
+        s6.setTransform(Matrix.translation(2, -2, 2));
+        g.addChild(s6);
+
+        Sphere s7 = new Sphere();
+        s7.setTransform(Matrix.translation(-2, 2, 2));
+        g.addChild(s7);
+
+        Sphere s8 = new Sphere();
+        s8.setTransform(Matrix.translation(2, 2, 2));
+        g.addChild(s8);
+
+        Sphere s9 = new Sphere();
+        g.addChild(s9);
+
+        g.subDivide();
+
+        assertEquals(g, s9.getParent());
+        assertEquals(9, g.getChildren().size());
+    }
+
+    @Test
+    void emptySubGroupsDoNotExist() {
+        Group g = new Group();
+
+        Sphere s1 = new Sphere();
+        s1.setTransform(Matrix.translation(-2, -2, -2));
+        g.addChild(s1);
+
+        Sphere s2 = new Sphere();
+        s2.setTransform(Matrix.translation(2, -2, -2));
+        g.addChild(s2);
+
+        Sphere s3 = new Sphere();
+        s3.setTransform(Matrix.translation(-2, 2, -2));
+        g.addChild(s3);
+
+        Sphere s4 = new Sphere();
+        s4.setTransform(Matrix.translation(-2, -2, 2));
+        g.addChild(s4);
+
+        Sphere s5 = new Sphere();
+        s5.setTransform(Matrix.translation(2, 2, -2));
+        g.addChild(s5);
+
+        Sphere s6 = new Sphere();
+        s6.setTransform(Matrix.translation(2, -2, 2));
+        g.addChild(s6);
+
+        Sphere s7 = new Sphere();
+        s7.setTransform(Matrix.translation(-2, 2, 2));
+        g.addChild(s7);
+
+        g.subDivide();
+
+        List<Shape> children = g.getChildren();
+
+        assertEquals(7, children.size());
+
+        for (Shape child: children) {
+            assertTrue(child instanceof Group);
+            assertEquals(1, ((Group)child).getChildren().size());
+        }
     }
 }
