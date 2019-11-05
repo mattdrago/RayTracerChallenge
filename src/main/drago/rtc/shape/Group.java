@@ -4,9 +4,7 @@ import drago.rtc.foundations.Intersection;
 import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Group extends Shape {
 
@@ -63,12 +61,44 @@ public class Group extends Shape {
         return children.size() > 0;
     }
 
-    List<Shape> getChildren() {
+    public List<Shape> getChildren() {
         return children;
     }
 
     public void addChild(Shape s) {
         children.add(s);
         s.setParent(this);
+    }
+
+    public void subDivide() {
+        List<Bounds> subBounds = calculateBounds().divide();
+        Map<Bounds, Group> subGroups = createSubGroups(subBounds);
+
+        for(Iterator<Shape> iter = children.iterator(); iter.hasNext(); ) {
+            Shape child = iter.next();
+            Bounds childBounds = child.getBounds().transform(child.getTransform());
+            for(Bounds bound : subBounds) {
+                if(bound.contains(childBounds)) {
+                    subGroups.get(bound).addChild(child);
+                    iter.remove();
+                    break;
+                }
+            }
+        }
+
+        for(Group subGroup : subGroups.values()) {
+            if(subGroup.hasChildren()) {
+                addChild(subGroup);
+            }
+        }
+    }
+
+    private Map<Bounds, Group> createSubGroups(List<Bounds> subBounds) {
+        Map<Bounds, Group> subGroupMap = new HashMap<>();
+        for(Bounds bound : subBounds) {
+            subGroupMap.put(bound, new Group());
+        }
+
+        return subGroupMap;
     }
 }
