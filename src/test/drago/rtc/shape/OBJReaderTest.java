@@ -143,7 +143,7 @@ class OBJReaderTest {
         OBJReader objReader = new OBJReader(fr);
         objReader.parse();
 
-        Group g = objReader.toGroup();
+        Group g = objReader.toGroup(false);
         assertTrue(g.hasChildren());
         assertFalse(g.getChildren().contains(objReader.getDefaultGroup())); // Default Group has no Children.
         assertTrue(g.getChildren().contains(objReader.getGroup("FirstGroup")));
@@ -164,7 +164,7 @@ class OBJReaderTest {
         OBJReader objReader = new OBJReader(sr);
         objReader.parse();
 
-        Group g = objReader.toGroup();
+        Group g = objReader.toGroup(false);
 
         assertTrue(g.getChildren().contains(objReader.getDefaultGroup()));
     }

@@ -36,7 +36,7 @@ class Teapot extends ChapterBase {
         try(FileReader fr = new FileReader("models/teapot.obj")) {
             OBJReader objReader = new OBJReader(fr);
             objReader.parse();
-            world.getObjects().add(objReader.toGroup());
+            world.getObjects().add(objReader.toGroup(true));
 
         } catch (IOException e) {
             e.printStackTrace();

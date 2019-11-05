@@ -112,17 +112,30 @@ public class OBJReader {
         return groups.get(groupName);
     }
 
-    public Group toGroup() {
+    public Group toGroup(boolean subdivide) {
         Group g = new Group();
 
         for (Group loadedGroup : this.groups.values()) {
+            doSubdivide(loadedGroup, subdivide);
             g.addChild(loadedGroup);
         }
 
         if(defaultGroup.hasChildren()) {
+            doSubdivide(defaultGroup, subdivide);
             g.addChild(defaultGroup);
         }
 
         return g;
+    }
+
+    private void doSubdivide(Group group, boolean subdivide) {
+        if(subdivide) {
+            group.subDivide();
+            for(Shape s: group.getChildren()) {
+                if(s instanceof Group) {
+                    ((Group)s).subDivide();
+                }
+            }
+        }
     }
 }

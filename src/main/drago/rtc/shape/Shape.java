@@ -33,7 +33,9 @@ public abstract class Shape {
 
         Intersection[] intersections = localIntersect(transformedRay);
 
-        IntersectHitLogger.log(this, intersections);
+        if(IntersectHitLogger.ENABLED) {
+            IntersectHitLogger.log(this, intersections);
+        }
 
         return intersections;
     }

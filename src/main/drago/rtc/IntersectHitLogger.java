@@ -8,10 +8,11 @@ import java.util.Map;
 
 public class IntersectHitLogger {
 
+    public static final boolean ENABLED = false;
     static private final Map<String, ShapeHitCount> hitCounts = new HashMap<>();
 
     public static void log(Shape s, Intersection[] xs) {
-        String key = ((Object)s).toString();
+        String key = s.toString();
 
         if(!hitCounts.containsKey(key)) {
             hitCounts.put(key, new ShapeHitCount(key, s.getParent() != null));
