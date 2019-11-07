@@ -8,10 +8,18 @@ import java.util.Arrays;
 public class Intersection implements Comparable<Intersection> {
     private final double t;
     private final Shape object;
+    private final double u;
+    private final double v;
 
     public Intersection(double t, Shape object) {
+        this(t, object, 0, 0);
+    }
+
+    public Intersection(double t, Shape object, double u, double v) {
         this.t = t;
         this.object = object;
+        this.u = u;
+        this.v = v;
     }
 
     static Intersection[] intersections(Intersection ... is) {
@@ -50,7 +58,7 @@ public class Intersection implements Comparable<Intersection> {
 
         Tuple position = ray.position(this.t);
         Tuple eyeV = ray.getDirection().scale(-1);
-        Tuple normalV = this.object.normalAt(position);
+        Tuple normalV = this.object.normalAt(position, this);
 
         double n1 = 0, n2 = 0;
         ArrayList<Shape> containers = new ArrayList<>();
@@ -82,5 +90,13 @@ public class Intersection implements Comparable<Intersection> {
         }
 
         return new Computations(this.t, this.object, position, eyeV, normalV, n1, n2);
+    }
+
+    public double getU() {
+        return u;
+    }
+
+    public double getV() {
+        return v;
     }
 }

@@ -31,7 +31,7 @@ public class Group extends Shape {
     }
 
     @Override
-    Tuple localNormalAt(Tuple objectPoint) {
+    Tuple localNormalAt(Tuple objectPoint, Intersection intersection) {
         throw new AbstractMethodError("Groups do not have a local Normal");
     }
 
@@ -61,7 +61,7 @@ public class Group extends Shape {
         return children.size() > 0;
     }
 
-    public List<Shape> getChildren() {
+    List<Shape> getChildren() {
         return children;
     }
 
@@ -70,7 +70,7 @@ public class Group extends Shape {
         s.setParent(this);
     }
 
-    public void subDivide() {
+    void subDivide() {
         List<Bounds> subBounds = calculateBounds().divide();
         Map<Bounds, Group> subGroups = createSubGroups(subBounds);
 

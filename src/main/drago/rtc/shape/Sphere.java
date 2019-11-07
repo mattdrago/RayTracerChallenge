@@ -45,7 +45,7 @@ public class Sphere extends Shape {
     }
 
     @Override
-    Tuple localNormalAt(Tuple objectPoint) {
+    Tuple localNormalAt(Tuple objectPoint, Intersection intersection) {
         return objectPoint.subtract(Tuple.point(0, 0, 0));
     }
 

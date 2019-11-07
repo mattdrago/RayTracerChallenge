@@ -83,7 +83,7 @@ class SphereTest {
         Sphere s = new Sphere();
 
         Tuple expectedNormal = Tuple.vector(1, 0, 0);
-        Tuple actualNormal = s.localNormalAt(Tuple.point(1, 0, 0));
+        Tuple actualNormal = s.localNormalAt(Tuple.point(1, 0, 0), null);
 
         assertEquals(expectedNormal, actualNormal);
     }
@@ -93,7 +93,7 @@ class SphereTest {
         Sphere s = new Sphere();
 
         Tuple expectedNormal = Tuple.vector(0, 1, 0);
-        Tuple actualNormal = s.localNormalAt(Tuple.point(0, 1, 0));
+        Tuple actualNormal = s.localNormalAt(Tuple.point(0, 1, 0), null);
 
         assertEquals(expectedNormal, actualNormal);
     }
@@ -103,7 +103,7 @@ class SphereTest {
         Sphere s = new Sphere();
 
         Tuple expectedNormal = Tuple.vector(0, 0, 1);
-        Tuple actualNormal = s.localNormalAt(Tuple.point(0, 0, 1));
+        Tuple actualNormal = s.localNormalAt(Tuple.point(0, 0, 1), null);
 
         assertEquals(expectedNormal, actualNormal);
     }
@@ -113,7 +113,7 @@ class SphereTest {
         Sphere s = new Sphere();
 
         Tuple expectedNormal = Tuple.vector(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3);
-        Tuple actualNormal = s.localNormalAt(Tuple.point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3));
+        Tuple actualNormal = s.localNormalAt(Tuple.point(Math.sqrt(3) / 3, Math.sqrt(3) / 3, Math.sqrt(3) / 3), null);
 
         assertEquals(expectedNormal, actualNormal);
     }

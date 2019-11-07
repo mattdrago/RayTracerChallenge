@@ -29,7 +29,7 @@ public class Cube extends Shape {
     }
 
     @Override
-    Tuple localNormalAt(Tuple objectPoint) {
+    Tuple localNormalAt(Tuple objectPoint, Intersection intersection) {
         Tuple normal;
 
         double x = Math.abs(objectPoint.getX());

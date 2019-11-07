@@ -3,6 +3,7 @@ package drago.rtc.foundations;
 import drago.rtc.shape.Plane;
 import drago.rtc.shape.Shape;
 import drago.rtc.shape.Sphere;
+import drago.rtc.shape.Triangle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -228,5 +229,14 @@ class IntersectionTest {
         Computations comps = xs[0].prepareComputations(r, xs);
 
         assertTrue(Math.abs(0.48873 - comps.schlick()) < Computations.EPSILON);
+    }
+
+    @Test
+    void anIntersectionCanEncapsulateUAndV() {
+        Shape s = new Triangle(Tuple.point(0, 1, 0), Tuple.point(-1, 0, 0), Tuple.point(1, 0, 0));
+        Intersection i = new Intersection(3.5, s, 0.2, 0.4);
+
+        assertEquals(0.2, i.getU());
+        assertEquals(0.4, i.getV());
     }
 }

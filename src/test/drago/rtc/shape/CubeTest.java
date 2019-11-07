@@ -85,7 +85,7 @@ class CubeTest {
         };
 
         for (int i = 0; i < ps.length; i++) {
-            assertEquals(normals[i], c.localNormalAt(ps[i]));
+            assertEquals(normals[i], c.localNormalAt(ps[i], null));
         }
     }
 

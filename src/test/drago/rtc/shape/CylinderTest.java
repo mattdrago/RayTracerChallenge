@@ -71,7 +71,7 @@ class CylinderTest {
         };
 
         for (int i = 0; i < ps.length; i++) {
-            Tuple actualNormal = cyl.localNormalAt(ps[i]);
+            Tuple actualNormal = cyl.localNormalAt(ps[i], null);
 
             assertEquals(expectedNormals[i], actualNormal);
         }
@@ -165,7 +165,7 @@ class CylinderTest {
         };
 
         for (int i = 0; i < points.length; i++) {
-            assertEquals(normals[i], cyl.localNormalAt(points[i]));
+            assertEquals(normals[i], cyl.localNormalAt(points[i], null));
         }
     }
 

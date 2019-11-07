@@ -24,7 +24,7 @@ public class Plane extends Shape {
     }
 
     @Override
-    Tuple localNormalAt(Tuple objectPoint) {
+    Tuple localNormalAt(Tuple objectPoint, Intersection intersection) {
         return Tuple.vector(0,1,0);
     }
 

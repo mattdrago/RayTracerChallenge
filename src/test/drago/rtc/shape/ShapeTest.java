@@ -80,7 +80,7 @@ class ShapeTest {
         s.setTransform(Matrix.translation(0, 1, 0));
 
         Tuple expectedNormal = Tuple.vector(0, 0.70711, -0.70711);
-        Tuple actualNormal = s.normalAt(Tuple.point(0, 1.70711, -0.70711));
+        Tuple actualNormal = s.normalAt(Tuple.point(0, 1.70711, -0.70711), null);
 
         assertEquals(expectedNormal, actualNormal);
     }
@@ -91,7 +91,7 @@ class ShapeTest {
         s.setTransform(Matrix.scaling(1, 0.5, 1).multiplyBy(Matrix.rotationZ(Math.PI / 5)));
 
         Tuple expectedNormal = Tuple.vector(0, 0.97014, -0.24254);
-        Tuple actualNormal = s.normalAt(Tuple.point(0, Math.sqrt(2) / 2, - Math.sqrt(2) / 2));
+        Tuple actualNormal = s.normalAt(Tuple.point(0, Math.sqrt(2) / 2, - Math.sqrt(2) / 2), null);
 
         assertEquals(expectedNormal, actualNormal);
     }
@@ -100,7 +100,7 @@ class ShapeTest {
     @Test
     void theNormalIsANormalisedVector() {
         Shape s = new TestShape();
-        Tuple normal = s.normalAt(Tuple.point(1, 2, 3));
+        Tuple normal = s.normalAt(Tuple.point(1, 2, 3), null);
 
         assertEquals(normal.normalise(), normal);
     }
@@ -166,7 +166,7 @@ class ShapeTest {
         s.setTransform(Matrix.translation(5, 0,0));
         g2.addChild(s);
 
-        Tuple calculatedNormal = s.normalAt(Tuple.point(1.7321, 1.1547, -5.5774));
+        Tuple calculatedNormal = s.normalAt(Tuple.point(1.7321, 1.1547, -5.5774), null);
         Tuple expectedNormal = Tuple.vector(0.28570, 0.42854, -0.85716);
 
         assertEquals(expectedNormal, calculatedNormal);
@@ -183,7 +183,7 @@ class ShapeTest {
         }
 
         @Override
-        Tuple localNormalAt(Tuple point) {
+        Tuple localNormalAt(Tuple point, Intersection intersection) {
             return Tuple.vector(point.getX(), point.getY(), point.getZ());
         }
 

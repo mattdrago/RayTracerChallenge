@@ -70,18 +70,17 @@ public class Triangle extends Shape {
                 if(v >= 0 && (u + v) <= 1.0) {
                     double t = f * edge2.dot(originCrossEdge1);
                     xs = new Intersection[] {
-                            new Intersection(t, this)
+                            createIntersection(t, u, v)
                     };
                 }
             }
         }
 
-
         return xs;
     }
 
     @Override
-    Tuple localNormalAt(Tuple objectPoint) {
+    Tuple localNormalAt(Tuple objectPoint, Intersection intersection) {
         return normal;
     }
 
@@ -100,5 +99,9 @@ public class Triangle extends Shape {
         );
 
         return new Bounds(min, max);
+    }
+
+    Intersection createIntersection(double t, double u, double v) {
+        return new Intersection(t, this);
     }
 }

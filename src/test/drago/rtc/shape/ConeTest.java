@@ -74,7 +74,7 @@ class ConeTest {
         };
 
         for (int i = 0; i < points.length; i++) {
-            assertEquals(normals[i], c.localNormalAt(points[i]));
+            assertEquals(normals[i], c.localNormalAt(points[i], null));
         }
     }
 
@@ -133,7 +133,7 @@ class ConeTest {
         };
 
         for (int i = 0; i < points.length; i++) {
-            assertEquals(normals[i], c.localNormalAt(points[i]));
+            assertEquals(normals[i], c.localNormalAt(points[i], null));
         }
     }
 

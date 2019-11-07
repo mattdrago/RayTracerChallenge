@@ -81,7 +81,7 @@ public class Cone extends Shape {
     }
 
     @Override
-    Tuple localNormalAt(Tuple objectPoint) {
+    Tuple localNormalAt(Tuple objectPoint, Intersection intersection) {
         Tuple normal;
 
         double dist = Math.pow(objectPoint.getX(), 2) + Math.pow(objectPoint.getZ(), 2);

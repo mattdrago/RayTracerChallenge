@@ -41,7 +41,7 @@ class GroupTest {
             }
 
             @Override
-            Tuple localNormalAt(Tuple objectPoint) {
+            Tuple localNormalAt(Tuple objectPoint, Intersection intersection) {
                 return null;
             }
 

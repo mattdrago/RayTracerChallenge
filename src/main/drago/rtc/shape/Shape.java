@@ -40,16 +40,15 @@ public abstract class Shape {
         return intersections;
     }
 
-    public final Tuple normalAt(Tuple worldPoint) {
-
+    public final Tuple normalAt(Tuple worldPoint, Intersection intersection) {
         Tuple objectPoint = worldToObject(worldPoint);
-        Tuple objectNormal = localNormalAt(objectPoint);
+        Tuple objectNormal = localNormalAt(objectPoint, intersection);
 
         return normalToWorld(objectNormal);
     }
 
     abstract Intersection[] localIntersect(Ray transformedRay);
-    abstract Tuple localNormalAt(Tuple objectPoint);
+    abstract Tuple localNormalAt(Tuple objectPoint, Intersection intersection);
     abstract Bounds getBounds();
 
     public Shape getParent() {

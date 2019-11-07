@@ -15,9 +15,9 @@ class PlaneTest {
 
         Tuple expected = Tuple.vector(0, 1, 0);
 
-        assertEquals(expected, p.localNormalAt(Tuple.point(0, 0, 0)));
-        assertEquals(expected, p.localNormalAt(Tuple.point(10, 0, -10)));
-        assertEquals(expected, p.localNormalAt(Tuple.point(-5, 0, 150)));
+        assertEquals(expected, p.localNormalAt(Tuple.point(0, 0, 0), null));
+        assertEquals(expected, p.localNormalAt(Tuple.point(10, 0, -10), null));
+        assertEquals(expected, p.localNormalAt(Tuple.point(-5, 0, 150), null));
 
     }
 

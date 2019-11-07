@@ -31,9 +31,9 @@ class TriangleTest {
 
         Tuple expectedNormal = t.getNormal();
 
-        assertEquals(expectedNormal, t.localNormalAt(Tuple.point(0, 0.5, 0)));
-        assertEquals(expectedNormal, t.localNormalAt(Tuple.point(-0.50, 0.75, 0)));
-        assertEquals(expectedNormal, t.localNormalAt(Tuple.point(0.5, 0.25, 0)));
+        assertEquals(expectedNormal, t.localNormalAt(Tuple.point(0, 0.5, 0), null));
+        assertEquals(expectedNormal, t.localNormalAt(Tuple.point(-0.50, 0.75, 0), null));
+        assertEquals(expectedNormal, t.localNormalAt(Tuple.point(0.5, 0.25, 0), null));
     }
 
     @Test
