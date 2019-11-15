@@ -15,7 +15,7 @@ class Teapot extends ChapterBase {
 
     public static void main(String[] args) {
         Teapot t = new Teapot();
-        t.renderWorld("gallery/teapot.ppm");
+        t.renderWorld("gallery/teapot-smooth.ppm");
 
     }
 
@@ -33,7 +33,7 @@ class Teapot extends ChapterBase {
 
     @Override
     void addShapes() {
-        try(FileReader fr = new FileReader("models/teapot.obj")) {
+        try(FileReader fr = new FileReader("models/teapot-smooth.obj")) {
             OBJReader objReader = new OBJReader(fr);
             objReader.parse();
             world.getObjects().add(objReader.toGroup(true));

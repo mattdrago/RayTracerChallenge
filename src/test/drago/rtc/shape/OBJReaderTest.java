@@ -168,4 +168,59 @@ class OBJReaderTest {
 
         assertTrue(g.getChildren().contains(objReader.getDefaultGroup()));
     }
+
+    @Test
+    void vertextNormalRecords() {
+        StringReader sr = new StringReader(
+                "vn 0 0 1\n" +
+                        "vn 0.707 0 -0.707\n" +
+                        "vn 1 2 3\n"
+        );
+
+        OBJReader objReader = new OBJReader(sr);
+        objReader.parse();
+
+        assertEquals(Tuple.vector(0, 0, 1), objReader.vertexNormal(1));
+        assertEquals(Tuple.vector(0.707, 0, -0.707), objReader.vertexNormal(2));
+        assertEquals(Tuple.vector(1, 2, 3), objReader.vertexNormal(3));
+    }
+
+    @Test
+    void facesWithNormals() {
+        StringReader sr = new StringReader(
+                "v 0 1 0\n" +
+                        "v -1 0 0\n" +
+                        "v 1 0 0\n" +
+                        "vn -1 0 0\n" +
+                        "vn 1 0 0\n" +
+                        "vn 0 1 0\n" +
+                        "f 1//3 2//1 3//2\n" +
+                        "f 1/0/3 2/102/1 3/14/2\n"
+        );
+
+        OBJReader objReader = new OBJReader(sr);
+        objReader.parse();
+
+        Group g = objReader.getDefaultGroup();
+        SmoothTriangle st1 = (SmoothTriangle) g.getChildren().get(0);
+        SmoothTriangle st2 = (SmoothTriangle) g.getChildren().get(1);
+
+        assertEquals(objReader.vertices(1), st1.getPoint1());
+        assertEquals(objReader.vertices(2), st1.getPoint2());
+        assertEquals(objReader.vertices(3), st1.getPoint3());
+
+        assertEquals(objReader.vertexNormal(3), st1.getNormal1());
+        assertEquals(objReader.vertexNormal(1), st1.getNormal2());
+        assertEquals(objReader.vertexNormal(2), st1.getNormal3());
+
+        assertEquals(objReader.vertices(1), st2.getPoint1());
+        assertEquals(objReader.vertices(2), st2.getPoint2());
+        assertEquals(objReader.vertices(3), st2.getPoint3());
+
+        assertEquals(objReader.vertexNormal(3), st2.getNormal1());
+        assertEquals(objReader.vertexNormal(1), st2.getNormal2());
+        assertEquals(objReader.vertexNormal(2), st2.getNormal3());
+
+
+    }
 }

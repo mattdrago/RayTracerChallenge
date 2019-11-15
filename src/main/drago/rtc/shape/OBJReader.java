@@ -13,6 +13,7 @@ import java.util.Map;
 public class OBJReader {
     private BufferedReader sourceReader;
     private final List<Tuple> vertices = new ArrayList<>();
+    private final List<Tuple> vertexNormals = new ArrayList<>();
     private final Group defaultGroup = new Group();
     private final Map<String, Group> groups = new HashMap<>();
     private Group currentGroup = defaultGroup; 
@@ -22,6 +23,7 @@ public class OBJReader {
 
     private OBJReader() {
         vertices.add(Tuple.point(0, 0, 0));
+        vertexNormals.add(Tuple.vector(0, 0, 0));
     }
 
     public OBJReader(Reader sourceReader) {
@@ -35,17 +37,21 @@ public class OBJReader {
             while ((line = sourceReader.readLine()) != null) {
                 linesRead++;
 
-                switch(getCommand(line)) {
-                    case 'v':
+                switch(Command.getFromLine(line)) {
+                    case VERTEX:
                         parseVertice(line);
                         break;
 
-                    case 'f':
+                    case FACE:
                         parseFace(line);
                         break;
                         
-                    case 'g':
+                    case GROUP:
                         changeGroup(line);
+                        break;
+
+                    case VERTEX_NORMAL:
+                        parseVertexNormal(line);
                         break;
 
                     default:
@@ -68,28 +74,36 @@ public class OBJReader {
 
     private void parseFace(String line) {
         String[] lineParts = line.split(" ");
-        Tuple rootVertex = vertices.get(Integer.parseInt(lineParts[1]));
+        FaceNode rootFaceNode = new FaceNode(lineParts[1]);
+        Tuple rootVertex = vertices.get(rootFaceNode.vertexIndex);
+        Tuple rootVertexNormal = vertexNormals.get(rootFaceNode.vertexNormalIndex);
 
         for(int i = 2, j = 3; j < lineParts.length; ++i, ++j) {
-            currentGroup.addChild(new Triangle(
-                    rootVertex,
-                    vertices.get(Integer.parseInt(lineParts[i])),
-                    vertices.get(Integer.parseInt(lineParts[j]))
-            ));
+            FaceNode faceNodeI = new FaceNode(lineParts[i]);
+            FaceNode faceNodeJ = new FaceNode(lineParts[j]);
+
+            Triangle tri;
+
+            if(rootFaceNode.smooth) {
+                tri = new SmoothTriangle(rootVertex, vertices.get(faceNodeI.vertexIndex), vertices.get(faceNodeJ.vertexIndex),
+                        rootVertexNormal, vertexNormals.get(faceNodeI.vertexNormalIndex), vertexNormals.get(faceNodeJ.vertexNormalIndex));
+            } else {
+                tri = new Triangle(rootVertex, vertices.get(faceNodeI.vertexIndex), vertices.get(faceNodeJ.vertexIndex));
+            }
+
+            currentGroup.addChild(tri);
         }
     }
 
-    private char getCommand(String line) {
-        if(line != null && line.length() > 0) {
-            return line.charAt(0);
-        }
-
-        return 0;
-    }
 
     private void parseVertice(String line) {
         String[] lineParts = line.split(" ");
         vertices.add(Tuple.point(Double.parseDouble(lineParts[1]), Double.parseDouble(lineParts[2]), Double.parseDouble(lineParts[3])));
+    }
+
+    private void parseVertexNormal(String line) {
+        String[] lineParts = line.split(" ");
+        vertexNormals.add(Tuple.vector(Double.parseDouble(lineParts[1]), Double.parseDouble(lineParts[2]), Double.parseDouble(lineParts[3])));
     }
 
     int linesIgnored() {
@@ -102,6 +116,10 @@ public class OBJReader {
 
     Tuple vertices(int index) {
         return vertices.get(index);
+    }
+
+    Tuple vertexNormal(int index) {
+        return vertexNormals.get(index);
     }
 
     Group getDefaultGroup() {
@@ -135,6 +153,62 @@ public class OBJReader {
                 if(s instanceof Group) {
                     ((Group)s).subDivide();
                 }
+            }
+        }
+    }
+
+    private enum Command {
+        VERTEX("v"),
+        FACE("f"),
+        GROUP("g"),
+        VERTEX_NORMAL("vn"),
+        UNKNOWN("");
+
+        private final String code;
+
+        Command(String code) {
+            this.code = code;
+        }
+
+        static Command getFromLine(String line) {
+            if(line != null && line.length() > 0) {
+                String[] lineParts = line.split(" ");
+
+                for (Command c : Command.values()) {
+                    if (c.code.equals(lineParts[0])) {
+                        return c;
+                    }
+                }
+            }
+
+            return UNKNOWN;
+        }
+    }
+
+    private class FaceNode {
+
+        final int vertexIndex;
+        final int textureVertex;
+        final int vertexNormalIndex;
+        final boolean smooth;
+
+        FaceNode(String linePart) {
+            String[] parts = linePart.split("/");
+            this.vertexIndex = Integer.parseInt(parts[0]);
+
+            if(parts.length > 1) {
+                if(parts[1].length() > 0) {
+                    this.textureVertex = Integer.parseInt(parts[1]);
+                } else {
+                    this.textureVertex = 0;
+                }
+
+                this.vertexNormalIndex = Integer.parseInt(parts[2]);
+                this.smooth = true;
+            } else {
+                this.textureVertex = 0;
+                this.vertexNormalIndex = 0;
+                this.smooth = false;
             }
         }
     }
