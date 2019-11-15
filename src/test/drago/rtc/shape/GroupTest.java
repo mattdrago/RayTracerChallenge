@@ -84,10 +84,10 @@ class GroupTest {
 
         assertEquals(4, xs.length);
 
-        assertEquals(s2, xs[0].getObject());
-        assertEquals(s2, xs[1].getObject());
-        assertEquals(s1, xs[2].getObject());
-        assertEquals(s1, xs[3].getObject());
+        assertEquals(s2, xs[0].getShape());
+        assertEquals(s2, xs[1].getShape());
+        assertEquals(s1, xs[2].getShape());
+        assertEquals(s1, xs[3].getShape());
     }
 
     @Test

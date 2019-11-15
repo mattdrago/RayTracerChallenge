@@ -73,8 +73,8 @@ class SphereTest {
 
         Intersection[] xs = s.localIntersect(r);
 
-        assertEquals(s, xs[0].getObject());
-        assertEquals(s, xs[1].getObject());
+        assertEquals(s, xs[0].getShape());
+        assertEquals(s, xs[1].getShape());
     }
 
 

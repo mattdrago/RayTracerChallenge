@@ -17,7 +17,7 @@ class IntersectionTest {
         Intersection i = new Intersection(3.5, s);
 
         assertEquals(3.5, i.getT());
-        assertEquals(s, i.getObject());
+        assertEquals(s, i.getShape());
     }
 
     @Test
@@ -85,7 +85,7 @@ class IntersectionTest {
         Computations comps = i.prepareComputations(r, new Intersection[] {i});
 
         assertEquals(i.getT(), comps.getT());
-        assertEquals(i.getObject(), comps.getObject());
+        assertEquals(i.getShape(), comps.getShape());
         assertEquals(Tuple.point(0, 0, -1), comps.getPoint());
         assertEquals(Tuple.vector(0, 0, -1), comps.getEyeV());
         assertEquals(Tuple.vector(0, 0, -1), comps.getNormalV());

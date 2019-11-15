@@ -59,15 +59,15 @@ public class World {
     }
 
     Color shadeHit(Computations comps, int remaining) {
-        Material m = comps.getObject().getMaterial();
+        Material m = comps.getShape().getMaterial();
 
         boolean isShadow = isShadowed(comps.getOverPoint());
 
-        Color surfaceColor = m.lighting(this.lightSource, comps.getObject(), comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
+        Color surfaceColor = m.lighting(this.lightSource, comps.getShape(), comps.getOverPoint(), comps.getEyeV(), comps.getNormalV(), isShadow);
         Color reflectedColor = reflectedColor(comps, remaining);
         Color refractedColor = refractedColor(comps, remaining);
 
-        if(comps.getObject().getMaterial().getReflective() > 0 && comps.getObject().getMaterial().getTransparency() > 0) {
+        if(comps.getShape().getMaterial().getReflective() > 0 && comps.getShape().getMaterial().getTransparency() > 0) {
             double reflectance = comps.schlick();
             return surfaceColor.add(reflectedColor.scale(reflectance)).add(refractedColor.scale(1 - reflectance));
         } else {
@@ -106,7 +106,7 @@ public class World {
     Color reflectedColor(Computations comps, int remaining) {
         Color reflectedColor = Color.BLACK;
 
-        Material m = comps.getObject().getMaterial();
+        Material m = comps.getShape().getMaterial();
 
         if(m.getReflective() != 0 && remaining > 0) {
             Ray reflectRay = new Ray(comps.getOverPoint(), comps.getReflectV());
@@ -119,7 +119,7 @@ public class World {
     Color refractedColor(Computations comps, int remaining) {
         Color refractedColor = Color.BLACK;
 
-        if(comps.getObject().getMaterial().getTransparency() > 0 && remaining > 0) {
+        if(comps.getShape().getMaterial().getTransparency() > 0 && remaining > 0) {
             double nRatio = comps.getN1() / comps.getN2();
             double cosIncident = comps.getEyeV().dot(comps.getNormalV());
 
@@ -135,7 +135,7 @@ public class World {
 
                 Ray refractRay = new Ray(comps.getUnderPoint(), direction);
 
-                refractedColor = colorAt(refractRay, remaining - 1).scale(comps.getObject().getMaterial().getTransparency());
+                refractedColor = colorAt(refractRay, remaining - 1).scale(comps.getShape().getMaterial().getTransparency());
             }
 
         }

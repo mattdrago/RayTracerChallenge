@@ -46,7 +46,7 @@ class PlaneTest {
 
         assertEquals(1, xs.length);
         assertEquals(1, xs[0].getT());
-        assertEquals(p, xs[0].getObject());
+        assertEquals(p, xs[0].getShape());
     }
 
     @Test
@@ -58,7 +58,7 @@ class PlaneTest {
 
         assertEquals(1, xs.length);
         assertEquals(1, xs[0].getT());
-        assertEquals(p, xs[0].getObject());
+        assertEquals(p, xs[0].getShape());
     }
 
     @Test
@@ -70,7 +70,7 @@ class PlaneTest {
 
         assertEquals(1, xs.length);
         assertEquals(-1, xs[0].getT());
-        assertEquals(p, xs[0].getObject());
+        assertEquals(p, xs[0].getShape());
     }
 
     @Test

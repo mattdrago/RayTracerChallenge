@@ -6,7 +6,7 @@ public class Computations {
     public static final double EPSILON = 0.000001;
 
     private final double t;
-    private final Shape object;
+    private final Shape shape;
     private final Tuple point;
     private final Tuple eyeV;
     private final Tuple normalV;
@@ -17,9 +17,9 @@ public class Computations {
     private final double n2;
     private final Tuple underPoint;
 
-    Computations(double t, Shape object, Tuple point, Tuple eyeV, Tuple normalV, double n1, double n2) {
+    Computations(double t, Shape shape, Tuple point, Tuple eyeV, Tuple normalV, double n1, double n2) {
         this.t = t;
-        this.object = object;
+        this.shape = shape;
         this.point = point;
         this.eyeV = eyeV;
 
@@ -45,8 +45,8 @@ public class Computations {
         return t;
     }
 
-    public Shape getObject() {
-        return object;
+    public Shape getShape() {
+        return shape;
     }
 
     Tuple getPoint() {

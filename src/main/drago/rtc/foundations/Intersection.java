@@ -7,17 +7,17 @@ import java.util.Arrays;
 
 public class Intersection implements Comparable<Intersection> {
     private final double t;
-    private final Shape object;
+    private final Shape shape;
     private final double u;
     private final double v;
 
-    public Intersection(double t, Shape object) {
-        this(t, object, 0, 0);
+    public Intersection(double t, Shape shape) {
+        this(t, shape, 0, 0);
     }
 
-    public Intersection(double t, Shape object, double u, double v) {
+    public Intersection(double t, Shape shape, double u, double v) {
         this.t = t;
-        this.object = object;
+        this.shape = shape;
         this.u = u;
         this.v = v;
     }
@@ -45,8 +45,8 @@ public class Intersection implements Comparable<Intersection> {
         return t;
     }
 
-    public Shape getObject() {
-        return object;
+    public Shape getShape() {
+        return shape;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Intersection implements Comparable<Intersection> {
 
         Tuple position = ray.position(this.t);
         Tuple eyeV = ray.getDirection().scale(-1);
-        Tuple normalV = this.object.normalAt(position, this);
+        Tuple normalV = this.shape.normalAt(position, this);
 
         double n1 = 0, n2 = 0;
         ArrayList<Shape> containers = new ArrayList<>();
@@ -72,10 +72,10 @@ public class Intersection implements Comparable<Intersection> {
                 }
             }
 
-            if (containers.indexOf(x.getObject()) >= 0) {
-                containers.remove(x.getObject());
+            if (containers.indexOf(x.getShape()) >= 0) {
+                containers.remove(x.getShape());
             } else {
-                containers.add(x.getObject());
+                containers.add(x.getShape());
             }
 
             if (x.equals(this)) {
@@ -89,7 +89,7 @@ public class Intersection implements Comparable<Intersection> {
             }
         }
 
-        return new Computations(this.t, this.object, position, eyeV, normalV, n1, n2);
+        return new Computations(this.t, this.shape, position, eyeV, normalV, n1, n2);
     }
 
     public double getU() {
