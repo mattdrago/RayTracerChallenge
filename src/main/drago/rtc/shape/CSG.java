@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class CSG extends Shape {
+public class CSG extends Shape {
 
 
     private final Operation op;
     private final Shape left;
     private final Shape right;
 
-    CSG(Operation op, Shape left, Shape right) {
+    public CSG(Operation op, Shape left, Shape right) {
         this.op = op;
         this.left = left;
         this.right = right;
@@ -86,7 +86,7 @@ class CSG extends Shape {
         return this.left.includes(other) || this.right.includes(other);
     }
 
-    enum Operation {
+    public enum Operation {
         UNION((leftHit, insideLeft, insideRight) -> (leftHit && !insideRight) || (!leftHit && !insideLeft)),
         INTERSECTION((leftHit, insideLeft, insideRight) -> (leftHit && insideRight) || (!leftHit && insideLeft)),
         DIFFERENCE((leftHit, insideLeft, insideRight) -> (leftHit && !insideRight) || (!leftHit && insideLeft));
