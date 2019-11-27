@@ -70,6 +70,17 @@ public class Group extends Shape {
         s.setParent(this);
     }
 
+    @Override
+    boolean includes(Shape other) {
+        for(Shape s : children) {
+            if(s.includes(other)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     void subDivide() {
         List<Bounds> subBounds = calculateBounds().divide();
         Map<Bounds, Group> subGroups = createSubGroups(subBounds);

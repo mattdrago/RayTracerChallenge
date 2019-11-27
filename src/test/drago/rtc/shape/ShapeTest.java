@@ -172,6 +172,23 @@ class ShapeTest {
         assertEquals(expectedNormal, calculatedNormal);
     }
 
+    @Test
+    void aShapeIncludesItSelf() {
+        Shape s = new TestShape();
+
+        assertTrue(s.includes(s));
+    }
+
+    @Test
+    void aBasicShapeDoesNotIncludeOtherBasicShapes() {
+        Shape s1 = new TestShape();
+        Shape s2 = new TestShape();
+
+        assertFalse(s1.includes(s2));
+        assertFalse(s2.includes(s1));
+    }
+
+
     private static class TestShape extends Shape {
         Ray savedRay;
 

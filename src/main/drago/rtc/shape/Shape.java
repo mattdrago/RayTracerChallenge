@@ -81,4 +81,8 @@ public abstract class Shape {
 
         return worldNormal;
     }
+
+    boolean includes(Shape other) {
+        return this.equals(other);
+    }
 }

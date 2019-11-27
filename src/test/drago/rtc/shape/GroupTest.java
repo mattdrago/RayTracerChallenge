@@ -285,4 +285,44 @@ class GroupTest {
             assertEquals(1, ((Group)child).getChildren().size());
         }
     }
+
+    @Test
+    void aGroupIncludesAllShapesAddedToIt() {
+        Shape s1 = new Sphere();
+        Shape s2 = new Cube();
+        Shape s3 = new Cylinder();
+
+        Group g = new Group();
+        g.addChild(s1);
+        g.addChild(s2);
+        g.addChild(s3);
+
+        assertTrue(g.includes(s1));
+        assertTrue(g.includes(s2));
+        assertTrue(g.includes(s3));
+    }
+
+    @Test
+    void aGroupDoesNotIncludeAShapeNotAddedToIt() {
+        Shape s = new Sphere();
+
+        Group g = new Group();
+        g.addChild(new Sphere());
+        g.addChild(new Cube());
+
+        assertFalse(g.includes(s));
+    }
+
+    @Test
+    void aGroupIncludesAShapeAddedToAChildGroup() {
+        Shape s = new Sphere();
+        Group gc = new Group();
+        gc.addChild(s);
+
+        Group g = new Group();
+        g.addChild(gc);
+
+        assertTrue(g.includes(s));
+    }
+
 }
