@@ -140,7 +140,7 @@ class WorldTest {
     }
 
     @Test
-    void theShadowWhenAnObjectIsBetweenThePOintAndTheLight() {
+    void thereIsAShadowWhenAnObjectIsBetweenThePointAndTheLight() {
         World w = World.defaultWorld();
         Tuple p = Tuple.point(10, -10, 10);
 
@@ -159,6 +159,18 @@ class WorldTest {
     void thereIsNoShadowWhenAnObjectIsBehindThePoint() {
         World w = World.defaultWorld();
         Tuple p = Tuple.point(-2, 2, -2);
+
+        assertFalse(w.isShadowed(p));
+    }
+
+    @Test
+    void thereIsNoShadowWhenAnObjectDoesNotCastOne() {
+        World w = World.defaultWorld();
+        Tuple p = Tuple.point(10, -10, 10);
+
+        for(Shape s: w.getObjects()) {
+            s.setCastShadow(false);
+        }
 
         assertFalse(w.isShadowed(p));
     }

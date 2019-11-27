@@ -89,7 +89,6 @@ public class World {
         return color;
     }
 
-    // TODO Can this be modified to handle light going through a transparent material?
     boolean isShadowed(Tuple point) {
         Tuple toLight = lightSource.getPosition().subtract(point);
         double distance = toLight.magnitude();
@@ -98,7 +97,9 @@ public class World {
         Ray ray = new Ray(point, direction);
         Intersection[] xs = intersect(ray);
 
-        Intersection hit = Intersection.hit(xs);
+        Intersection[] xsThatCastShadow = Arrays.stream(xs).filter(x -> x.getShape().isCastShadow()).toArray(Intersection[]::new);
+
+        Intersection hit = Intersection.hit(xsThatCastShadow);
 
         return (hit != null && hit.getT() < distance);
     }

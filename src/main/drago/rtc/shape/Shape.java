@@ -11,6 +11,7 @@ public abstract class Shape {
     private Matrix transform = Matrix.identity(4);
     private Material material = new Material();
     private Shape parent;
+    private boolean castShadow = true;
 
     public final Matrix getTransform() {
         return transform;
@@ -84,5 +85,13 @@ public abstract class Shape {
 
     boolean includes(Shape other) {
         return this.equals(other);
+    }
+
+    public boolean isCastShadow() {
+        return castShadow;
+    }
+
+    public void setCastShadow(boolean castShadow) {
+        this.castShadow = castShadow;
     }
 }
