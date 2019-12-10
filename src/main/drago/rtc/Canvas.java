@@ -4,14 +4,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Canvas {
 
     private final int width;
     private final int height;
 
-    private final HashMap<String, Color> pixels = new HashMap<>();
+    private final Map<String, Color> pixels = new ConcurrentHashMap<>();
 
     private static final Color DEFAULT_PIXEL = new Color(0, 0, 0);
 
