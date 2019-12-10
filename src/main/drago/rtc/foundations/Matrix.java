@@ -215,16 +215,18 @@ public class Matrix {
     }
 
     double determinant() {
-        if(determinant == null) {
-            determinant = 0.0;
+        synchronized (this) {
+            if (determinant == null) {
+                determinant = 0.0;
 
-            int matrixSize = values.length;
+                int matrixSize = values.length;
 
-            if (matrixSize == 2) {
-                determinant = values[0][0] * values[1][1] - values[0][1] * values[1][0];
-            } else {
-                for (int colI = 0; colI < matrixSize; colI++) {
-                    determinant += values[0][colI] * cofactor(0, colI);
+                if (matrixSize == 2) {
+                    determinant = values[0][0] * values[1][1] - values[0][1] * values[1][0];
+                } else {
+                    for (int colI = 0; colI < matrixSize; colI++) {
+                        determinant += values[0][colI] * cofactor(0, colI);
+                    }
                 }
             }
         }
@@ -271,20 +273,23 @@ public class Matrix {
 
     public Matrix inverse() {
         if(!isInvertible()) {
+            System.out.println("Not invertible");
             return null;
         }
 
         if(inverse == null) {
-            double determinant = determinant();
-            double[][] newValues = new double[values.length][values[0].length];
+            synchronized (this) {
+                double determinant = determinant();
+                double[][] newValues = new double[values.length][values[0].length];
 
-            for (int rowI = 0; rowI < values.length; rowI++) {
-                for (int colI = 0; colI < values[0].length; colI++) {
-                    newValues[colI][rowI] = cofactor(rowI, colI) / determinant;
+                for (int rowI = 0; rowI < values.length; rowI++) {
+                    for (int colI = 0; colI < values[0].length; colI++) {
+                        newValues[colI][rowI] = cofactor(rowI, colI) / determinant;
+                    }
                 }
-            }
 
-            inverse = new Matrix(newValues);
+                inverse = new Matrix(newValues);
+            }
         }
 
         return inverse;
