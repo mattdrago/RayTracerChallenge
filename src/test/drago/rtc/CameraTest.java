@@ -5,6 +5,8 @@ import drago.rtc.foundations.Ray;
 import drago.rtc.foundations.Tuple;
 import org.junit.jupiter.api.Test;
 
+import java.util.Queue;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CameraTest {
@@ -89,4 +91,48 @@ class CameraTest {
 
         assertEquals(new Color(0.38066, 0.47583, 0.2855), image.pixelAt(5, 5));
     }
+
+    @Test
+    void renderingAWorldSetsEveryPixel() {
+        Color expectedColor = new Color(0.1, 0.2, 0.3);
+
+        World w = new World() {
+            @Override
+            Color colorAt(Ray ray, int remaining) {
+                return expectedColor;
+            }
+        };
+
+        Camera c = new Camera(200, 100, Math.PI / 2);
+        Canvas img = c.render(w);
+
+        for (int px = 0; px < c.getHSize(); px++) {
+            for (int py = 0; py < c.getVSize(); py++) {
+                assertEquals(expectedColor, img.pixelAt(px, py));
+            }
+        }
+    }
+
+    @Test
+    void preparingChunks() {
+        int hSize = 22;
+        int vSize = 11;
+        Camera c = new Camera(hSize, vSize, Math.PI / 2);
+
+        Queue<Camera.Chunk> chunks = c.prepareChunks();
+
+        assertEquals(18, chunks.size());
+
+        int maxX = 0;
+        int maxY = 0;
+
+        for (Camera.Chunk chunk : chunks) {
+            maxX = Math.max(maxX, chunk.getToX());
+            maxY = Math.max(maxY, chunk.getToY());
+        }
+
+        assertEquals(hSize, maxX);
+        assertEquals(vSize, maxY);
+    }
+
 }
