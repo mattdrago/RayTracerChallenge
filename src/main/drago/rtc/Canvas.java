@@ -4,21 +4,21 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Canvas {
 
     private final int width;
     private final int height;
 
-    private final Map<String, Color> pixels = new ConcurrentHashMap<>();
+    private final Color[][] pixels;
 
     private static final Color DEFAULT_PIXEL = new Color(0, 0, 0);
 
     public Canvas(int width, int height) {
         this.width = width;
         this.height = height;
+
+        pixels = new Color[width][height];
     }
 
     public int getWidth() {
@@ -30,7 +30,11 @@ public class Canvas {
     }
 
     Color pixelAt(int x, int y) {
-        Color c = pixels.get(pixelKey(x, y));
+        Color c = null;
+
+        if(withinCanvasBounds(x, y)) {
+            c = pixels[x][y];
+        }
 
         if(c == null) {
             c = DEFAULT_PIXEL;
@@ -39,13 +43,9 @@ public class Canvas {
         return c;
     }
 
-    private String pixelKey(int x, int y) {
-        return x + "_" + y;
-    }
-
     public void writePixel(int x, int y, Color color) {
         if(withinCanvasBounds(x, y)) {
-            pixels.put(pixelKey(x, y), color);
+            pixels[x][y] = color;
         }
     }
 
