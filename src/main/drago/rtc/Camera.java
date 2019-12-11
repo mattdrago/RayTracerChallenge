@@ -9,8 +9,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Camera {
     private static final int REFLECTION_MAX_DEPTH = 5;
-    private static final int CHUNK_SIZE = 4;
-    private static final int NUM_RENDERER_THREADS = 1;
+    private static final int NUM_RENDERER_THREADS = 5;
 
     private int hSize;
     private int vSize;
@@ -106,11 +105,11 @@ public class Camera {
 
     public Canvas render(World world) {
         Canvas image = new Canvas(hSize, vSize);
-        Queue<Chunk> chunks = prepareChunks();
+        Queue<Pixel> pixels = preparePixels();
 
         Set<Thread> rendererThreads = new HashSet<>();
         for (int i = 0; i < NUM_RENDERER_THREADS; i++) {
-            Renderer r = new Renderer(chunks, world, image);
+            Renderer r = new Renderer(pixels, world, image);
             Thread t = new Thread(r);
             rendererThreads.add(t);
             t.start();
@@ -128,74 +127,48 @@ public class Camera {
         return image;
     }
 
-//    public Canvas render(World world) {
-//        Canvas image = new Canvas(hSize, vSize);
-//
-//        for (int y = 0; y < vSize; y++) {
-//            for (int x = 0; x < hSize; x++) {
-//                Ray ray = rayForPixel(x, y);
-//                Color color = world.colorAt(ray, REFLECTION_MAX_DEPTH);
-//                image.writePixel(x, y, color);
-//            }
-//        }
-//
-//        return image;
-//    }
+    public Queue<Pixel> preparePixels() {
+        Queue<Pixel> pixels = new ConcurrentLinkedQueue<>();
 
-    public Queue<Chunk> prepareChunks() {
-        Queue<Chunk> chunks = new ConcurrentLinkedQueue<>();
-
-        for (int x = 0; x < hSize; x += CHUNK_SIZE) {
-            for (int y = 0; y < vSize; y += CHUNK_SIZE) {
-                int toX = Math.min(hSize, (x + CHUNK_SIZE));
-                int toY = Math.min(vSize, (y + CHUNK_SIZE));
-                chunks.offer(new Chunk (x, y, toX, toY));
+        for (int x = 0; x < hSize; ++x) {
+            for (int y = 0; y < vSize; ++y) {
+                pixels.offer(new Pixel(x, y));
             }
         }
 
-        return chunks;
+        return pixels;
     }
 
-    class Chunk {
-        private final int fromX;
-        private final int fromY;
-        private final int toX;
-        private final int toY;
+    class Pixel {
+        private final int x;
+        private final int y;
 
-        Chunk(int fromX, int fromY, int toX, int toY) {
+        Pixel(int x, int y) {
 
-            this.fromX = fromX;
-            this.fromY = fromY;
-            this.toX = toX;
-            this.toY = toY;
+            this.x = x;
+            this.y = y;
         }
 
-        public int getFromX() {
-            return fromX;
+        public int getX() {
+            return x;
         }
 
-        public int getFromY() {
-            return fromY;
-        }
-
-        public int getToX() {
-            return toX;
-        }
-
-        public int getToY() {
-            return toY;
+        public int getY() {
+            return y;
         }
     }
 
     private class Renderer implements Runnable {
 
-        private final Queue<Chunk> chunks;
+        private final Queue<Pixel> pixels;
         private final World world;
         private final Canvas image;
 
-        public Renderer(Queue<Chunk> chunks, World world, Canvas image) {
+        private int pixelCount = 0;
 
-            this.chunks = chunks;
+        public Renderer(Queue<Pixel> pixels, World world, Canvas image) {
+
+            this.pixels = pixels;
             this.world = world;
             this.image = image;
         }
@@ -203,16 +176,17 @@ public class Camera {
         @Override
         public void run() {
 
-            Chunk chunk;
-            while((chunk = chunks.poll()) != null) {
-                for (int y = chunk.getFromY(); y < chunk.getToY(); y++) {
-                    for (int x = chunk.getFromX(); x < chunk.getToX(); x++) {
-                        Ray ray = rayForPixel(x, y);
-                        Color color = world.colorAt(ray, REFLECTION_MAX_DEPTH);
-                        image.writePixel(x, y, color);
-                    }
-                }
+            Pixel pixel;
+            while((pixel = pixels.poll()) != null) {
+                Ray ray = rayForPixel(pixel.getX(), pixel.getY());
+                Color color = world.colorAt(ray, REFLECTION_MAX_DEPTH);
+                image.writePixel(pixel.getX(), pixel.getY(), color);
+                pixelCount++;
             }
+        }
+
+        public int getPixelCount() {
+            return pixelCount;
         }
     }
 }

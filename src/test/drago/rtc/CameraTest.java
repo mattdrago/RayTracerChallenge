@@ -119,20 +119,20 @@ class CameraTest {
         int vSize = 11;
         Camera c = new Camera(hSize, vSize, Math.PI / 2);
 
-        Queue<Camera.Chunk> chunks = c.prepareChunks();
+        Queue<Camera.Pixel> chunks = c.preparePixels();
 
-        assertEquals(18, chunks.size());
+        assertEquals(242, chunks.size());
 
         int maxX = 0;
         int maxY = 0;
 
-        for (Camera.Chunk chunk : chunks) {
-            maxX = Math.max(maxX, chunk.getToX());
-            maxY = Math.max(maxY, chunk.getToY());
+        for (Camera.Pixel chunk : chunks) {
+            maxX = Math.max(maxX, chunk.getX());
+            maxY = Math.max(maxY, chunk.getY());
         }
 
-        assertEquals(hSize, maxX);
-        assertEquals(vSize, maxY);
+        assertEquals(hSize - 1, maxX);
+        assertEquals(vSize - 1, maxY);
     }
 
 }
