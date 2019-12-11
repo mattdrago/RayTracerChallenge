@@ -107,17 +107,27 @@ public class Camera {
         Canvas image = new Canvas(hSize, vSize);
         Queue<Pixel> pixels = preparePixels();
 
-        Set<Thread> rendererThreads = new HashSet<>();
+        Map<Thread, Renderer> rendererThreads = new HashMap<>();
         for (int i = 0; i < NUM_RENDERER_THREADS; i++) {
             Renderer r = new Renderer(pixels, world, image);
             Thread t = new Thread(r);
-            rendererThreads.add(t);
+            rendererThreads.put(t, r);
             t.start();
         }
 
-        for (Thread t : rendererThreads) {
+        System.out.println("Thread Name, Num Pixels, Total Duration (nSec), Duration Per Pixel (nSec)");
+        for (Thread t : rendererThreads.keySet()) {
             try {
                 t.join();
+                Renderer r = rendererThreads.get(t);
+                System.out.println(String.join(",", new String[] {
+                        t.getName(),
+                        String.valueOf(r.getPixelCount()),
+                        String.valueOf(r.getRunningTime()),
+                        String.valueOf(r.getRunningTime() / r.getPixelCount())
+
+                }));
+
             } catch (InterruptedException e) {
                 System.out.println("Interrupted whilst rendering: " + e.getLocalizedMessage());
                 Thread.currentThread().interrupt();
@@ -165,6 +175,7 @@ public class Camera {
         private final Canvas image;
 
         private int pixelCount = 0;
+        private long totalTime = 0;
 
         public Renderer(Queue<Pixel> pixels, World world, Canvas image) {
 
@@ -177,16 +188,24 @@ public class Camera {
         public void run() {
 
             Pixel pixel;
+            long start = System.nanoTime();
             while((pixel = pixels.poll()) != null) {
                 Ray ray = rayForPixel(pixel.getX(), pixel.getY());
                 Color color = world.colorAt(ray, REFLECTION_MAX_DEPTH);
                 image.writePixel(pixel.getX(), pixel.getY(), color);
                 pixelCount++;
             }
+            long end = System.nanoTime();
+
+            totalTime = end - start;
         }
 
         public int getPixelCount() {
             return pixelCount;
+        }
+
+        public long getRunningTime() {
+            return totalTime;
         }
     }
 }
